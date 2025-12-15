@@ -7,16 +7,17 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'node:path';
 import { AppResolver } from './app.resolver';
 import { UserModule } from './user/user.module';
+import { ProjectModule } from './project/project.module';
+import { CommentModule } from './comment/comment.module';
+import { FileModule } from './file/file.module';
 import { StepModule } from './step/step.module';
 import { WorkspaceModule } from './workspace/workspace.module';
-import { CommentModule } from './comment/comment.module';
-import { ProjectModule } from './project/project.module';
-import { UserModule } from './user/user.module';
-import { FileModule } from './file/file.module';
-import { WorkspaceModule } from './workspace/workspace.module';
-import { CommentModule } from './comment/comment.module';
-import { ProjectModule } from './project/project.module';
-import { UserModule } from './user/user.module';
+import { User } from './user/entities/user.entity';
+import { Project } from './project/entities/project.entity';
+import { Step } from './step/entities/step.entity';
+import { Comment } from './comment/entities/comment.entity';
+import { Workspace } from './workspace/entities/workspace.entity';
+import { File } from './file/entities/file.entity';
 
 @Module({
   imports: [
@@ -24,11 +25,12 @@ import { UserModule } from './user/user.module';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: process.env.USERNAME_database ?? 'asma',
-      password: process.env.PASSWORD_database ?? 'aera_project_password',
-      database: 'aera_project_db',
-      entities: [],
+      username: process.env.USERNAME_database,
+      password: process.env.PASSWORD_database,
+      database: process.env.DATABASE_database,
+      entities: [User, Project, Step, Comment, File, Workspace],
       synchronize: true,
+      logging: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

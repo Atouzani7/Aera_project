@@ -2,6 +2,294 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Comment {
+  """Comment"""
+  content: String!
+
+  """Comment Creation Date"""
+  createdAt: DateTime!
+
+  """Example field (placeholder)"""
+  exampleField: Int!
+
+  """ID"""
+  id: ID!
+  project: Project!
+
+  """Comment Update Date"""
+  updatedAt: DateTime!
+  user: User!
+}
+
+input CreateCommentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateFileInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateProjectInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateStepInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateWorkspaceInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
+"""
+scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
+
+type File {
+  """File Path GDrive ID """
+  GDrive_id: String!
+
+  """Example field (placeholder)"""
+  exampleField: Int!
+
+  """ID"""
+  id: ID!
+
+  """File Name"""
+  name: String!
+
+  """File Path GDrive ID """
+  notion_id: String!
+
+  """File Path GDrive ID """
+  path: String!
+  user: [User!]!
+  workspaces: [Workspace!]!
+}
+
+"\n    A string representing a duration conforming to the ISO8601 standard,\n    such as: P1W1DT13H23M34S\n    P is the duration designator (for period) placed at the start of the duration representation.\n    Y is the year designator that follows the value for the number of years.\n    M is the month designator that follows the value for the number of months.\n    W is the week designator that follows the value for the number of weeks.\n    D is the day designator that follows the value for the number of days.\n    T is the time designator that precedes the time components of the representation.\n    H is the hour designator that follows the value for the number of hours.\n    M is the minute designator that follows the value for the number of minutes.\n    S is the second designator that follows the value for the number of seconds.\n\n    Note the time designator, T, that precedes the time value.\n\n    Matches moment.js, Luxon and DateFns implementations\n    ,/. is valid for decimal places and +/- is a valid prefix\n  "
+scalar ISO8601Duration
+
+type Mutation {
+  createComment(createCommentInput: CreateCommentInput!): Comment!
+  createFile(createFileInput: CreateFileInput!): File!
+  createProject(createProjectInput: CreateProjectInput!): Project!
+  createStep(createStepInput: CreateStepInput!): Step!
+  createUser(createUserInput: CreateUserInput!): User!
+  createWorkspace(createWorkspaceInput: CreateWorkspaceInput!): Workspace!
+  removeComment(id: Int!): Comment!
+  removeFile(id: Int!): File!
+  removeProject(id: Int!): Project!
+  removeStep(id: Int!): Step!
+  removeUser(id: Int!): User!
+  removeWorkspace(id: Int!): Workspace!
+  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
+  updateFile(updateFileInput: UpdateFileInput!): File!
+  updateProject(updateProjectInput: UpdateProjectInput!): Project!
+  updateStep(updateStepInput: UpdateStepInput!): Step!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  updateWorkspace(updateWorkspaceInput: UpdateWorkspaceInput!): Workspace!
+}
+
+type Project {
+  """Project img"""
+  Brand_identity: String!
+
+  """Project Google DriveId"""
+  GDriveId: String!
+
+  """Project NotionId"""
+  Notion_id: String!
+
+  """Project Archive Date"""
+  archivedAt: DateTime!
+  comments: [Comment!]!
+
+  """email client"""
+  contact_email: String!
+
+  """name client"""
+  contact_name: String!
+
+  """Project Start Date"""
+  createdAt: DateTime!
+
+  """Project Description"""
+  description: String!
+
+  """Project End Date"""
+  endDate: DateTime!
+
+  """Example field (placeholder)"""
+  exampleField: Int!
+
+  """ID"""
+  id: ID!
+
+  """Project Name"""
+  name: String!
+
+  """Project Status"""
+  status: String!
+  step: [Step!]!
+
+  """Project Update Date"""
+  updatedAt: DateTime!
+  user: [User!]!
+  workspaces: [Workspace!]!
+}
+
 type Query {
+  comment(id: Int!): Comment!
+  file(id: Int!): File!
   hello: String!
+  project(id: Int!): Project!
+  step(id: Int!): Step!
+  user(id: Int!): User!
+  workspace(id: Int!): Workspace!
+}
+
+type Step {
+  """Step Creation Date"""
+  createdAt: DateTime!
+
+  """Step Description"""
+  description: String!
+
+  """Step End Date"""
+  endDate: DateTime!
+
+  """Example field (placeholder)"""
+  exampleField: Int!
+
+  """ID"""
+  id: ID!
+
+  """Step Name"""
+  name: String!
+
+  """Projects associated with this Step"""
+  projects: [Project!]!
+
+  """Step Status"""
+  status: String!
+
+  """Step Update Date"""
+  updatedAt: DateTime!
+}
+
+input UpdateCommentInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateFileInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateProjectInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateStepInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateWorkspaceInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+type User {
+  comments: [Comment!]!
+  createdAt: DateTime!
+
+  """Date of brith"""
+  dateOfBirth: DateTime!
+
+  """Email"""
+  email: EmailAddress!
+  files: [File!]!
+
+  """Firstname"""
+  firstname: String!
+
+  """ID"""
+  id: ID!
+
+  """lastname"""
+  lastname: String!
+
+  """Password"""
+  password: String!
+
+  """Phone number"""
+  phoneNumber: Int!
+  profilePicture: String
+  project: [Project!]!
+
+  """Role"""
+  role: String!
+  status: String
+  updatedAt: DateTime!
+  workspaces: [Workspace!]!
+}
+
+type Workspace {
+  """Workspace Duration"""
+  createdAt: ISO8601Duration!
+
+  """Workspace Description"""
+  description: String!
+
+  """Workspace files"""
+  files_id: File!
+
+  """ID"""
+  id: ID!
+
+  """Workspace Name"""
+  name: String!
+
+  """workspaces associated with this project"""
+  projects: [Project!]!
+
+  """Step Status"""
+  status: String!
+
+  """Workspace Duration"""
+  updatedAt: ISO8601Duration!
+
+  """Users in this Workspace"""
+  users: [User!]!
 }

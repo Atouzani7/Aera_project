@@ -1,7 +1,67 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import {
+  ObjectType,
+  Field,
+  Int,
+  ID,
+  GraphQLISODateTime,
+} from '@nestjs/graphql';
+import { Project } from 'src/project/entities/project.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
+export type StepStatus =
+  | 'NOT_STARTED' // non commencé
+  | 'IN_PROGRESS'
+  | 'COMPLETED'
+  | 'BLOCKED'
+  | 'ARCHIVED'
+  | 'DELETED'
+  | 'UNDER_REVIEW' // en cours de révision
+  | 'WAITING_FOR_FEEDBACK'; // en attente de retour
 @ObjectType()
+@Entity()
 export class Step {
   @Field(() => Int, { description: 'Example field (placeholder)' })
   exampleField: number;
+
+  @Field(() => ID, { description: 'ID' })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Field(() => String, { description: 'Step Name' })
+  @Column({ length: 100, unique: true })
+  name: string;
+
+  @Field(() => String, { description: 'Step Description' })
+  @Column({ nullable: true })
+  description: string;
+
+  @Field(() => String, { description: 'Step Status' })
+  @Column({ default: 'NOT_STARTED' })
+  status: StepStatus;
+
+  @Field(() => GraphQLISODateTime, { description: 'Step End Date' })
+  @Column({ nullable: true })
+  endDate: Date;
+
+  @Field(() => GraphQLISODateTime, { description: 'Step Creation Date' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Field(() => GraphQLISODateTime, { description: 'Step Update Date' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
+
+  @Field(() => [Project], { description: 'Projects associated with this Step' })
+  @ManyToMany(() => Project, (project) => project.step)
+  projects: Project[];
 }
