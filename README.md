@@ -82,3 +82,19 @@ If you are looking for a cloud-based platform to deploy your NestJS application,
 $ npm install -g @nestjs/mau
 $ mau deploy
 ```
+
+
+## Dependences utilisés 
+
+### 🎨 Frontend
+
+- NextJs
+- Tailwind
+- Motion_dev : animation / effet
+
+### 🎯 Backend 
+
+- TypeORM
+- Postgres
+- NestJs
+- GraphQL 
