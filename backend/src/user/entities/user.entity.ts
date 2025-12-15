@@ -4,6 +4,7 @@ import {
   ID,
   GraphQLISODateTime,
   Int,
+  InputType,
 } from '@nestjs/graphql';
 import {
   Length,
@@ -56,7 +57,7 @@ export class User {
   @IsEmail({}, { message: 'Email must be a valid email address' })
   email: string;
 
-  @Field(() => String, { description: 'Password' })
+  // @Field(() => String, { description: 'Password' })
   @Column()
   @IsString({ message: 'Password must be a string' })
   @Length(8, 100, { message: 'Password must be between 8 and 100 characters' })
@@ -129,4 +130,20 @@ export class User {
   @Field(() => [File])
   @ManyToOne(() => File, (file) => file.user)
   files: Workspace[];
+}
+
+//? INPUT TYPES ____________________________________________________________
+@InputType()
+export class CreateUserInput {
+  @Field({ description: 'Lastname' })
+  lastname: string;
+
+  @Field({ description: 'Firstname' })
+  firstname: string;
+
+  @Field({ description: 'Email' })
+  email: string;
+
+  @Field({ description: 'Password' })
+  password: string;
 }
