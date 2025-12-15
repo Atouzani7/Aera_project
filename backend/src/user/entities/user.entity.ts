@@ -123,9 +123,11 @@ export class User {
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
 
-  @Field(() => [Workspace])
-  @ManyToOne(() => Workspace, (workspace) => workspace.users)
-  workspaces: Workspace[];
+  @Field(() => Workspace)
+  @ManyToOne(() => Workspace, (workspace) => workspace.users, {
+    nullable: false,
+  })
+  workspaces: Workspace;
 
   @Field(() => [File])
   @ManyToOne(() => File, (file) => file.user)

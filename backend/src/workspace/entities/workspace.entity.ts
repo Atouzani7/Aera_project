@@ -1,5 +1,4 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import { GraphQLISO8601Duration } from 'graphql-scalars';
+import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
 import { File } from 'src/file/entities/file.entity';
 import { Project } from 'src/project/entities/project.entity';
 import { Status, User } from 'src/user/entities/user.entity';
@@ -40,11 +39,11 @@ export class Workspace {
   @Column({ nullable: true })
   description: string;
 
-  @Field(() => GraphQLISO8601Duration, { description: 'Workspace Duration' })
+  @Field(() => GraphQLISODateTime, { description: 'Workspace Duration' })
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Field(() => GraphQLISO8601Duration, { description: 'Workspace Duration' })
+  @Field(() => GraphQLISODateTime, { description: 'Workspace Duration' })
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
