@@ -55,8 +55,14 @@ export class UserService {
     });
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+
+    const updatedUser = { ...user, ...updateUserInput };
+    return await this.userRepository.save(updatedUser);
   }
 
   async remove(id: number) {
