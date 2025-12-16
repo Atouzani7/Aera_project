@@ -1,0 +1,10 @@
+Pour ajouter une page / 
+
+app/
+├── page.tsx               → page d’accueil (/)
+├── about/
+│   └── page.tsx           → /about
+├── blog/
+│   ├── page.tsx           → /blog
+│   └── [slug]/
+│       └── page.tsx       → /blog/:slug (route dynamique)
