@@ -5,6 +5,8 @@ import {
   ID,
   GraphQLISODateTime,
 } from '@nestjs/graphql';
+import { IsEmail } from 'class-validator';
+import { GraphQLEmailAddress } from 'graphql-scalars';
 import { Comment } from 'src/comment/entities/comment.entity';
 import { Step } from 'src/step/entities/step.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -30,18 +32,41 @@ export type ProjectStatus =
   | 'APPROVED' // approuvé
   | 'REJECTED'; // rejeté
 
+//     1. Création
+// → tout ce qui est production, conception, création de valeur
+//     2.    Communication
+// → contenu, messages, échanges, visibilité
+//     3.    Digital
+// → web, outils en ligne, automatisation, tech au sens large
+//     4.    Business
+// → stratégie, offres, ventes, organisation
+//     5.    Contenu
+// → rédaction, médias, documents, livrables
+//     6.    Organisation
+// → gestion, structuration, planification, suivi
+//     7.    Accompagnement
+// → coaching, conseil, support, prestation humaine
+//     8.    Autre
+// → liberté totale sans friction
+export type ProjectTag =
+  | 'Création'
+  | 'Communication'
+  | 'Digital'
+  | 'Business'
+  | 'Evénementiel'
+  | 'Organisation'
+  | 'Accompagnement'
+  | 'Autre';
+
 @ObjectType()
 @Entity()
 export class Project {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
-
   @Field(() => ID, { description: 'ID' })
   @PrimaryGeneratedColumn()
   id: number;
 
   @Field(() => String, { description: 'Project Name' })
-  @Column({ length: 100 })
+  @Column({ length: 100 /*unique: true */ })
   name: string;
 
   @Field(() => String, { description: 'Project Description' })
@@ -84,13 +109,22 @@ export class Project {
   @Column({ nullable: true })
   Brand_identity: string;
 
-  @Field(() => String, { description: 'email client' })
+  @Field(() => GraphQLEmailAddress, { description: 'Email client' })
   @Column({ nullable: true })
+  @IsEmail({}, { message: 'Email must be a valid email address' })
   contact_email: string;
 
   @Field(() => String, { description: 'name client' })
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   contact_name: string;
+
+  @Field(() => String, { description: 'phone client' })
+  @Column({ nullable: true })
+  contact_phone: string;
+
+  @Field(() => String, { description: 'tag project' })
+  @Column({ nullable: true })
+  tag: ProjectTag;
 
   @Field(() => [User])
   @ManyToMany(() => User, (user) => user.project)

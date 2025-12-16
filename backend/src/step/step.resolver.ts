@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { StepService } from './step.service';
 import { Step } from './entities/step.entity';
 import { CreateStepInput } from './dto/create-step.input';
 import { UpdateStepInput } from './dto/update-step.input';
+import { StepService } from './step.service';
 
 @Resolver(() => Step)
 export class StepResolver {

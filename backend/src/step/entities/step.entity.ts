@@ -26,15 +26,12 @@ export type StepStatus =
 @ObjectType()
 @Entity()
 export class Step {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
-
   @Field(() => ID, { description: 'ID' })
   @PrimaryGeneratedColumn()
   id: number;
 
   @Field(() => String, { description: 'Step Name' })
-  @Column({ length: 100, unique: true })
+  @Column({ length: 100, default: 'First Step' })
   name: string;
 
   @Field(() => String, { description: 'Step Description' })

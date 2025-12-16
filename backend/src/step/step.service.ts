@@ -1,11 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStepInput } from './dto/create-step.input';
 import { UpdateStepInput } from './dto/update-step.input';
+import { Step } from './entities/step.entity';
+import { Project } from 'src/project/entities/project.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class StepService {
-  create(createStepInput: CreateStepInput) {
-    return 'This action adds a new step';
+  constructor(
+    @InjectRepository(Step)
+    private readonly stepRepository: Repository<Step>,
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
+  ) {}
+
+  create(createStepInput: CreateStepInput): Promise<Step> {
+    const step = this.stepRepository.create({
+      ...createStepInput,
+    });
+
+    return this.stepRepository.save(step);
   }
 
   findAll() {
