@@ -1,11 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProjectInput } from './dto/create-project.input';
 import { UpdateProjectInput } from './dto/update-project.input';
+import { Project } from './entities/project.entity';
+import { Repository } from 'typeorm';
+import { Step } from 'src/step/entities/step.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Date } from 'graphql-scalars/typings/typeDefs';
 
 @Injectable()
 export class ProjectService {
-  create(createProjectInput: CreateProjectInput) {
-    return 'This action adds a new project';
+  constructor(
+    @InjectRepository(Step)
+    private readonly stepRepository: Repository<Step>,
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
+  ) {}
+  async create(data: CreateProjectInput): Promise<Project> {
+    const newProject: Project = this.projectRepository.create(data);
+    const { name, description, contact_name } = data;
+
+    const step = this.stepRepository.create({
+      name: 'First Step',
+      // description: description,
+      // contact_name: contact_name,
+    });
+
+    const defaultStep = this.stepRepository.create(step);
+    const savedStep = await this.stepRepository.save(defaultStep);
+
+    newProject.step = [savedStep];
+
+    return await this.projectRepository.save(newProject);
   }
 
   findAll() {
