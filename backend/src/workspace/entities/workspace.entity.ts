@@ -47,6 +47,18 @@ export class Workspace {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
+  archiveDateColumn?: Date;
+
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
+  unarchiveDateColumn?: Date;
+
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
+  DeleteDateColumn?: Date;
+
   @Field(() => String, { description: 'Step Status' })
   @Column({ default: 'ACTIVE' })
   status: Status;
