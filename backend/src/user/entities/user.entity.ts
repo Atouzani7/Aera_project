@@ -136,11 +136,17 @@ export class User {
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
 
-  @Field(() => Workspace)
+  // @Field(() => Workspace)
+  // @ManyToOne(() => Workspace, (workspace) => workspace.users, {
+  //   nullable: false,
+  // })
+  // workspaces: Workspace;
+
   @ManyToOne(() => Workspace, (workspace) => workspace.users, {
-    nullable: false,
+    nullable: true,
+    onDelete: 'SET NULL',
   })
-  workspaces: Workspace;
+  workspaces?: Workspace;
 
   @Field(() => [File])
   @ManyToOne(() => File, (file) => file.user)
@@ -164,7 +170,27 @@ export class CreateUserInput {
 }
 
 @InputType()
-export class UpdateStausUser {
-  @Field({ description: 'status' })
-  status: Status;
+export class UpdateUserInput {
+  @Field({ description: 'Lastname' })
+  lastname: string;
+
+  @Field({ description: 'Firstname' })
+  firstname: string;
+
+  @Field(() => GraphQLEmailAddress, { description: 'Email' })
+  @Column({ unique: true, length: 100 })
+  @IsEmail({}, { message: 'Email must be a valid email address' })
+  email: string;
+
+  @Field({ description: 'Password' })
+  password: string;
+
+  @Field({ description: 'phone number' })
+  phoneNumber: number;
+
+  @Field({ description: 'date of birth' })
+  dateOfBirth: Date;
+
+  @Field({ description: 'profile picture' })
+  profilePicture?: string;
 }
