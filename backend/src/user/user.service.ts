@@ -22,9 +22,12 @@ export class UserService {
     if (existingUser) {
       throw new Error(`User with email ${createUserDto.email} already exists`);
     }
+    const defaultWorkspaceName = `${createUserDto.firstname}'s Workspace`;
+    const workspaceName = createUserDto.workspaceName || defaultWorkspaceName;
 
     const workspace = this.workspaceRepository.create({
-      name: createUserDto.firstname, // ou un champ spécifique
+      // name: createUserDto.firstname,
+      name: workspaceName,
     });
 
     await this.workspaceRepository.save(workspace);
@@ -35,6 +38,7 @@ export class UserService {
     });
 
     workspace.users = [user];
+    await this.workspaceRepository.save(workspace);
 
     return await this.userRepository.save(user);
   }

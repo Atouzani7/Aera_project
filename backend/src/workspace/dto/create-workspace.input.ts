@@ -2,6 +2,12 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateWorkspaceInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String, { description: 'Workspace Name' })
+  name: string;
+
+  @Field(() => String, { description: 'Workspace Description', nullable: true })
+  description?: string;
+
+  // @Field(() => String, { description: 'Workspace Avatar' })
+  // avatar?: string;
 }

@@ -5,7 +5,6 @@ import { Project } from './entities/project.entity';
 import { Repository } from 'typeorm';
 import { Step } from 'src/step/entities/step.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Date } from 'graphql-scalars/typings/typeDefs';
 
 @Injectable()
 export class ProjectService {
@@ -21,8 +20,6 @@ export class ProjectService {
 
     const step = this.stepRepository.create({
       name: 'First Step',
-      // description: description,
-      // contact_name: contact_name,
     });
 
     const defaultStep = this.stepRepository.create(step);

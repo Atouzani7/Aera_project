@@ -32,23 +32,62 @@ input CreateFileInput {
 }
 
 input CreateProjectInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Project img"""
+  Brand_identity: String
+
+  """Project Google DriveId"""
+  GDriveId: String
+
+  """Project NotionId"""
+  Notion_id: String
+
+  """email client"""
+  contact_email: String
+
+  """name client"""
+  contact_name: String
+
+  """phone client"""
+  contact_phone: String
+
+  """Project Description"""
+  description: String
+
+  """Project End Date"""
+  endDate: DateTime
+
+  """Project Name"""
+  name: String!
+
+  """step project"""
+  step: String
+
+  """tag project"""
+  tag: String
 }
 
 input CreateStepInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Step Description"""
+  description: String
+
+  """Step Name"""
+  name: String! = "First Step"
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  email: String!
+  firstname: String!
+  lastname: String!
+  password: String!
+  workspaceName: String!
 }
 
 input CreateWorkspaceInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Workspace Description"""
+  description: String
+
+  """Workspace Name"""
+  name: String!
 }
 
 """
@@ -83,10 +122,8 @@ type File {
   workspaces: [Workspace!]!
 }
 
-"\n    A string representing a duration conforming to the ISO8601 standard,\n    such as: P1W1DT13H23M34S\n    P is the duration designator (for period) placed at the start of the duration representation.\n    Y is the year designator that follows the value for the number of years.\n    M is the month designator that follows the value for the number of months.\n    W is the week designator that follows the value for the number of weeks.\n    D is the day designator that follows the value for the number of days.\n    T is the time designator that precedes the time components of the representation.\n    H is the hour designator that follows the value for the number of hours.\n    M is the minute designator that follows the value for the number of minutes.\n    S is the second designator that follows the value for the number of seconds.\n\n    Note the time designator, T, that precedes the time value.\n\n    Matches moment.js, Luxon and DateFns implementations\n    ,/. is valid for decimal places and +/- is a valid prefix\n  "
-scalar ISO8601Duration
-
 type Mutation {
+  archiveUser(id: Int!): User!
   createComment(createCommentInput: CreateCommentInput!): Comment!
   createFile(createFileInput: CreateFileInput!): File!
   createProject(createProjectInput: CreateProjectInput!): Project!
@@ -99,6 +136,7 @@ type Mutation {
   removeStep(id: Int!): Step!
   removeUser(id: Int!): User!
   removeWorkspace(id: Int!): Workspace!
+  unarchiveUser(id: Int!): User!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   updateFile(updateFileInput: UpdateFileInput!): File!
   updateProject(updateProjectInput: UpdateProjectInput!): Project!
@@ -121,11 +159,14 @@ type Project {
   archivedAt: DateTime!
   comments: [Comment!]!
 
-  """email client"""
-  contact_email: String!
+  """Email client"""
+  contact_email: EmailAddress!
 
   """name client"""
   contact_name: String!
+
+  """phone client"""
+  contact_phone: String!
 
   """Project Start Date"""
   createdAt: DateTime!
@@ -136,9 +177,6 @@ type Project {
   """Project End Date"""
   endDate: DateTime!
 
-  """Example field (placeholder)"""
-  exampleField: Int!
-
   """ID"""
   id: ID!
 
@@ -148,6 +186,9 @@ type Project {
   """Project Status"""
   status: String!
   step: [Step!]!
+
+  """tag project"""
+  tag: String!
 
   """Project Update Date"""
   updatedAt: DateTime!
@@ -174,9 +215,6 @@ type Step {
 
   """Step End Date"""
   endDate: DateTime!
-
-  """Example field (placeholder)"""
-  exampleField: Int!
 
   """ID"""
   id: ID!
@@ -207,30 +245,71 @@ input UpdateFileInput {
 }
 
 input UpdateProjectInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """Project img"""
+  Brand_identity: String
+
+  """Project Google DriveId"""
+  GDriveId: String
+
+  """Project NotionId"""
+  Notion_id: String
+
+  """email client"""
+  contact_email: String
+
+  """name client"""
+  contact_name: String
+
+  """phone client"""
+  contact_phone: String
+
+  """Project Description"""
+  description: String
+
+  """Project End Date"""
+  endDate: DateTime
   id: Int!
+
+  """Project Name"""
+  name: String
+
+  """step project"""
+  step: String
+
+  """tag project"""
+  tag: String
 }
 
 input UpdateStepInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """Step Description"""
+  description: String
   id: Int!
+
+  """Step Name"""
+  name: String = "First Step"
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  email: String
+  firstname: String
   id: Int!
+  lastname: String
+  password: String
+  workspaceName: String
 }
 
 input UpdateWorkspaceInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """Workspace Description"""
+  description: String
   id: Int!
+
+  """Workspace Name"""
+  name: String
 }
 
 type User {
+  DeleteDateColumn: DateTime
+  archiveDateColumn: DateTime
   comments: [Comment!]!
   createdAt: DateTime!
 
@@ -250,9 +329,6 @@ type User {
   """lastname"""
   lastname: String!
 
-  """Password"""
-  password: String!
-
   """Phone number"""
   phoneNumber: Int!
   profilePicture: String
@@ -261,13 +337,19 @@ type User {
   """Role"""
   role: String!
   status: String
+  unarchiveDateColumn: DateTime
   updatedAt: DateTime!
-  workspaces: [Workspace!]!
 }
 
 type Workspace {
+  DeleteDateColumn: DateTime
+  archiveDateColumn: DateTime
+
+  """Workspace Avatar"""
+  avatar: String!
+
   """Workspace Duration"""
-  createdAt: ISO8601Duration!
+  createdAt: DateTime!
 
   """Workspace Description"""
   description: String!
@@ -286,9 +368,10 @@ type Workspace {
 
   """Step Status"""
   status: String!
+  unarchiveDateColumn: DateTime
 
   """Workspace Duration"""
-  updatedAt: ISO8601Duration!
+  updatedAt: DateTime!
 
   """Users in this Workspace"""
   users: [User!]!

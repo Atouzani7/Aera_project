@@ -24,12 +24,19 @@ export class Workspace {
   projects: Project[];
 
   @Field(() => [User], { description: 'Users in this Workspace' })
-  @OneToMany(() => User, (user) => user.workspaces)
+  @OneToMany(() => User, (user) => user.workspaces, { cascade: true })
   users: User[];
+
+  // @OneToMany(() => User, (user) => user.workspaces)
+  // users: User[];
 
   @Field(() => File, { description: 'Workspace files' })
   @OneToMany(() => File, (file) => file.workspaces)
   files_id: string;
+
+  @Field(() => String, { description: 'Workspace Avatar' })
+  @Column({ default: 'frontend/public/aera_project.logo.png', nullable: true })
+  avatar?: String;
 
   @Field(() => String, { description: 'Workspace Name' })
   @Column({ length: 100 })
