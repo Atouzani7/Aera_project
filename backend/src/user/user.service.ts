@@ -59,7 +59,44 @@ export class UserService {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+
+    await this.userRepository.update(id, {
+      status: 'DELETED',
+      DeleteDateColumn: new Date(),
+    });
+    return {
+      ...user,
+      status: 'DELETED',
+      DeleteDateColumn: new Date(),
+    };
+  }
+
+  async archive(id: number) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+    await this.userRepository.update(id, {
+      status: 'ARCHIVED',
+      archiveDateColumn: new Date(),
+    });
+    return this.userRepository.findOne({ where: { id } });
+  }
+
+  async unarchive(id: number) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+    await this.userRepository.update(id, {
+      status: 'ACTIVE',
+      unarchiveDateColumn: new Date(),
+    });
+    return this.userRepository.findOne({ where: { id } });
   }
 }

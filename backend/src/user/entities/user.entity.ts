@@ -22,6 +22,7 @@ import { Workspace } from 'src/workspace/entities/workspace.entity';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   ManyToMany,
   ManyToOne,
@@ -31,7 +32,7 @@ import {
 } from 'typeorm';
 
 export type Role = 'admin' | 'user' | 'guest' | 'customer';
-export type Status = 'ACTIVE' | 'ARCHIVED';
+export type Status = 'ACTIVE' | 'ARCHIVED' | 'DELETED';
 
 @ObjectType()
 @Entity()
@@ -102,10 +103,22 @@ export class User {
   @Field({ nullable: true })
   @Column({
     type: 'text',
-    enum: ['ACTIVE', 'ARCHIVED'],
+    enum: ['ACTIVE', 'ARCHIVED', 'DELETED'],
     default: 'ACTIVE',
   })
   status: Status;
+
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
+  archiveDateColumn?: Date;
+
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
+  unarchiveDateColumn?: Date;
+
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
+  DeleteDateColumn?: Date;
 
   @Field(() => GraphQLISODateTime)
   @CreateDateColumn()
@@ -148,4 +161,10 @@ export class CreateUserInput {
 
   @Field({ description: 'Password' })
   password: string;
+}
+
+@InputType()
+export class UpdateStausUser {
+  @Field({ description: 'status' })
+  status: Status;
 }

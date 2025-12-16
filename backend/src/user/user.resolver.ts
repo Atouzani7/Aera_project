@@ -27,6 +27,16 @@ export class UserResolver {
     return this.userService.remove(id);
   }
 
+  @Mutation(() => User)
+  archiveUser(@Args('id', { type: () => Int }) id: number) {
+    return this.userService.archive(id);
+  }
+
+  @Mutation(() => User)
+  unarchiveUser(@Args('id', { type: () => Int }) id: number) {
+    return this.userService.unarchive(id);
+  }
+
   //? QUERIES __________________________________________________________________________________________________
 
   @Query(() => [User], { name: 'user' })
