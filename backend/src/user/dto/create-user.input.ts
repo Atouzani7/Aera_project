@@ -15,6 +15,9 @@ export class CreateUserInput {
 
   @Field()
   password: string;
+
+  @Field()
+  workspaceName?: string;
 }
 
 @InputType()
