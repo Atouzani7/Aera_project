@@ -182,6 +182,10 @@ export class UpdateUserInput {
   @IsEmail({}, { message: 'Email must be a valid email address' })
   email: string;
 
+  @Field(() => Boolean, { description: 'Email notification' })
+  @Column({ default: true })
+  email_notification: boolean;
+
   @Field({ description: 'Password' })
   password: string;
 
