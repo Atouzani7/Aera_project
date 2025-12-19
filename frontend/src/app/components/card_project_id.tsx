@@ -37,7 +37,8 @@ tag project                     --> /                   --> /project.tag
 
                 <div>
                     {/* <div className="mt-6 mb-6 space-y-4 flex flex-row items-start justify-end border-2 border-blue-500 rounded-lg w-full max-w-screen-lg max-h-full p-6"> */}
-                    <div>
+
+                    <div className="w-100">
                         <MotionConfig transition={{ type: "spring", stiffness: 100, damping: 20 }}>
                             <CardStep />
                         </MotionConfig>
