@@ -1,47 +1,3 @@
-// import { cn } from "@/lib/utils"
-
-// type StepperProps = {
-//     steps: string[]
-//     currentStep: number
-// }
-
-// export function Stepper({ steps, currentStep }: StepperProps) {
-//     return (
-//         <div className="flex items-center w-full">
-//             {steps.map((step, index) => {
-//                 const isActive = index <= currentStep
-
-//                 return (
-//                     <div key={index} className="flex items-center w-full">
-//                         {/* Cercle */}
-//                         <div
-//                             className={cn(
-//                                 "w-8 h-8 rounded-full flex items-center justify-center border-2",
-//                                 isActive
-//                                     ? "bg-primary text-white border-primary"
-//                                     : "border-muted text-muted-foreground"
-//                             )}
-//                         >
-//                             {index + 1}
-//                         </div>
-
-//                         {/* Ligne */}
-//                         {index !== steps.length - 1 && (
-//                             <div
-//                                 className={cn(
-//                                     "flex-1 h-1 mx-2",
-//                                     isActive ? "bg-primary" : "bg-muted"
-//                                 )}
-//                             />
-//                         )}
-//                     </div>
-//                 )
-//             })}
-//         </div>
-//     )
-// }
-
-
 "use client"
 
 import { cn } from "@/lib/utils"
@@ -79,7 +35,7 @@ export function Stepper({ steps, onStepClick }: StepperProps) {
                                 <div
                                     className={cn(
                                         "flex-1 h-1 mx-2",
-                                        isCompleted ? "bg-primary" : "bg-muted"
+                                        isCompleted ? "bg-primary" : "bg-button"
                                     )}
                                 />
                             )}
