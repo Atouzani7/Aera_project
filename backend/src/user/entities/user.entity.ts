@@ -150,7 +150,7 @@ export class User {
 
   @Field(() => [File])
   @ManyToOne(() => File, (file) => file.user)
-  files: Workspace[];
+  files: File[];
 }
 
 //? INPUT TYPES ____________________________________________________________
