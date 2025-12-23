@@ -43,13 +43,17 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  /*************  ✨ Windsurf Command ⭐  *************/
-  /**
-   * Retrieve all user records
-   * @returns {Promise<User[]>} - List of user records
-   */
-  /*******  964f9b68-f97e-4964-b14d-c5adf4a43447  *******/ findAll() {
-    return `This action returns all user`;
+  // /*************  ✨ Windsurf Command ⭐  *************/
+  // /**
+  //  * Retrieve all user records
+  //  * @returns {Promise<User[]>} - List of user records
+  //  */
+  // /*******  964f9b68-f97e-4964-b14d-c5adf4a43447  *******/ findAll() {
+  //   return `This action returns all user`;
+  // }
+
+  findAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 
   findOne(id: number): Promise<User | null> {
@@ -57,6 +61,25 @@ export class UserService {
       where: { id },
       relations: ['workspaces'],
     });
+  }
+
+  findByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findOne({ where: { email } });
+  }
+
+  findAllWithWorkspace(workspaceId: number): Promise<User[]> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.workspaces', 'workspace')
+      .where('workspace.id = :workspaceId', { workspaceId })
+      .getMany();
+  }
+
+  findUserByRole(role: string): Promise<User[]> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .where('user.role = :role', { role })
+      .getMany();
   }
 
   async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {

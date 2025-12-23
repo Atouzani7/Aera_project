@@ -8,6 +8,7 @@ import { User } from 'src/user/entities/user.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Workspace, User])],
-  providers: [WorkspaceResolver, WorkspaceService, UserService],
+  providers: [WorkspaceService],
+  exports: [TypeOrmModule, WorkspaceService],
 })
 export class WorkspaceModule {}

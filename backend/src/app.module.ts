@@ -18,6 +18,7 @@ import { Step } from './step/entities/step.entity';
 import { Comment } from './comment/entities/comment.entity';
 import { Workspace } from './workspace/entities/workspace.entity';
 import { File } from './file/entities/file.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -36,10 +37,12 @@ import { File } from './file/entities/file.entity';
       driver: ApolloDriver,
       graphiql: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      context: ({ req, res }) => ({ req, res }),
       // autoSchemaFile: true,
       sortSchema: true,
       playground: true,
       introspection: true,
+      // autoSchemaFile: true,
       // typePaths: ['./**/*.graphql'],
     }),
     UserModule,
@@ -48,6 +51,7 @@ import { File } from './file/entities/file.entity';
     WorkspaceModule,
     FileModule,
     StepModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
