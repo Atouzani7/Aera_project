@@ -1,29 +1,18 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import Footer from "./components/footer";
 import Header from "./components/header";
+import Footer from "./components/footer";
+import ApolloClientProvider from "./providers/ApolloProvider";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 const geistSans = localFont({
   src: "/fonts/Geist-ExtraLight.ttf",
   variable: "--font-geist-sans",
-  // display: "swap",
 });
 
 const geistMono = localFont({
   src: "/fonts/Geist-Medium.ttf",
   variable: "--font-geist-mono",
-  // display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -33,18 +22,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <ApolloClientProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ApolloClientProvider>
       </body>
-    </html >
+    </html>
   );
 }

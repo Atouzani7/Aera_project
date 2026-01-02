@@ -29,6 +29,7 @@ export class AuthService {
   }
 
   async signIn(email: string, pass: string) {
+    // Se connecter
     const user = await this.userService.findByEmail(email);
 
     if (!user || user.password !== pass) {
@@ -42,6 +43,7 @@ export class AuthService {
   }
 
   async logout(res: Response) {
+    // Se déconnecter
     res.clearCookie('jwt');
     // console.log(document.cookie, 'after clear cookie');
     return { message: 'Déconnexion réussie' };

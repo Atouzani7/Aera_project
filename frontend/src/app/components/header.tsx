@@ -18,11 +18,11 @@ export default function Header() {
                 </div>
                 <div className=" h-full bg-background/40 flex flex-col  items-right justify-center py-4">
                     {/* <button className="mb-2 border border-border bg-button px-4 py-2 rounded-md hover:bg-button-hover hover:text-foreground transition ounded-md hover:bg-button-hover hover:text-foreground transition"> */}
-                    <button className="mb-2 px-4 py-2 rounded-md border border-button/30 bg-button backdrop-blur-md text-black hover:bg-button-hover hover:backdrop-blur-lg transition">
+                    <button className="mb-2 px-4 py-2 rounded-md border-pink-200 text-pink-600 hover:bg-pink-50 backdrop-blur-md text-black hover:bg-button-hover hover:backdrop-blur-lg transition">
                         Se connecter
                     </button>
 
-                    <button className="mb-2 px-4 py-2 rounded-md border border-button/30 bg-button backdrop-blur-md text-black hover:bg-button-hover hover:backdrop-blur-lg transition">
+                    <button className="mb-2 px-4 py-2 rounded-md border-pink-200 text-pink-600 hover:bg-pink-50 backdrop-blur-md text-black hover:bg-button-hover hover:backdrop-blur-lg transition">
                         S&apos;inscrire
                     </button>
                 </div>
