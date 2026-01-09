@@ -1,7 +1,7 @@
 import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
 import { File } from 'src/file/entities/file.entity';
 import { Project } from 'src/project/entities/project.entity';
-import { Status, User } from 'src/user/entities/user.entity';
+import { Status, UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
@@ -23,12 +23,12 @@ export class Workspace {
   @ManyToMany(() => Project, (project) => project.step)
   projects: Project[];
 
-  @Field(() => [User], { description: 'Users in this Workspace' })
-  @OneToMany(() => User, (user) => user.workspaces, { cascade: true })
-  users: User[];
+  @Field(() => [UserEntity], { description: 'Users in this Workspace' })
+  @OneToMany(() => UserEntity, (user) => user.workspaces, { cascade: true })
+  users: UserEntity[];
 
-  // @OneToMany(() => User, (user) => user.workspaces)
-  // users: User[];
+  // @OneToMany(() => UserEntity, (user) => user.workspaces)
+  // users: UserEntity[];
 
   @Field(() => File, { description: 'Workspace files' })
   @OneToMany(() => File, (file) => file.workspaces)

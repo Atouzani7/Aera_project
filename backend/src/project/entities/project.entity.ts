@@ -9,7 +9,7 @@ import { IsEmail } from 'class-validator';
 import { GraphQLEmailAddress } from 'graphql-scalars';
 import { Comment } from 'src/comment/entities/comment.entity';
 import { Step } from 'src/step/entities/step.entity';
-import { User } from 'src/user/entities/user.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import { Workspace } from 'src/workspace/entities/workspace.entity';
 import {
   Column,
@@ -126,10 +126,10 @@ export class Project {
   @Column({ nullable: true })
   tag: ProjectTag;
 
-  @Field(() => [User])
-  @ManyToMany(() => User, (user) => user.project)
+  @Field(() => [UserEntity])
+  @ManyToMany(() => UserEntity, (user) => user.project)
   @JoinTable()
-  user: User[];
+  user: UserEntity[];
 
   @Field(() => [Step])
   @ManyToMany(() => Step, (step) => step.projects)

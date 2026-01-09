@@ -38,8 +38,8 @@ export type Role = 'admin' | 'user' | 'guest' | 'customer';
 export type Status = 'ACTIVE' | 'ARCHIVED' | 'DELETED';
 
 @ObjectType()
-@Entity()
-export class User {
+@Entity('user')
+export class UserEntity {
   @BeforeUpdate()
   @BeforeInsert()
   protected async hashPassword() {
@@ -47,7 +47,7 @@ export class User {
       this.password = await argon2.hash(this.password);
     }
   }
-  protected async emailToLowerCase() {
+  protected emailToLowerCase() {
     this.email = this.email.toLocaleLowerCase();
   }
 
@@ -76,16 +76,16 @@ export class User {
   @Column()
   @IsString({ message: 'Password must be a string' })
   @Length(8, 100, { message: 'Password must be between 8 and 100 characters' })
-  // @MinLength(8, { message: 'Password must be at least 8 characters long' })
-  // @Matches(/(?=.*[A-Z])/, {
-  //   message: 'Password must contain at least one uppercase letter',
-  // })
-  // @Matches(/(?=.*\d)/, {
-  //   message: 'Password must contain at least one number',
-  // })
-  // @Matches(/(?=.*[!@#$%^&*])/, {
-  //   message: 'Password must contain at least one special character',
-  // })
+  @MinLength(8, { message: 'Password must be at least 8 characters long' })
+  @Matches(/(?=.*[A-Z])/, {
+    message: 'Password must contain at least one uppercase letter',
+  })
+  @Matches(/(?=.*\d)/, {
+    message: 'Password must contain at least one number',
+  })
+  @Matches(/(?=.*[!@#$%^&*])/, {
+    message: 'Password must contain at least one special character',
+  })
   password: string;
 
   @Field(() => Int, { description: 'Phone number' })

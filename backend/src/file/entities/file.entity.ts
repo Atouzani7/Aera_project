@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import { User } from 'src/user/entities/user.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import { Workspace } from 'src/workspace/entities/workspace.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -33,7 +33,7 @@ export class File {
   @ManyToOne(() => Workspace, (workspace) => workspace.files_id)
   workspaces: Workspace[];
 
-  @Field(() => [User])
-  @ManyToOne(() => User, (user) => user.files)
-  user: User[];
+  @Field(() => [UserEntity])
+  @ManyToOne(() => UserEntity, (user) => user.files)
+  user: UserEntity[];
 }

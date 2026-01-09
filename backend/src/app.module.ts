@@ -13,7 +13,7 @@ import { CommentModule } from './comment/comment.module';
 import { FileModule } from './file/file.module';
 import { StepModule } from './step/step.module';
 import { WorkspaceModule } from './workspace/workspace.module';
-import { User } from './user/entities/user.entity';
+import { UserEntity } from './user/entities/user.entity';
 import { Project } from './project/entities/project.entity';
 import { Step } from './step/entities/step.entity';
 import { Comment } from './comment/entities/comment.entity';
@@ -31,7 +31,7 @@ import { Request, Response } from 'express';
       username: process.env.USERNAME,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
-      entities: [User, Project, Step, Comment, File, Workspace],
+      entities: [UserEntity, Project, Step, Comment, File, Workspace],
       synchronize: false,
       logging: true,
     }),
