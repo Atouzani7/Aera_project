@@ -15,8 +15,10 @@ COPY ../package.json ./package.json
 RUN npm install
 
 # Copier tous les fichiers nécessaires du répertoire parent vers le conteneur
-COPY ../src ./src
+COPY ../src ./src 
 COPY ../tsconfig.json ./tsconfig.json
+
+COPY . .
 
 # Spécifie la commande par défaut à exécuter quand le conteneur démarre
 CMD ["npm", "run", "start"]

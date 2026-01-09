@@ -2,7 +2,10 @@ services:
   backend:
     build: ./backend
     ports:
-      - "4000:4000"
+      - "4001:4001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
 
   frontend:
     build: ./frontend
