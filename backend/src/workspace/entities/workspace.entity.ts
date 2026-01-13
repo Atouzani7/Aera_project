@@ -12,7 +12,7 @@ import {
 
 @ObjectType()
 @Entity()
-export class Workspace {
+export class WorkspaceEntity {
   @Field(() => ID, { description: 'ID' })
   @PrimaryGeneratedColumn()
   id: number;
@@ -24,7 +24,7 @@ export class Workspace {
   projects: Project[];
 
   @Field(() => [UserEntity], { description: 'Users in this Workspace' })
-  @OneToMany(() => UserEntity, (user) => user.workspaces, { cascade: true })
+  @OneToMany(() => UserEntity, (user) => user.workspace, { cascade: true })
   users: UserEntity[];
 
   // @OneToMany(() => UserEntity, (user) => user.workspaces)
@@ -32,7 +32,7 @@ export class Workspace {
 
   @Field(() => File, { description: 'Workspace files' })
   @OneToMany(() => File, (file) => file.workspaces)
-  files_id: string;
+  files_id: File[];
 
   @Field(() => String, { description: 'Workspace Avatar' })
   @Column({ default: 'frontend/public/aera_project.logo.png', nullable: true })
