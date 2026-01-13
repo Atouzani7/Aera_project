@@ -19,7 +19,7 @@ import { GraphQLEmailAddress } from 'graphql-scalars';
 import { Comment } from 'src/comment/entities/comment.entity';
 import { File } from 'src/file/entities/file.entity';
 import { Project } from 'src/project/entities/project.entity';
-import { Workspace } from 'src/workspace/entities/workspace.entity';
+import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -159,15 +159,15 @@ export class UserEntity {
   // })
   // workspaces: Workspace;
 
-  @ManyToOne(() => Workspace, (workspace) => workspace.users, {
+  @ManyToOne(() => WorkspaceEntity, (workspace) => workspace.users, {
     nullable: true,
     onDelete: 'SET NULL',
   })
-  workspaces?: Workspace;
+  workspace?: WorkspaceEntity;
 
   @Field(() => [File])
-  @ManyToOne(() => File, (file) => file.user)
-  files: File[];
+  @OneToMany(() => File, (file) => file.user)
+  file: File[];
 }
 
 //? INPUT TYPES ____________________________________________________________

@@ -24,7 +24,7 @@ export class AuthService {
       email: user.email,
       sub: user.id,
       role: user.role,
-      workspaceName: user.workspaces?.[0]?.name,
+      workspaceName: user.workspace?.[0]?.name,
       name: user.firstname,
       lastname: user.lastname,
     };
@@ -37,8 +37,13 @@ export class AuthService {
     user: Omit<UserEntity, 'password'>;
     token: string;
   } | null> {
-    const user = await this.userService.findByEmail(email);
+    const normalizedEmail = email.toLowerCase();
+    const user = await this.userService.findByEmail(normalizedEmail);
     if (!user) return null;
+
+    if (user.status === 'ARCHIVED') {
+      throw new Error('Ce compte à été désactivé');
+    }
 
     const isPasswordValid = await argon2.verify(user.password, password);
     if (!isPasswordValid) return null;

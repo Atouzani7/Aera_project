@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserInput, UpdateUserInput } from './dto/create-user.input';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Workspace } from 'src/workspace/entities/workspace.entity';
+import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
 import { Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
 
@@ -12,8 +12,8 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    @InjectRepository(Workspace)
-    private readonly workspaceRepository: Repository<Workspace>,
+    @InjectRepository(WorkspaceEntity)
+    private readonly workspaceRepository: Repository<WorkspaceEntity>,
   ) {}
 
   async create(createUserInput: CreateUserInput): Promise<UserEntity> {
@@ -29,6 +29,10 @@ export class UserService {
 
     if (existingUser) {
       throw new Error(`User with email ${existingUser.email} already exists`);
+    }
+    if (createUserInput.password) {
+      const hashedPassword = await argon2.hash(createUserInput.password);
+      createUserInput.password = hashedPassword;
     }
     const defaultWorkspace = `${createUserInput.firstname}'s Workspace`;
     const workspaceName = createUserInput.workspaceName || defaultWorkspace;
@@ -103,10 +107,11 @@ export class UserService {
   }
 
   findOne(id: number): Promise<UserEntity | null> {
-    return this.userRepository.findOne({
+    const user = this.userRepository.findOne({
       where: { id },
       relations: ['workspaces'],
     });
+    return user;
   }
 
   // update(id: number, updateUserInput: UpdateUserInput) {
