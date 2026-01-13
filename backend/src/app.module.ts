@@ -17,7 +17,7 @@ import { UserEntity } from './user/entities/user.entity';
 import { Project } from './project/entities/project.entity';
 import { Step } from './step/entities/step.entity';
 import { Comment } from './comment/entities/comment.entity';
-import { Workspace } from './workspace/entities/workspace.entity';
+import { WorkspaceEntity } from './workspace/entities/workspace.entity';
 import { File } from './file/entities/file.entity';
 import { AuthModule } from './auth/auth.module';
 import { Request, Response } from 'express';
@@ -31,8 +31,8 @@ import { Request, Response } from 'express';
       username: process.env.USERNAME,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
-      entities: [UserEntity, Project, Step, Comment, File, Workspace],
-      synchronize: false,
+      entities: [UserEntity, Project, Step, Comment, File, WorkspaceEntity],
+      synchronize: true,
       logging: true,
     }),
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
