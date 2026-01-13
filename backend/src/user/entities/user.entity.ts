@@ -47,6 +47,9 @@ export class UserEntity {
       this.password = await argon2.hash(this.password);
     }
   }
+
+  @BeforeUpdate()
+  @BeforeInsert()
   protected emailToLowerCase() {
     this.email = this.email.toLocaleLowerCase();
   }
