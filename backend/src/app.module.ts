@@ -14,7 +14,7 @@ import { FileModule } from './file/file.module';
 import { StepModule } from './step/step.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 import { UserEntity } from './user/entities/user.entity';
-import { Project } from './project/entities/project.entity';
+import { ProjectEntity } from './project/entities/project.entity';
 import { Step } from './step/entities/step.entity';
 import { Comment } from './comment/entities/comment.entity';
 import { WorkspaceEntity } from './workspace/entities/workspace.entity';
@@ -31,7 +31,14 @@ import { Request, Response } from 'express';
       username: process.env.USERNAME,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
-      entities: [UserEntity, Project, Step, Comment, File, WorkspaceEntity],
+      entities: [
+        UserEntity,
+        ProjectEntity,
+        Step,
+        Comment,
+        File,
+        WorkspaceEntity,
+      ],
       synchronize: true,
       logging: true,
     }),

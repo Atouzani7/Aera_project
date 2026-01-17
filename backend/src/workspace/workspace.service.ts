@@ -31,8 +31,18 @@ export class WorkspaceService {
     return `This action returns all workspace`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} workspace`;
+  async findOne(id: number): Promise<WorkspaceEntity> {
+    const workspace = await this.workspaceRepository.findOne({
+      where: { id },
+      relations: ['users'],
+    });
+
+    if (!workspace) {
+      throw new Error('Workspace not found');
+    }
+
+    console.log(workspace);
+    return workspace;
   }
 
   update(id: number, updateWorkspaceInput: UpdateWorkspaceInput) {

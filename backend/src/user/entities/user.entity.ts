@@ -18,7 +18,7 @@ import {
 import { GraphQLEmailAddress } from 'graphql-scalars';
 import { Comment } from 'src/comment/entities/comment.entity';
 import { File } from 'src/file/entities/file.entity';
-import { Project } from 'src/project/entities/project.entity';
+import { ProjectEntity } from 'src/project/entities/project.entity';
 import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
 import {
   BeforeInsert,
@@ -27,6 +27,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -145,24 +146,21 @@ export class UserEntity {
   @UpdateDateColumn({ nullable: true })
   updatedAt: Date;
 
-  @Field(() => [Project])
-  @ManyToMany(() => Project, (project) => project.user)
-  project: Project[];
+  @Field(() => [ProjectEntity])
+  @ManyToMany(() => ProjectEntity, (project) => project.users)
+  project: ProjectEntity[];
 
   @Field(() => [Comment])
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
 
-  // @Field(() => Workspace)
-  // @ManyToOne(() => Workspace, (workspace) => workspace.users, {
-  //   nullable: false,
-  // })
-  // workspaces: Workspace;
-
+  @Column({ nullable: true })
+  workspaceId: number;
   @ManyToOne(() => WorkspaceEntity, (workspace) => workspace.users, {
     nullable: true,
     onDelete: 'SET NULL',
   })
+  @JoinColumn({ name: 'workspaceId' })
   workspace?: WorkspaceEntity;
 
   @Field(() => [File])

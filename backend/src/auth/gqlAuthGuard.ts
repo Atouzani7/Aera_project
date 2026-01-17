@@ -2,6 +2,7 @@ import {
   Injectable,
   ExecutionContext,
   UnauthorizedException,
+  createParamDecorator,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GqlExecutionContext } from '@nestjs/graphql';
@@ -35,3 +36,11 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
     return user;
   }
 }
+export const CurrentUser = createParamDecorator(
+  (data: unknown, context: ExecutionContext) => {
+    const ctx = GqlExecutionContext.create(context);
+    const user = ctx.getContext().req.user;
+    console.log('User dans la requête (req.user):', ctx.getContext().req.user);
+    return user;
+  },
+);

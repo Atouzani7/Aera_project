@@ -10,13 +10,14 @@ import { GraphQLEmailAddress } from 'graphql-scalars';
 import { Comment } from 'src/comment/entities/comment.entity';
 import { Step } from 'src/step/entities/step.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
-import { Workspace } from 'src/workspace/entities/workspace.entity';
+import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -59,8 +60,8 @@ export type ProjectTag =
   | 'Autre';
 
 @ObjectType()
-@Entity()
-export class Project {
+@Entity('project')
+export class ProjectEntity {
   @Field(() => ID, { description: 'ID' })
   @PrimaryGeneratedColumn()
   id: number;
@@ -129,7 +130,7 @@ export class Project {
   @Field(() => [UserEntity])
   @ManyToMany(() => UserEntity, (user) => user.project)
   @JoinTable()
-  user: UserEntity[];
+  users: UserEntity[];
 
   @Field(() => [Step])
   @ManyToMany(() => Step, (step) => step.projects)
@@ -140,7 +141,9 @@ export class Project {
   @OneToMany(() => Comment, (comment) => comment.project)
   comments: Comment[];
 
-  @Field(() => [Workspace])
-  @ManyToMany(() => Workspace, (workspace) => workspace.projects)
-  workspaces: Workspace[];
+  @Field(() => WorkspaceEntity)
+  @ManyToOne(() => WorkspaceEntity, (workspace) => workspace.projects, {
+    onDelete: 'CASCADE', // Si on supprime le workspace, on supprime ses projets
+  })
+  workspace: WorkspaceEntity;
 }

@@ -17,7 +17,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         '71509c20e99e3cc7f81435d3cbbf22c571181a4a57b2b08f95c3aa4883783cec',
     });
   }
+
   async validate(payload: any) {
-    return { userId: payload.sub, username: payload.username };
+    const id = payload.sub || payload.id;
+    if (!id) {
+    }
+    return { id: Number(id), username: payload.username };
+    // return { userId: payload.sub, username: payload.username, id: payload.id };
   }
 }

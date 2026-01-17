@@ -1,35 +1,50 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Int } from '@nestjs/graphql';
 import { ProjectService } from './project.service';
-import { Project } from './entities/project.entity';
+import { ProjectEntity } from './entities/project.entity';
 import { CreateProjectInput } from './dto/create-project.input';
-import { UpdateProjectInput } from './dto/update-project.input';
+import { UseGuards } from '@nestjs/common';
+import { CurrentUser, GqlAuthGuard } from 'src/auth/gqlAuthGuard';
+import { UserEntity } from 'src/user/entities/user.entity';
+// import { CreateProjectInput } from './dto/create-project.input';
+// import { UpdateProjectInput } from './dto/update-project.input';
 
-@Resolver(() => Project)
+@Resolver(() => ProjectEntity)
 export class ProjectResolver {
   constructor(private readonly projectService: ProjectService) {}
 
-  @Mutation(() => Project)
-  createProject(@Args('createProjectInput') createProjectInput: CreateProjectInput) {
-    return this.projectService.create(createProjectInput);
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => ProjectEntity)
+  createProject(
+    @Args('createProjectInput') createProjectInput: CreateProjectInput,
+    @CurrentUser() user: UserEntity,
+  ) {
+    console.log('User extrait du décorateur:', user);
+    const userId = user.id;
+    const workspaceId = user.workspaceId;
+    return this.projectService.createProject(
+      createProjectInput,
+      userId,
+      workspaceId,
+    );
   }
 
-  @Query(() => [Project], { name: 'project' })
-  findAll() {
-    return this.projectService.findAll();
-  }
+  // @Query(() => [Project], { name: 'project' })
+  // findAll() {
+  //   return this.projectService.findAll();
+  // }
 
-  @Query(() => Project, { name: 'project' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.projectService.findOne(id);
-  }
+  // @Query(() => Project, { name: 'project' })
+  // findOne(@Args('id', { type: () => Int }) id: number) {
+  //   return this.projectService.findOne(id);
+  // }
 
-  @Mutation(() => Project)
-  updateProject(@Args('updateProjectInput') updateProjectInput: UpdateProjectInput) {
-    return this.projectService.update(updateProjectInput.id, updateProjectInput);
-  }
+  // @Mutation(() => Project)
+  // updateProject(@Args('updateProjectInput') updateProjectInput: UpdateProjectInput) {
+  //   return this.projectService.update(updateProjectInput.id, updateProjectInput);
+  // }
 
-  @Mutation(() => Project)
-  removeProject(@Args('id', { type: () => Int }) id: number) {
-    return this.projectService.remove(id);
-  }
+  // @Mutation(() => Project)
+  // removeProject(@Args('id', { type: () => Int }) id: number) {
+  //   return this.projectService.remove(id);
+  // }
 }

@@ -109,7 +109,7 @@ export class UserService {
   findOne(id: number): Promise<UserEntity | null> {
     const user = this.userRepository.findOne({
       where: { id },
-      relations: ['workspaces'],
+      relations: ['workspace'],
     });
     return user;
   }
