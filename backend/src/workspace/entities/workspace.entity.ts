@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
 import { File } from 'src/file/entities/file.entity';
-import { Project } from 'src/project/entities/project.entity';
+import { ProjectEntity } from 'src/project/entities/project.entity';
 import { Status, UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
@@ -11,17 +11,22 @@ import {
 } from 'typeorm';
 
 @ObjectType()
-@Entity()
+@Entity('workspace')
 export class WorkspaceEntity {
   @Field(() => ID, { description: 'ID' })
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => [Project], {
-    description: 'workspaces associated with this project',
-  })
-  @ManyToMany(() => Project, (project) => project.step)
-  projects: Project[];
+  // @Field(() => [ProjectEntity], {
+  //   description: 'workspaces associated with this project',
+  // })
+  // @ManyToMany(() => ProjectEntity, (project) => project.step)
+  // projects: ProjectEntity[];
+
+  // Un workspace a plusieurs projets
+  @Field(() => [ProjectEntity])
+  @OneToMany(() => ProjectEntity, (project) => project.workspace)
+  projects: ProjectEntity[];
 
   @Field(() => [UserEntity], { description: 'Users in this Workspace' })
   @OneToMany(() => UserEntity, (user) => user.workspace, { cascade: true })
