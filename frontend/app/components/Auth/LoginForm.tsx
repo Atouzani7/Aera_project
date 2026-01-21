@@ -40,16 +40,19 @@ export default function LoginForm() {
     };
     if (user) {
         return (
-            <div className="p-4 border rounded bg-green-100 dark:bg-purple-100 dark:text-black">
+            <div className="p-4 border rounded bg-green-100 dark:bg-purple-100 dark:text-black m-auto">
                 <p>
-                    ✅ Connecté en tant que <strong>{user.role?.toUpperCase()}</strong> | Email:{" "}
-                    <strong>{user.email}</strong>
+                    ✅ Connecté en tant que <strong>{user.role?.toUpperCase()}</strong> | {" "}
+                    <strong>{user.firstname}</strong>
                 </p>
             </div>
         );
     }
     return (
-        <form onSubmit={handleSignin} className="space-y-4">
+        <form onSubmit={handleSignin} className="space-y-4 m-2 m-auto w-full max-w-md ">
+            <h1 className="text-3xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 tracking-tighter md:text-4xl">
+                Se connecter
+            </h1>
             <Input
                 type="email"
                 value={email}
