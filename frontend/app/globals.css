@@ -1,26 +1,92 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
 
 @theme inline {
+  /* --- Polices --- */
+  --font-avenir: "Avenir", "sans-serif";
+  --font-gill-sans: "GillSans", "sans-serif";
+
+  /* --- Couleurs Shadcn existantes --- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-valid: var(--valid);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* --- Tes Couleurs Personnalisées --- */
+  --color-lila-100: #D1C4E9;
+  --color-lila-200: #9B8FB1;
+  --color-green-pastel-100: #C4E9D1;
+  --color-green-pastel-200: #9DCAB1;
+  --color-black-custom: #1E1E1E;
+
+  /* --- Animations --- */
+  --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
+
+  @keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
+
+  /* --- Radius Shadcn --- */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* --- Backdrop Blur Utilities --- */
+.backdrop-blur-lg {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+
+/* --- Variables de Design (Light Mode) --- */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(96.03% 0.00754 260.889);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.93 0.033 272.788);
+  --primary-foreground: oklch(0.301 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.899 0.059 343.231);
+  --validation: oklch(0.93 0.052 158.219);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+}
+
+/* --- Dark Mode --- */
+.dark {
+  --background: oklch(0.984 0.003 247.858); /* Ajusté pour un vrai mode sombre */
+  --foreground: oklch(0.301 0 0);
+  /* ... (le reste de tes variables dark ici) */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-avenir;
+  }
 }
