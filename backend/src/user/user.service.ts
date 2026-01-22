@@ -23,6 +23,9 @@ export class UserService {
     const email = createUserInput.email.toLowerCase();
     createUserInput.email = email;
 
+    const firstname = createUserInput.firstname;
+    const lastname = createUserInput.lastname;
+
     const existingUser = await this.userRepository.findOne({
       where: { email },
     });
@@ -30,6 +33,10 @@ export class UserService {
     if (existingUser) {
       throw new Error(`User with email ${existingUser.email} already exists`);
     }
+    if (!email) throw new Error('Email is required');
+    if (!firstname) throw new Error('Firstname is required');
+    if (!lastname) throw new Error('Lastname is required');
+
     if (createUserInput.password) {
       const hashedPassword = await argon2.hash(createUserInput.password);
       createUserInput.password = hashedPassword;
@@ -71,7 +78,7 @@ export class UserService {
   }
 
   async update(
-    id: number,
+    id: string,
     updateUserInput: UpdateUserInput,
   ): Promise<UserEntity> {
     const user = await this.userRepository.findOne({ where: { id } });
@@ -98,6 +105,7 @@ export class UserService {
   findByEmail(email: string) {
     return this.userRepository
       .createQueryBuilder('user')
+      .leftJoinAndSelect('user.workspace', 'workspace')
       .where('LOWER(user.email) = LOWER(:email)', { email })
       .getOne();
   }
@@ -106,13 +114,24 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  findOne(id: number): Promise<UserEntity | null> {
+  findOne(id: string): Promise<UserEntity | null> {
     const user = this.userRepository.findOne({
       where: { id },
       relations: ['workspace'],
     });
     return user;
   }
+
+  // async findUserById(id: string): Promise<UserEntity> {
+  //   const user = await this.userRepository.findOne({
+  //     where: { id },
+  //     relations: ['workspace', 'projects', 'comments'],
+  //   });
+
+  //   // assertDataExists(user);
+
+  //   return user as UserEntity;
+  // }
 
   // update(id: number, updateUserInput: UpdateUserInput) {
   //   return `This action updates a #${id} user`;

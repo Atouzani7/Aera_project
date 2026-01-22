@@ -35,8 +35,8 @@ export class ProjectService {
 
   async createProject(
     dto: CreateProjectInput,
-    userId: number,
-    workspaceId: number,
+    userId: string,
+    workspaceId: string,
   ) {
     // 1. Charger le workspace avec ses utilisateurs
     const workspace = await this.workspaceService.findOne(workspaceId);
@@ -49,9 +49,7 @@ export class ProjectService {
 
     // 3. Vérification de l'accès (plus robuste que [0])
     // On utilise Number() pour éviter le piège String vs Number
-    const isMember = workspace.users?.some(
-      (u) => Number(u.id) === Number(userId),
-    );
+    const isMember = workspace.users?.some((u) => u.id === userId);
     if (!isMember) {
       throw new ForbiddenException(
         'Accès refusé - Vous ne faites pas partie de ce workspace',

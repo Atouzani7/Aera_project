@@ -1,6 +1,8 @@
 services:
   backend:
     build: ./backend
+    depends_on:
+      - db
     ports:
       - "4001:4001"
     volumes:
@@ -42,6 +44,7 @@ services:
       POSTGRES_DB: aera_project_db
       POSTGRES_USER: asma
       POSTGRES_PASSWORD: aera_project_password
+      DB_HOST: db
     # permet de ne pas perdre les données à chaque arrêt.
     volumes: 
       - aera_project_db:/var/lib/postgresql/data
