@@ -63,7 +63,7 @@ export type ProjectTag =
 @Entity('project')
 export class ProjectEntity {
   @Field(() => ID, { description: 'ID' })
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
 
   @Field(() => String, { description: 'Project Name' })

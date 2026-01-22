@@ -24,7 +24,7 @@ export class AuthService {
       email: user.email,
       sub: user.id,
       role: user.role,
-      workspaceName: user.workspace?.[0]?.name,
+      workspaceName: user.workspace,
       name: user.firstname,
       lastname: user.lastname,
     };
@@ -48,12 +48,30 @@ export class AuthService {
     const isPasswordValid = await argon2.verify(user.password, password);
     if (!isPasswordValid) return null;
 
-    const payload = { sub: user.id, email: user.email };
+    // const payload = {
+    //   sub: user.id,
+    //   email: user.email,
+    //   workspace: user.workspace?.id,
+    // };
+
+    if (!user.workspace) {
+      throw new Error('Aucun workspace associé à cet utilisateur');
+    }
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      workspaceId: user.workspace.id,
+    };
+
     const token = await this.jwtService.signAsync(payload);
 
     const { password: _, ...safeUser } = user;
 
-    return { user: safeUser as Omit<UserEntity, 'password'>, token };
+    return {
+      user: safeUser as Omit<UserEntity, 'password'>,
+      token,
+    };
   }
 
   async logout(req: Request, res: Response): Promise<LogoutResponse> {

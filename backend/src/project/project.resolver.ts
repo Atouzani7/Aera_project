@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args, Int } from '@nestjs/graphql';
 import { ProjectService } from './project.service';
 import { ProjectEntity } from './entities/project.entity';
 import { CreateProjectInput } from './dto/create-project.input';
-import { UseGuards } from '@nestjs/common';
+import { BadRequestException, UseGuards } from '@nestjs/common';
 import { CurrentUser, GqlAuthGuard } from 'src/auth/gqlAuthGuard';
 import { UserEntity } from 'src/user/entities/user.entity';
 // import { CreateProjectInput } from './dto/create-project.input';
@@ -19,8 +19,14 @@ export class ProjectResolver {
     @CurrentUser() user: UserEntity,
   ) {
     console.log('User extrait du décorateur:', user);
+
     const userId = user.id;
     const workspaceId = user.workspaceId;
+    if (!workspaceId) {
+      throw new BadRequestException(
+        'Aucun workspace associé à cet utilisateur',
+      );
+    }
     return this.projectService.createProject(
       createProjectInput,
       userId,

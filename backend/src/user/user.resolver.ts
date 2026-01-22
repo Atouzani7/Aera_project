@@ -17,7 +17,7 @@ export class UserResolver {
 
   @Mutation(() => UserEntity)
   updateUser(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => Int }) id: string,
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
   ) {
     return this.userService.update(id, updateUserInput);
@@ -30,7 +30,7 @@ export class UserResolver {
 
   @Query(() => UserEntity, { name: 'FindUserByID' })
   @UseGuards(GqlAuthGuard)
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: string) {
     return this.userService.findOne(id);
   }
 

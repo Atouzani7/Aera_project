@@ -24,9 +24,24 @@ export class WorkspaceResolver {
     return this.workspaceService.findAll();
   }
 
-  @Query(() => WorkspaceEntity, { name: 'workspace' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @UseGuards(GqlAuthGuard)
+  @Query(() => WorkspaceEntity, { name: 'workspaceByID' })
+  findOne(@Args('id', { type: () => Int }) id: string) {
     return this.workspaceService.findOne(id);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query(() => [WorkspaceEntity], { name: 'userWorkspaces' })
+  findUserWorkspaces(@Args('userId') userId: string) {
+    return this.workspaceService.findUserWorkspaces(userId);
+  }
+
+  @Mutation(() => WorkspaceEntity)
+  addUserToWorkspace(
+    @Args('workspaceId', { type: () => Int }) workspaceId: string,
+    @Args('userId', { type: () => Int }) userId: string,
+  ) {
+    return this.workspaceService.addUserToWorkspace(workspaceId, userId);
   }
 
   @Mutation(() => WorkspaceEntity)
