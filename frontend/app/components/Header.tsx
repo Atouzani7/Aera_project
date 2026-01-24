@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"; // 1. Import de useState
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import Image from "next/image";
 import LogoutButton from "./Auth/LogoutButton";
 import { useRouter } from "next/navigation";

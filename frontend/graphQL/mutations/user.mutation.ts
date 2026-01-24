@@ -19,6 +19,10 @@ export const REGISTER = gql`
         email
         id
       }
+      workspace {
+        name
+        id
+      }
     }
   }
 `;
@@ -33,6 +37,10 @@ export const SIGN_IN = gql`
         lastname
         role
         # workspaceName
+        workspace {
+          id
+          name
+        }
       }
       access_token
     }

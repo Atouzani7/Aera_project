@@ -1,7 +1,7 @@
 "use client"
 import { useAuth } from "@/app/hook/context/authContext";
-import { Button } from "@/components/ui/button";
-import { DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog } from "@/components/ui/dialog"; // Correction import Dialog
+import { Button } from "@/app/components/ui/button";
+import { DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog } from "@/app/components/ui/dialog"; // Correction import Dialog
 import { LOGOUT } from "@/graphQL/mutations/user.mutation";
 import { useMutation } from "@apollo/client/react";
 import { useState } from "react";

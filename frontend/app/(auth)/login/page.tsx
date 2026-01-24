@@ -1,6 +1,6 @@
 "use client";
 import LoginForm from "@/app/components/Auth/LoginForm";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/app/components/ui/card";
 import { motion } from "motion/react";
 import Image from "next/image";
 

@@ -1,6 +1,6 @@
 "use client";
 import RegisterForm from "@/app/components/Auth/RegisterForm";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/app/components/ui/card";
 import { motion } from "motion/react";
 import Image from "next/image";
 
