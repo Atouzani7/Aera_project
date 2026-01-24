@@ -30,19 +30,18 @@ export const REGISTER = gql`
 export const SIGN_IN = gql`
   mutation signIn($email: String!, $password: String!) {
     signIn(email: $email, password: $password) {
+      access_token
       user {
         email
         # password // 🚨 ne pas le retourné coté front
         firstname
         lastname
         role
-        # workspaceName
         workspace {
           id
           name
         }
       }
-      access_token
     }
   }
 `;

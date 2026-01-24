@@ -15,7 +15,10 @@ export interface UserType {
     firstname?: string;
     lastname?: string;
     role?: string;
-    // workspaceName?: string;
+    workspace?: {
+        id: string;
+        name?: string;
+    };
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -24,6 +27,7 @@ export const AuthContext = createContext<AuthContextType>({
     contextLogout: () => { },
     isLoading: true, // On commence en mode chargement
 });
+
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // const [user, setUser] = useState<string | undefined>(undefined);
@@ -74,3 +78,4 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 // Hook personnalisé pour l'utiliser partout facilement
 export const useAuth = () => useContext(AuthContext);
+// export const useAuthContext = () => useContext(AuthContext);

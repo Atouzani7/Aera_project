@@ -7,6 +7,8 @@ import { useAuth, UserType } from "../../hook/context/authContext";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { LogIn } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { routes } from "@/lib/routes";
 
 type SignInData = {
     signIn: {
@@ -21,18 +23,35 @@ type SignInVars = {
 };
 
 export default function LoginForm() {
+    const router = useRouter();
     const { login, user } = useAuth(); // on récupère la fonction du context
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const [signin, { loading, error }] = useMutation<SignInData, SignInVars>(SIGN_IN, {
-        onCompleted: (data) => {
-            // ⚡ On envoie les infos au AuthContext
-            console.log("Login réussi :", data);
-            console.log("RAW GRAPHQL RESPONSE:", JSON.stringify(data, null, 2));
-            login(data.signIn.user, data.signIn.access_token);
-        },
-    });
+    // const [signin, { loading, error }] = useMutation<SignInData, SignInVars>(SIGN_IN, {
+    //     onCompleted: (data) => {
+    //         // ⚡ On envoie les infos au AuthContext
+    //         console.log("Login réussi :", data);
+    //         console.log("RAW GRAPHQL RESPONSE:", JSON.stringify(data, null, 2));
+    //         login(data.signIn.user, data.signIn.access_token);
+    //     },
+    // });
+
+
+    const [signin, { loading, error }] = useMutation<SignInData, SignInVars>(
+        SIGN_IN,
+        {
+            onCompleted: async (data) => {
+                console.log("✅ Login GraphQL OK");
+
+                await login(data.signIn.user, data.signIn.access_token);
+
+                // router.push(`/workspace/${data.signIn.user?.workspace?.id}`);
+                router.push(`${routes.workspace.pathname}/${data.signIn.user?.workspace?.id}`);
+            },
+        }
+    );
+
 
     const handleSignin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,6 +69,9 @@ export default function LoginForm() {
             </div>
         );
     }
+
+
+
     return (
         <form onSubmit={handleSignin} className="space-y-4 m-2 m-auto w-full max-w-md ">
             <h1 className="text-3xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 tracking-tighter md:text-4xl">

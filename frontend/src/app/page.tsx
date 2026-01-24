@@ -23,7 +23,6 @@ export default function Home() {
           </p>
           <Separator className="my-4 h-px w-48 bg-zinc-200 dark:bg-zinc-700" />
         </div>
-        <AuthForm />
       </main>
     </div>
   );

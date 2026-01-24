@@ -19,7 +19,7 @@ const authLink = setContext((_, { headers }) => {
         typeof window !== "undefined"
             ? localStorage.getItem("token")
             : null;
-
+    console.log("ApolloClientProvider - Token utilisé pour les requêtes :", token);
     // 🚫 pas de header Authorization si pas de token
     if (!token) {
         return { headers };
