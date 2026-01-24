@@ -31,7 +31,7 @@ export class WorkspaceService {
     return `This action returns all workspace`;
   }
 
-  async findOne(id: number): Promise<WorkspaceEntity> {
+  async findOne(id: string): Promise<WorkspaceEntity> {
     const workspace = await this.workspaceRepository.findOne({
       where: { id },
       relations: ['users'],
@@ -45,7 +45,31 @@ export class WorkspaceService {
     return workspace;
   }
 
-  update(id: number, updateWorkspaceInput: UpdateWorkspaceInput) {
+  async findUserWorkspaces(userId: string): Promise<WorkspaceEntity[]> {
+    const workspaces = await this.workspaceRepository.find({
+      relations: ['users', 'projects'],
+      where: {
+        users: {
+          id: userId,
+        },
+      },
+    });
+
+    return workspaces;
+  }
+
+  async addUserToWorkspace(
+    workspaceId: string,
+    userId: string,
+  ): Promise<WorkspaceEntity> {
+    const workspace = await this.findOne(workspaceId);
+    const user = await this.userService.findOne(userId);
+
+    workspace.users.push(user?.id as unknown as UserEntity);
+    return this.workspaceRepository.save(workspace);
+  }
+
+  update(id: string, updateWorkspaceInput: UpdateWorkspaceInput) {
     return `This action updates a #${id} workspace`;
   }
 

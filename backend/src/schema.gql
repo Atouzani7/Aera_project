@@ -3,8 +3,9 @@
 # ------------------------------------------------------
 
 type Auth {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  access_token: String!
+  message: String!
+  user: UserEntity!
 }
 
 type Comment {
@@ -19,16 +20,11 @@ type Comment {
 
   """ID"""
   id: ID!
-  project: Project!
+  project: ProjectEntity!
 
   """Comment Update Date"""
   updatedAt: DateTime!
-  user: User!
-}
-
-input CreateAuthInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  user: UserEntity!
 }
 
 input CreateCommentInput {
@@ -42,8 +38,9 @@ input CreateFileInput {
 }
 
 input CreateProjectInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  contact_name: String!
+  description: String
+  name: String!
 }
 
 input CreateStepInput {
@@ -52,13 +49,25 @@ input CreateStepInput {
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  email: String!
+  firstname: String!
+  lastname: String!
+  password: String!
+  workspaceName: String!
 }
 
 input CreateWorkspaceInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Workspace Avatar"""
+  avatar: String
+
+  """Workspace Description"""
+  description: String
+
+  """Workspace Name"""
+  name: String!
+
+  """Workspace Tags"""
+  tags: String
 }
 
 """
@@ -89,35 +98,38 @@ type File {
 
   """File Path GDrive ID """
   path: String!
-  user: [User!]!
-  workspaces: [Workspace!]!
+  user: [UserEntity!]!
+  workspaces: [WorkspaceEntity!]!
+}
+
+type LogoutResponse {
+  message: String!
 }
 
 type Mutation {
-  createAuth(createAuthInput: CreateAuthInput!): Auth!
+  addUserToWorkspace(userId: Int!, workspaceId: Int!): WorkspaceEntity!
   createComment(createCommentInput: CreateCommentInput!): Comment!
   createFile(createFileInput: CreateFileInput!): File!
-  createProject(createProjectInput: CreateProjectInput!): Project!
+  createProject(createProjectInput: CreateProjectInput!): ProjectEntity!
   createStep(createStepInput: CreateStepInput!): Step!
-  createUser(createUserInput: CreateUserInput!): User!
-  createWorkspace(createWorkspaceInput: CreateWorkspaceInput!): Workspace!
-  removeAuth(id: Int!): Auth!
+  createUser(createUserInput: CreateUserInput!): UserEntity!
+  createWorkspace(createWorkspaceInput: CreateWorkspaceInput!): WorkspaceEntity!
+  logout: LogoutResponse!
+  register(email: String!, firstname: String!, lastname: String!, password: String!, workspaceName: String): Auth!
   removeComment(id: Int!): Comment!
   removeFile(id: Int!): File!
-  removeProject(id: Int!): Project!
   removeStep(id: Int!): Step!
-  removeUser(id: Int!): User!
-  removeWorkspace(id: Int!): Workspace!
-  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
+  removeUser(id: Int!): UserEntity!
+  removeWorkspace(id: Int!): WorkspaceEntity!
+  signIn(email: String!, password: String!): Auth!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   updateFile(updateFileInput: UpdateFileInput!): File!
-  updateProject(updateProjectInput: UpdateProjectInput!): Project!
   updateStep(updateStepInput: UpdateStepInput!): Step!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  updateWorkspace(updateWorkspaceInput: UpdateWorkspaceInput!): Workspace!
+  updateUser(id: Int!, updateUserInput: UpdateUserInput!): UserEntity!
+  updateWorkspace(updateWorkspaceInput: UpdateWorkspaceInput!): WorkspaceEntity!
 }
 
-type Project {
+type ProjectEntity {
   """Project img"""
   Brand_identity: String!
 
@@ -164,18 +176,20 @@ type Project {
 
   """Project Update Date"""
   updatedAt: DateTime!
-  user: [User!]!
-  workspaces: [Workspace!]!
+  users: [UserEntity!]!
+  workspace: WorkspaceEntity!
 }
 
 type Query {
-  auth(id: Int!): Auth!
+  FindUserByID(id: Int!): UserEntity!
   comment(id: Int!): Comment!
   file(id: Int!): File!
-  project(id: Int!): Project!
+  me: UserEntity!
   step(id: Int!): Step!
-  user(id: Int!): User!
-  workspace(id: Int!): Workspace!
+  user: [UserEntity!]!
+  userWorkspaces(userId: String!): [WorkspaceEntity!]!
+  workspace: [WorkspaceEntity!]!
+  workspaceByID(id: Int!): WorkspaceEntity!
 }
 
 type Step {
@@ -195,19 +209,13 @@ type Step {
   name: String!
 
   """Projects associated with this Step"""
-  projects: [Project!]!
+  projects: [ProjectEntity!]!
 
   """Step Status"""
   status: String!
 
   """Step Update Date"""
   updatedAt: DateTime!
-}
-
-input UpdateAuthInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }
 
 input UpdateCommentInput {
@@ -222,12 +230,6 @@ input UpdateFileInput {
   id: Int!
 }
 
-input UpdateProjectInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
 input UpdateStepInput {
   """Example field (placeholder)"""
   exampleField: Int
@@ -235,18 +237,31 @@ input UpdateStepInput {
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  dateOfBirth: DateTime
+  email: EmailAddress
+  firstname: String
+  lastname: String
+  password: String
+  phoneNumber: Float
+  profilePicture: String
 }
 
 input UpdateWorkspaceInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """Workspace Avatar"""
+  avatar: String
+
+  """Workspace Description"""
+  description: String
   id: Int!
+
+  """Workspace Name"""
+  name: String
+
+  """Workspace Tags"""
+  tags: String
 }
 
-type User {
+type UserEntity {
   DeleteDateColumn: DateTime
   archiveDateColumn: DateTime
   comments: [Comment!]!
@@ -257,12 +272,10 @@ type User {
 
   """Email"""
   email: EmailAddress!
-  files: [File!]!
+  file: [File!]!
 
   """Firstname"""
   firstname: String!
-
-  """ID"""
   id: ID!
 
   """lastname"""
@@ -271,16 +284,17 @@ type User {
   """Phone number"""
   phoneNumber: Int!
   profilePicture: String
-  project: [Project!]!
+  project: [ProjectEntity!]!
 
   """Role"""
   role: String!
   status: String
   unarchiveDateColumn: DateTime
   updatedAt: DateTime!
+  workspace: WorkspaceEntity!
 }
 
-type Workspace {
+type WorkspaceEntity {
   DeleteDateColumn: DateTime
   archiveDateColumn: DateTime
 
@@ -301,9 +315,7 @@ type Workspace {
 
   """Workspace Name"""
   name: String!
-
-  """workspaces associated with this project"""
-  projects: [Project!]!
+  projects: [ProjectEntity!]!
 
   """Step Status"""
   status: String!
@@ -313,5 +325,5 @@ type Workspace {
   updatedAt: DateTime!
 
   """Users in this Workspace"""
-  users: [User!]!
+  users: [UserEntity!]!
 }

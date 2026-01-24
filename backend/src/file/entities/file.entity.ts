@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { UserEntity } from 'src/user/entities/user.entity';
-import { Workspace } from 'src/workspace/entities/workspace.entity';
+import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
@@ -29,11 +29,11 @@ export class File {
   @Column()
   GDrive_id: string;
 
-  @Field(() => [Workspace])
-  @ManyToOne(() => Workspace, (workspace) => workspace.files_id)
-  workspaces: Workspace[];
+  @Field(() => [WorkspaceEntity])
+  @ManyToOne(() => WorkspaceEntity, (workspace) => workspace.files_id)
+  workspaces: WorkspaceEntity[];
 
   @Field(() => [UserEntity])
-  @ManyToOne(() => UserEntity, (user) => user.files)
+  @ManyToOne(() => UserEntity, (user) => user.file)
   user: UserEntity[];
 }

@@ -55,9 +55,9 @@ export class UserEntity {
     this.email = this.email.toLocaleLowerCase();
   }
 
-  @Field(() => ID, { description: 'ID' })
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Field(() => ID)
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Field(() => String, { description: 'lastname' })
   @Column({ length: 50 })
@@ -155,11 +155,12 @@ export class UserEntity {
   comments: Comment[];
 
   @Column({ nullable: true })
-  workspaceId: number;
+  workspaceId: string;
   @ManyToOne(() => WorkspaceEntity, (workspace) => workspace.users, {
     nullable: true,
     onDelete: 'SET NULL',
   })
+  @Field(() => WorkspaceEntity, { nullable: false })
   @JoinColumn({ name: 'workspaceId' })
   workspace?: WorkspaceEntity;
 

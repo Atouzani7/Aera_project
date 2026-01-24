@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
-import { Project } from 'src/project/entities/project.entity';
+import { ProjectEntity } from 'src/project/entities/project.entity';
+
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export type StepStatus =
@@ -46,7 +47,9 @@ export class Step {
   })
   updatedAt: Date;
 
-  @Field(() => [Project], { description: 'Projects associated with this Step' })
-  @ManyToMany(() => Project, (project) => project.step)
-  projects: Project[];
+  @Field(() => [ProjectEntity], {
+    description: 'Projects associated with this Step',
+  })
+  @ManyToMany(() => ProjectEntity, (project) => project.step)
+  projects: ProjectEntity[];
 }

@@ -14,8 +14,8 @@ import {
 @Entity('workspace')
 export class WorkspaceEntity {
   @Field(() => ID, { description: 'ID' })
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   // @Field(() => [ProjectEntity], {
   //   description: 'workspaces associated with this project',

@@ -6,7 +6,7 @@ import {
   GraphQLISODateTime,
 } from '@nestjs/graphql';
 import { IsString, Length } from 'class-validator';
-import { Project } from 'src/project/entities/project.entity';
+import { ProjectEntity } from 'src/project/entities/project.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -42,9 +42,9 @@ export class Comment {
   @ManyToOne(() => UserEntity, (user) => user.comments, { onDelete: 'CASCADE' })
   user: UserEntity;
 
-  @Field(() => Project)
-  @ManyToOne(() => Project, (project) => project.comments, {
+  @Field(() => ProjectEntity)
+  @ManyToOne(() => ProjectEntity, (project) => project.comments, {
     onDelete: 'CASCADE',
   })
-  project: Project;
+  project: ProjectEntity;
 }
