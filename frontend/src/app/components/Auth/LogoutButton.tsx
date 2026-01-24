@@ -1,11 +1,15 @@
 "use client"
-import { useAuth } from "@/app/hook/context/authContext";
-import { Button } from "@/app/components/ui/button";
-import { DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog } from "@/app/components/ui/dialog"; // Correction import Dialog
+// import { useAuth } from "@/app/hook/context/authContext";
+// import { Button } from "@/app/components/ui/button";
+// import { DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog } from "@/app/components/ui/dialog"; // Correction import Dialog
 import { LOGOUT } from "@/graphQL/mutations/user.mutation";
 import { useMutation } from "@apollo/client/react";
 import { useState } from "react";
 import { LogOut } from 'lucide-react';
+import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
+import { useAuth } from "../../hook/context/authContext";
+import { Button } from "../ui/button";
+import { DialogHeader } from "../ui/dialog";
 
 export default function LogoutButton() {
     const [open, setOpen] = useState(false);

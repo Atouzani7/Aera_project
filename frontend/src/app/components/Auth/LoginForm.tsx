@@ -4,8 +4,8 @@ import { SIGN_IN } from "@/graphQL/mutations/user.mutation";
 import { useMutation } from "@apollo/client/react";
 import { useState } from "react";
 import { useAuth, UserType } from "../../hook/context/authContext";
-import { Input } from "@/app/components/ui/input";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import { LogIn } from "lucide-react";
 
 type SignInData = {

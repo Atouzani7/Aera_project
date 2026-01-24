@@ -1,8 +1,8 @@
 "use client";
-import LoginForm from "@/app/components/Auth/LoginForm";
-import { Card } from "@/app/components/ui/card";
 import { motion } from "motion/react";
 import Image from "next/image";
+import LoginForm from "../../components/Auth/LoginForm";
+import { Card } from "../../components/ui/card";
 
 export default function LoginPage() {
     return <div className="flex md:flex-row flex-col min-h-screen items-center md:justify-start justify-center ">

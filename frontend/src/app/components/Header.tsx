@@ -1,6 +1,5 @@
 "use client"
 import { useState } from "react"; // 1. Import de useState
-import { Button } from "@/app/components/ui/button";
 import Image from "next/image";
 import LogoutButton from "./Auth/LogoutButton";
 import { useRouter } from "next/navigation";
@@ -10,6 +9,7 @@ import { Menu, X } from "lucide-react"; // 2. Import des icônes pour le burger
 import { LogIn } from 'lucide-react';
 import { UserRoundPlus } from 'lucide-react';
 import { User } from 'lucide-react';
+import { Button } from "./ui/button";
 
 export default function Header() {
     const router = useRouter();
