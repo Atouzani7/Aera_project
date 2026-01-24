@@ -50,6 +50,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("token", token);
         localStorage.setItem("userData", JSON.stringify(userData)); // On stocke l'objet entier
         setUser(userData);
+        console.log("TOKEN SAVED:", token);
+        console.log("LOCAL STORAGE NOW:", localStorage.getItem("token"));
+
     }, []);
 
 

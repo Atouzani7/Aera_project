@@ -10,7 +10,7 @@ import { LogIn } from "lucide-react";
 
 type SignInData = {
     signIn: {
-        accessToken: string;
+        access_token: string;
         user: UserType;
     };
 };
@@ -28,7 +28,9 @@ export default function LoginForm() {
     const [signin, { loading, error }] = useMutation<SignInData, SignInVars>(SIGN_IN, {
         onCompleted: (data) => {
             // ⚡ On envoie les infos au AuthContext
-            login(data.signIn.user, data.signIn.accessToken);
+            console.log("Login réussi :", data);
+            console.log("RAW GRAPHQL RESPONSE:", JSON.stringify(data, null, 2));
+            login(data.signIn.user, data.signIn.access_token);
         },
     });
 
