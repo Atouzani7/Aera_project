@@ -1,6 +1,7 @@
 "use client";
 import { useCurrentUser } from "@/lib/useCurrentUser";
 import { UserType } from "../../hook/context/authContext";
+import { motion } from "framer-motion";
 
 export default function MyProfil() {
 
@@ -22,11 +23,11 @@ export default function MyProfil() {
     }
 
 
-    return <div className="flex flex-col items-center mt-40 text-center">
+    return <motion.div className="flex flex-col items-center mt-40 text-center">
         <h1>Mon Profil</h1>
         <p>Prénom : {user?.firstname}</p>
         <p>Nom : {user?.lastname}</p>
         <p>Email : {user?.email}</p>
 
-    </div>;
+    </motion.div>;
 }

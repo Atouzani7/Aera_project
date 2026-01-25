@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { Auth, LogoutResponse } from './entities/auth.entity';
+import { Auth, LogoutResponse, RegisterResponse } from './entities/auth.entity';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from 'src/user/entities/user.entity';
@@ -54,7 +54,7 @@ export class AuthResolver {
     return this.authService.logout(ctx.req, ctx.res);
   }
 
-  @Mutation(() => Auth)
+  @Mutation(() => RegisterResponse)
   register(
     @Args('email') email: string,
     @Args('password') password: string,

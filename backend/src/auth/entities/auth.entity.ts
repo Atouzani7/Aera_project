@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { UserEntity } from 'src/user/entities/user.entity';
+import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
 
 @ObjectType()
 export class Auth {
@@ -11,6 +12,12 @@ export class Auth {
 
   @Field()
   message: string;
+
+  @Field(() => WorkspaceEntity, { nullable: true })
+  workspace?: WorkspaceEntity;
+
+  // @Field()
+  // workspace: string;
 
   // @Field()
   // token: string;
@@ -34,6 +41,12 @@ export class RegisterResponse {
 
   @Field()
   lastname: string;
+
+  @Field(() => UserEntity)
+  user: UserEntity;
+
+  @Field(() => WorkspaceEntity, { nullable: true })
+  workspace: WorkspaceEntity;
 }
 
 @ObjectType()

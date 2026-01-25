@@ -6,6 +6,7 @@ type Auth {
   access_token: String!
   message: String!
   user: UserEntity!
+  workspace: WorkspaceEntity
 }
 
 type Comment {
@@ -115,7 +116,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): UserEntity!
   createWorkspace(createWorkspaceInput: CreateWorkspaceInput!): WorkspaceEntity!
   logout: LogoutResponse!
-  register(email: String!, firstname: String!, lastname: String!, password: String!, workspaceName: String): Auth!
+  register(email: String!, firstname: String!, lastname: String!, password: String!, workspaceName: String): RegisterResponse!
   removeComment(id: Int!): Comment!
   removeFile(id: Int!): File!
   removeStep(id: Int!): Step!
@@ -190,6 +191,15 @@ type Query {
   userWorkspaces(userId: String!): [WorkspaceEntity!]!
   workspace: [WorkspaceEntity!]!
   workspaceByID(id: Int!): WorkspaceEntity!
+}
+
+type RegisterResponse {
+  email: String!
+  firstname: String!
+  id: ID!
+  lastname: String!
+  user: UserEntity!
+  workspace: WorkspaceEntity
 }
 
 type Step {

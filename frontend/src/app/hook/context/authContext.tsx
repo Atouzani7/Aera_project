@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { data, error, loading } = useQuery<{ me: UserType }>(ME, {
         fetchPolicy: "network-only", // Pour forcer la récupération fraîche
     });
-    console.log(" AuthProvider - ME query data:", data, "loading:", loading, "error:", error);
+    // console.log(" AuthProvider - ME query data:", data, "loading:", loading, "error:", error);
 
     useEffect(() => {
         // 1. Tenter de récupérer les données locales tout de suite pour l'UX

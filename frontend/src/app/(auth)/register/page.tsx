@@ -1,6 +1,6 @@
 "use client";
-import RegisterForm from "@/app/components/Auth/RegisterForm";
-import { Card } from "@/app/components/ui/card";
+import RegisterForm from "@/src/components/Auth/RegisterForm";
+import { Card } from "@/src/components/ui/card";
 import { motion } from "motion/react";
 import Image from "next/image";
 
@@ -12,7 +12,7 @@ export default function RegisterPage() {
             {/* LEFT SIDE - VISUAL */}
 
 
-            <div className="relative w-full h-screen bg-gray-100 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
                 {/* Image de fond */}
                 <Image
                     src="/hero.image.webp"

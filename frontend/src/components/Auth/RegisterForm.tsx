@@ -5,13 +5,15 @@ import { useMutation } from "@apollo/client/react";
 import { Label } from "@radix-ui/react-label";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
-import { User, MonitorCloud, UserRoundPlus, Form } from "lucide-react";
+import { User, MonitorCloud, UserRoundPlus } from "lucide-react";
 import { useForm } from "react-hook-form"
 import { zodResolver as hookFormZodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Separator } from "@radix-ui/react-separator";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Form } from "../ui/form";
+
 
 export default function RegisterForm() {
     // 1. Un seul état pour tout le formulaire
@@ -46,6 +48,7 @@ export default function RegisterForm() {
             // workspaceDescription: "",
         },
     })
+
 
     const [register, { loading, error }] = useMutation(REGISTER, {
         onCompleted: (data) => {
@@ -100,13 +103,13 @@ export default function RegisterForm() {
 
 
     return (
-        <motion.div className="p-2 w-lg mx-auto mt-10 md:mt-20 md:w-1/2 flex flex-col justify-center">
+        <motion.div className="p-2 m-4 w-lg mx-auto mt-10 md:mt-20 md:w-1/2 flex flex-col justify-center">
             <motion.div>
             </motion.div>
             <h1 className="text-3xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 tracking-tighter md:text-4xl">
                 Créer un compte
             </h1>
-            <Form {...form}>
+            <Form {...{ form }}>
 
 
                 <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">

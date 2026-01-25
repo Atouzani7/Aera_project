@@ -6,10 +6,18 @@ import { LOGOUT } from "@/graphQL/mutations/user.mutation";
 import { useMutation } from "@apollo/client/react";
 import { useState } from "react";
 import { LogOut } from 'lucide-react';
-import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
+import {
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogTitle,
+    DialogDescription,
+    DialogClose,
+    DialogHeader,
+    DialogFooter,
+} from "@/src/components/ui/dialog"
 
 import { Button } from "../ui/button";
-import { DialogHeader } from "../ui/dialog";
 import { useAuth } from "@/src/app/hook/context/authContext";
 
 export default function LogoutButton() {
