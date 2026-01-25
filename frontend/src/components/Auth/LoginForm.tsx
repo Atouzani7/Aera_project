@@ -3,8 +3,8 @@
 import { SIGN_IN } from "@/graphQL/mutations/user.mutation";
 import { useMutation } from "@apollo/client/react";
 import { useState } from "react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Button } from "../../../components/ui/button";
+import { Input } from "../../../components/ui/input";
 import { LogIn } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";

@@ -15,9 +15,9 @@ import {
     DialogClose,
     DialogHeader,
     DialogFooter,
-} from "@/src/components/ui/dialog"
+} from "@/components/ui/dialog"
 
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 import { useAuth } from "@/src/app/hook/context/authContext";
 
 export default function LogoutButton() {

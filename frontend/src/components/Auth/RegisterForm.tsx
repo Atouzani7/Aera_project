@@ -10,9 +10,9 @@ import { useForm } from "react-hook-form"
 import { zodResolver as hookFormZodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Separator } from "@radix-ui/react-separator";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Form } from "../ui/form";
+import { Button } from "../../../components/ui/button";
+import { Input } from "../../../components/ui/input";
+import { Form } from "../../../components/ui/form";
 
 
 export default function RegisterForm() {
