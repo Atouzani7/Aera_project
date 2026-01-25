@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ApolloClientProvider from "@/apollo/ApolloClientProvider";
 import { AuthProvider } from "./hook/context/authContext";
-import Header from "./components/Header";
+import Header from "../components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

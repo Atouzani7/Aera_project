@@ -3,12 +3,12 @@
 import { SIGN_IN } from "@/graphQL/mutations/user.mutation";
 import { useMutation } from "@apollo/client/react";
 import { useState } from "react";
-import { useAuth, UserType } from "../../hook/context/authContext";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { LogIn } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
+import { UserType, useAuth } from "@/src/app/hook/context/authContext";
 
 type SignInData = {
     signIn: {

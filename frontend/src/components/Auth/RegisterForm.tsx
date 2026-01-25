@@ -4,16 +4,14 @@ import { REGISTER } from "@/graphQL/mutations/user.mutation";
 import { useMutation } from "@apollo/client/react";
 import { Label } from "@radix-ui/react-label";
 import { useRouter } from "next/navigation";
-import { Button } from "@/app/components/ui/button";
 import { motion } from "motion/react";
-import Image from "next/image";
-import { Input } from "@/app/components/ui/input";
-import { User, MonitorCloud, UserRoundPlus } from "lucide-react";
+import { User, MonitorCloud, UserRoundPlus, Form } from "lucide-react";
 import { useForm } from "react-hook-form"
 import { zodResolver as hookFormZodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Form } from "@/app/components/ui/form";
 import { Separator } from "@radix-ui/react-separator";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export default function RegisterForm() {
     // 1. Un seul état pour tout le formulaire

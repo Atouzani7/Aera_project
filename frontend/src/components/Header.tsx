@@ -3,7 +3,6 @@ import { useState } from "react"; // 1. Import de useState
 import Image from "next/image";
 import LogoutButton from "./Auth/LogoutButton";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "../hook/context/authContext";
 import { useContext } from "react";
 import { LayoutDashboard, Menu, X } from "lucide-react"; // 2. Import des icônes pour le burger
 import { LogIn } from 'lucide-react';
@@ -11,6 +10,7 @@ import { UserRoundPlus } from 'lucide-react';
 import { User } from 'lucide-react';
 import { Button } from "./ui/button";
 import { useCurrentUser } from "@/lib/useCurrentUser";
+import { AuthContext } from "../app/hook/context/authContext";
 
 export default function Header() {
     const router = useRouter();
