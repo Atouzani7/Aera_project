@@ -8,7 +8,7 @@ import { LayoutDashboard, Menu, X } from "lucide-react"; // 2. Import des icône
 import { LogIn } from 'lucide-react';
 import { UserRoundPlus } from 'lucide-react';
 import { User } from 'lucide-react';
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 import { useCurrentUser } from "@/lib/useCurrentUser";
 import { AuthContext } from "../app/hook/context/authContext";
 
@@ -17,7 +17,7 @@ export default function Header() {
     const { user, isLoading } = useContext(AuthContext);
 
     const userCo = useCurrentUser()
-    console.log('🎨 Header : user', userCo.user?.id)
+    // console.log('🎨 Header : user', userCo.user?.id)
 
 
     const [isOpen, setIsOpen] = useState(false);

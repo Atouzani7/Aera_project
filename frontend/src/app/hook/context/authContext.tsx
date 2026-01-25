@@ -51,23 +51,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // const [user, setUser] = useState<string | undefined>(undefined);
     const [user, setUser] = useState<UserType | undefined>(undefined);
     const router = useRouter();
+    const client = useApolloClient();
 
-    const contextLogout = useCallback(() => {
+    const contextLogout = useCallback(async () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userData");
         setUser(undefined);
-
+        await client.clearStore(); // <--- INDISPENSABLE : Vide le cache GraphQL
         router.push("/");
-
-    }, [router]);
+    }, [router, client]);
 
     const [isLoading, setIsLoading] = useState(true);
 
     // On récupère les données via la query ME
     const { data, error, loading } = useQuery<{ me: UserType }>(ME, {
+        context: {
+            fetchOptions: {
+                cache: 'no-store', // Empêche Next.js de mettre en cache la réponse fetch
+            },
+        },
         fetchPolicy: "network-only", // Pour forcer la récupération fraîche
+
     });
-    // console.log(" AuthProvider - ME query data:", data, "loading:", loading, "error:", error);
+    console.log(" AuthProvider - ME query data:", data, "loading:", loading, "error:", error);
 
     useEffect(() => {
         // 1. Tenter de récupérer les données locales tout de suite pour l'UX
@@ -96,20 +102,51 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setIsLoading(false);
         }
 
-    }, [data, loading, error]);
+    }, [data, loading, error, contextLogout]);
+
+
+
+
+    // useEffect(() => {
+    //     const savedUser = localStorage.getItem("userData");
+    //     if (savedUser && !user) {
+    //         setUser(JSON.parse(savedUser));
+    //     }
+
+    //     if (!loading) {
+    //         if (data?.me) {
+    //             setUser(data.me);
+    //             localStorage.setItem("userData", JSON.stringify(data.me));
+    //             setIsLoading(false);
+    //         } else if (error) {
+    //             if (error.message.includes("Unauthorized") || error.graphQLErrors?.some(e => e.extensions?.code === 'UNAUTHENTICATED')) {
+    //                 console.log("Session expirée ou invalide, déconnexion...");
+    //                 contextLogout();
+    //             }
+    //             setIsLoading(false);
+    //         }
+    //     }
+    // }, [data, loading, error, contextLogout]);
+
+
+
+
     const login = useCallback((userData: UserType, token: string) => {
         localStorage.setItem("token", token);
         localStorage.setItem("userData", JSON.stringify(userData));
         setUser(userData);
-        console.log("TOKEN SAVED:", token);
-        console.log("LOCAL STORAGE NOW:", localStorage.getItem("token"));
+        // console.log("TOKEN SAVED:", token);
+        // console.log("LOCAL STORAGE NOW:", localStorage.getItem("token"));
+
+
+        console.log("LOGIN TOKEN RECEIVED:", token);
+        console.log("TOKEN BEFORE SAVE:", localStorage.getItem("token"));
+
+        localStorage.setItem("token", token);
+
+        console.log("TOKEN AFTER SAVE:", localStorage.getItem("token"));
 
     }, []);
-
-    // const client = useApolloClient();
-
-    // // Après avoir mis le token dans le localStorage :
-    // client.resetStore();
 
     return (
         <AuthContext.Provider value={{ user, login, contextLogout, isLoading, }}>

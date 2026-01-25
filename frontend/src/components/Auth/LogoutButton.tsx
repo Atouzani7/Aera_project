@@ -45,7 +45,7 @@ export default function LogoutButton() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="text-foreground " >
+                <Button className="text-foreground " variant="destructive" >
                     <LogOut className="mr-2 h-4 w-4" />
                     Se déconnecter
                 </Button>

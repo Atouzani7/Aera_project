@@ -30,7 +30,7 @@ export class UserResolver {
 
   @Query(() => UserEntity, { name: 'FindUserByID' })
   @UseGuards(GqlAuthGuard)
-  findOne(@Args('id', { type: () => Int }) id: string) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.userService.findOne(id);
   }
 

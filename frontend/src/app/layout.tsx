@@ -5,6 +5,9 @@ import ApolloClientProvider from "@/apollo/ApolloClientProvider";
 import { AuthProvider } from "./hook/context/authContext";
 import Header from "../components/Header";
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

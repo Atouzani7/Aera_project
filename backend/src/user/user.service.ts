@@ -114,28 +114,20 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  findOne(id: string): Promise<UserEntity | null> {
+  async findOne(id: string): Promise<UserEntity | null> {
+    // Sécurité : si pas d'ID, on ne cherche même pas en BDD
+    if (!id) {
+      console.error('Tentative de findOne avec un ID undefined !');
+      return null;
+    }
+
     const user = this.userRepository.findOne({
       where: { id },
       relations: ['workspace', 'workspace.projects'],
     });
+
     return user;
   }
-
-  // async findUserById(id: string): Promise<UserEntity> {
-  //   const user = await this.userRepository.findOne({
-  //     where: { id },
-  //     relations: ['workspace', 'projects', 'comments'],
-  //   });
-
-  //   // assertDataExists(user);
-
-  //   return user as UserEntity;
-  // }
-
-  // update(id: number, updateUserInput: UpdateUserInput) {
-  //   return `This action updates a #${id} user`;
-  // }
 
   remove(id: number) {
     return `This action removes a #${id} user`;
