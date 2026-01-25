@@ -10,16 +10,22 @@ import { LogIn } from 'lucide-react';
 import { UserRoundPlus } from 'lucide-react';
 import { User } from 'lucide-react';
 import { Button } from "./ui/button";
+import { useCurrentUser } from "@/lib/useCurrentUser";
 
 export default function Header() {
     const router = useRouter();
     const { user, isLoading } = useContext(AuthContext);
 
+    const userCo = useCurrentUser()
+    console.log('🎨 Header : user', userCo.user?.id)
+
+
     const [isOpen, setIsOpen] = useState(false);
 
     const isAuthenticated = !!user;
 
-    const pathname = `/workspace/${user?.workspace?.id}`;
+    const pathnameWorkspace = `/workspace/${user?.workspace?.id}`;
+    const pathnameMyAccount = `/profil/${userCo.user?.id}`;
 
     if (isLoading) {
         return (
@@ -76,7 +82,7 @@ export default function Header() {
                         <>
                             <Button
                                 className="w-full md:w-auto"
-                                onClick={() => { router.push("/profil"); setIsOpen(false); }}
+                                onClick={() => { router.push(pathnameMyAccount); setIsOpen(false); }}
                             >
                                 <User className="mr-2 h-4 w-4" />
                                 Mon Profil
@@ -84,7 +90,7 @@ export default function Header() {
                             <Button
                                 className="bg-primary text-primary-foreground w-full md:w-auto"
                                 // onClick={() => { router.push({ pathname: pathname }); setIsOpen(false); }}
-                                onClick={() => { router.push(pathname); setIsOpen(false); }}
+                                onClick={() => { router.push(pathnameWorkspace); setIsOpen(false); }}
                             >
                                 <LayoutDashboard />
                                 Mon workspace
