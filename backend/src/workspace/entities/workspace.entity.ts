@@ -25,7 +25,9 @@ export class WorkspaceEntity {
 
   // Un workspace a plusieurs projets
   @Field(() => [ProjectEntity])
-  @OneToMany(() => ProjectEntity, (project) => project.workspace)
+  @OneToMany(() => ProjectEntity, (project) => project.workspace, {
+    cascade: true,
+  })
   projects: ProjectEntity[];
 
   @Field(() => [UserEntity], { description: 'Users in this Workspace' })

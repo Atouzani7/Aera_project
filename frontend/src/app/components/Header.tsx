@@ -5,7 +5,7 @@ import LogoutButton from "./Auth/LogoutButton";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "../hook/context/authContext";
 import { useContext } from "react";
-import { Menu, X } from "lucide-react"; // 2. Import des icônes pour le burger
+import { LayoutDashboard, Menu, X } from "lucide-react"; // 2. Import des icônes pour le burger
 import { LogIn } from 'lucide-react';
 import { UserRoundPlus } from 'lucide-react';
 import { User } from 'lucide-react';
@@ -18,6 +18,8 @@ export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
 
     const isAuthenticated = !!user;
+
+    const pathname = `/workspace/${user?.workspace?.id}`;
 
     if (isLoading) {
         return (
@@ -78,6 +80,14 @@ export default function Header() {
                             >
                                 <User className="mr-2 h-4 w-4" />
                                 Mon Profil
+                            </Button>
+                            <Button
+                                className="bg-primary text-primary-foreground w-full md:w-auto"
+                                // onClick={() => { router.push({ pathname: pathname }); setIsOpen(false); }}
+                                onClick={() => { router.push(pathname); setIsOpen(false); }}
+                            >
+                                <LayoutDashboard />
+                                Mon workspace
                             </Button>
                             <LogoutButton />
                         </>

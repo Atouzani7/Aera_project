@@ -9,3 +9,30 @@ export const GetLocations = gql`
     }
   }
 `;
+
+export const ME = gql`
+  query Me {
+    me {
+      email
+      firstname
+      id
+      lastname
+      profilePicture
+      role
+      status
+      unarchiveDateColumn
+      updatedAt
+      workspace {
+        id
+        projects {
+          createdAt
+          description
+          id
+          name
+          status
+          updatedAt
+        }
+      }
+    }
+  }
+`;

@@ -117,7 +117,7 @@ export class UserService {
   findOne(id: string): Promise<UserEntity | null> {
     const user = this.userRepository.findOne({
       where: { id },
-      relations: ['workspace'],
+      relations: ['workspace', 'workspace.projects'],
     });
     return user;
   }

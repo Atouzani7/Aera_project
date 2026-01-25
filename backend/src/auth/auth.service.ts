@@ -19,6 +19,19 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  // async findOne(id: string): Promise<Auth | null> {
+  //   return this.userService.findOne(id).then((user) => {
+  //     if (!user) {
+  //       return null;
+  //     }
+  //     return {
+  //       user,
+  //       access_token: '',
+  //       message: 'Utilisateur trouvé avec succès',
+  //     };
+  //   });
+  // }
+
   async login(user: UserEntity): Promise<{ access_token: string }> {
     const payload = {
       email: user.email,
@@ -62,8 +75,19 @@ export class AuthService {
       sub: user.id,
       email: user.email,
       workspaceId: user.workspace.id,
+      role: user.role,
+      name: user.firstname,
+      lastname: user.lastname,
+      project: user.project?.map((project) => ({
+        id: project.id,
+        name: project.name,
+      })),
+      workspace: {
+        id: user.workspace.id,
+        name: user.workspace.name,
+      },
     };
-
+    console.log('JWT PAYLOAD:', payload);
     const token = await this.jwtService.signAsync(payload);
 
     const { password: _, ...safeUser } = user;

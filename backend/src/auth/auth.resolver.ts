@@ -5,13 +5,17 @@ import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { GqlAuthGuard } from './gqlAuthGuard';
+import { UserService } from 'src/user/user.service';
 // import { CreateAuthInput } from './dto/create-auth.input';
 // import { UpdateAuthInput } from './dto/update-auth.input';
 
 @Resolver(() => Auth)
 export class AuthResolver {
   [x: string]: any;
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   //? _________________________________________ Mutations _________________________________________
   @Mutation(() => Auth)
@@ -69,7 +73,7 @@ export class AuthResolver {
 
   //? _________________________________________ QUERIES _________________________________________
   // user.resolver.ts ou auth.resolver.ts
-  @Query(() => UserEntity)
+  @Query(() => UserEntity, { name: 'me' })
   @UseGuards(GqlAuthGuard)
   async me(@Context() context) {
     console.log('--- HEADERS REÇUS ---');
@@ -93,7 +97,7 @@ export class AuthResolver {
   // }
 
   // @Query(() => Auth, { name: 'auth' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
+  // findOne(@Args('id', { type: () => Int }) id: string) {
   //   return this.authService.findOne(id);
   // }
 
