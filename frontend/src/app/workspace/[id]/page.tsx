@@ -2,12 +2,15 @@
 import { useCurrentUser } from "@/lib/useCurrentUser";
 import { UserType } from "../../hook/context/authContext";
 import ProjectID from "../../project/[id]/page";
+import { Button } from "@/components/ui/button";
+import CreateProject from "../../project/CreateProject";
 
 export default function WorkspaceIdPage() {
 
     const { user, isLoading, isAuthenticated } = useCurrentUser() as unknown as { user: UserType | null; isLoading: boolean; isAuthenticated: boolean };
 
-    // console.log("WorkspaceIdPage - user:", user);
+    console.log("🚀 WorkspaceIdPage - user:", user?.workspace);
+    console.log("🚀 WorkspaceIdPage - project:", user?.workspace?.projects);
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -27,11 +30,20 @@ export default function WorkspaceIdPage() {
     return <div className="m-40">
         <h1 className="text-2xl font-bold">
             Bienvenue, {user?.firstname} {user?.lastname}
+
         </h1>
+        <p>Votre id : {user?.id}</p>
+        <Button>
+            {/* <CreateProject /> */} Creer un nouveau projet
+        </Button>
+        <Button>
+            Gerer les projets
+        </Button>
         {user?.workspace?.id ? (
             <div className="mt-4 p-6 border rounded shadow">
                 <p>Votre Workspace : <strong>{user.workspace.name}</strong></p>
                 <p>ID du Workspace : {user?.workspace.id}</p>
+                <p>Nombre de projets : {user?.workspace?.projects?.length}</p>
             </div>
         ) : (
             <p>Aucun workspace trouvé pour cet utilisateur.</p>

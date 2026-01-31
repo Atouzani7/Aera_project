@@ -78,13 +78,14 @@ export class AuthService {
       role: user.role,
       name: user.firstname,
       lastname: user.lastname,
-      project: user.project?.map((project) => ({
-        id: project.id,
-        name: project.name,
-      })),
+
       workspace: {
         id: user.workspace.id,
         name: user.workspace.name,
+        project: user.workspace.projects?.map((project) => ({
+          id: project.id,
+          name: project.name,
+        })),
       },
     };
     console.log('JWT PAYLOAD:', payload);

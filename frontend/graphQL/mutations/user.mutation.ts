@@ -32,6 +32,7 @@ export const SIGN_IN = gql`
     signIn(email: $email, password: $password) {
       access_token
       user {
+        id
         email
         # password // 🚨 ne pas le retourné coté front
         firstname

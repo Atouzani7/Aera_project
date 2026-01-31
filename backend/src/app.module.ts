@@ -51,6 +51,19 @@ import { Request, Response } from 'express';
         req,
         res,
       }),
+
+      cache: 'bounded',
+      plugins: [
+        {
+          async requestDidStart() {
+            return {
+              async willSendResponse({ response }) {
+                response.http.headers.set('Cache-Control', 'no-store');
+              },
+            };
+          },
+        },
+      ],
       // autoSchemaFile: true,
       sortSchema: true,
       playground: true,

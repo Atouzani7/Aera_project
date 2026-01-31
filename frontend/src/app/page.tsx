@@ -1,6 +1,6 @@
 import Image from "next/image";
-import AuthForm from "./components/Auth/LoginForm";
 import { Separator } from "@radix-ui/react-separator";
+import CreateProject from "./project/CreateProject";
 
 export default function Home() {
   return (
@@ -23,6 +23,7 @@ export default function Home() {
           </p>
           <Separator className="my-4 h-px w-48 bg-zinc-200 dark:bg-zinc-700" />
         </div>
+        <CreateProject />
       </main>
     </div>
   );

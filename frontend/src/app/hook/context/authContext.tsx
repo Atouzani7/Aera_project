@@ -7,13 +7,13 @@ import { createContext, useContext, useState, useEffect, ReactNode, useCallback 
 
 interface AuthContextType {
     user: UserType | undefined;
-    login: (userData: UserType, token: string) => void;
+    login: (data: UserType, token: string) => void;
     contextLogout: () => void;
     isLoading: boolean;
 }
 
 export interface UserType {
-    id: string;
+    id?: string;
     email: string;
     firstname?: string;
     lastname?: string;
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 cache: 'no-store', // Empêche Next.js de mettre en cache la réponse fetch
             },
         },
-        fetchPolicy: "network-only", // Pour forcer la récupération fraîche
+        fetchPolicy: "cache-and-network",
 
     });
     console.log(" AuthProvider - ME query data:", data, "loading:", loading, "error:", error);
@@ -105,32 +105,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, [data, loading, error, contextLogout]);
 
 
-
-
-    // useEffect(() => {
-    //     const savedUser = localStorage.getItem("userData");
-    //     if (savedUser && !user) {
-    //         setUser(JSON.parse(savedUser));
-    //     }
-
-    //     if (!loading) {
-    //         if (data?.me) {
-    //             setUser(data.me);
-    //             localStorage.setItem("userData", JSON.stringify(data.me));
-    //             setIsLoading(false);
-    //         } else if (error) {
-    //             if (error.message.includes("Unauthorized") || error.graphQLErrors?.some(e => e.extensions?.code === 'UNAUTHENTICATED')) {
-    //                 console.log("Session expirée ou invalide, déconnexion...");
-    //                 contextLogout();
-    //             }
-    //             setIsLoading(false);
-    //         }
-    //     }
-    // }, [data, loading, error, contextLogout]);
-
-
-
-
     const login = useCallback((userData: UserType, token: string) => {
         localStorage.setItem("token", token);
         localStorage.setItem("userData", JSON.stringify(userData));
@@ -138,15 +112,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         // console.log("TOKEN SAVED:", token);
         // console.log("LOCAL STORAGE NOW:", localStorage.getItem("token"));
 
-
-        console.log("LOGIN TOKEN RECEIVED:", token);
-        console.log("TOKEN BEFORE SAVE:", localStorage.getItem("token"));
+        console.log("🍄 USER DATA PASSED TO LOGIN:", userData);
 
         localStorage.setItem("token", token);
 
-        console.log("TOKEN AFTER SAVE:", localStorage.getItem("token"));
-
     }, []);
+
+    console.log("👉🏼 USER STORED IN CONTEXT:", user);
 
     return (
         <AuthContext.Provider value={{ user, login, contextLogout, isLoading, }}>

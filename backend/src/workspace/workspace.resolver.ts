@@ -26,7 +26,7 @@ export class WorkspaceResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => WorkspaceEntity, { name: 'workspaceByID' })
-  findOne(@Args('id', { type: () => Int }) id: string) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.workspaceService.findOne(id);
   }
 

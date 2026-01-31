@@ -13,9 +13,9 @@ export const GetLocations = gql`
 export const ME = gql`
   query Me {
     me {
+      id
       email
       firstname
-      id
       lastname
       profilePicture
       role
@@ -24,6 +24,7 @@ export const ME = gql`
       updatedAt
       workspace {
         id
+        name
         projects {
           createdAt
           description

@@ -182,7 +182,7 @@ type ProjectEntity {
 }
 
 type Query {
-  FindUserByID(id: Int!): UserEntity!
+  FindUserByID(id: String!): UserEntity!
   comment(id: Int!): Comment!
   file(id: Int!): File!
   me: UserEntity!
@@ -190,7 +190,7 @@ type Query {
   user: [UserEntity!]!
   userWorkspaces(userId: String!): [WorkspaceEntity!]!
   workspace: [WorkspaceEntity!]!
-  workspaceByID(id: Int!): WorkspaceEntity!
+  workspaceByID(id: String!): WorkspaceEntity!
 }
 
 type RegisterResponse {

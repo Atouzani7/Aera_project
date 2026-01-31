@@ -83,7 +83,8 @@ export class AuthResolver {
     console.log('--- USER DÉCODÉ ---');
     console.log(user);
 
-    return this.userService.findOne(user.userId);
+    // return this.userService.findOne(user.id); // le bon code pour id dans useCurrent
+    return this.userService.findOne(user.sub);
   }
 
   // @Mutation(() => Auth)
