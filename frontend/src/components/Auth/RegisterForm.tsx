@@ -50,14 +50,14 @@ export default function RegisterForm() {
     })
 
 
-    const [register, { loading, error }] = useMutation(REGISTER, {
-        onCompleted: (data) => {
-            console.log("Utilisateur créé avec succès :", data);
-        },
-        onError: (error) => {
-            console.error("Erreur Apollo :", error);
-        },
-    });
+    // const [register, { loading, error }] = useMutation(REGISTER, {
+    //     onCompleted: (data) => {
+    //         console.log("Utilisateur créé avec succès :", data);
+    //     },
+    //     onError: (error) => {
+    //         console.error("Erreur Apollo :", error);
+    //     },
+    // });
 
     // 2. Fonction pour mettre à jour l'état dynamiquement
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +69,7 @@ export default function RegisterForm() {
     };
 
 
-    const [registerMutation] = useMutation(REGISTER, {
+    const [registerMutation, { loading, error }] = useMutation(REGISTER, {
         onError: (error) => {
             console.error("Erreur lors de l'inscription :", error);
         },
