@@ -4,6 +4,7 @@ import "./globals.css";
 import ApolloClientProvider from "@/apollo/ApolloClientProvider";
 import { AuthProvider } from "./hook/context/authContext";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
@@ -37,6 +38,7 @@ export default function RootLayout({
           <AuthProvider>
             <Header />
             {children}
+            <Footer />
           </AuthProvider>
         </ApolloClientProvider>
       </body>

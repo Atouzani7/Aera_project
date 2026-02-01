@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Separator } from "@radix-ui/react-separator";
-import CreateProject from "./project/CreateProject";
+import CreateProject from "./project/newProject/page";
 
 export default function Home() {
   return (
@@ -21,9 +21,8 @@ export default function Home() {
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
             Développeur Fullstack
           </p>
-          <Separator className="my-4 h-px w-48 bg-zinc-200 dark:bg-zinc-700" />
+          {/* <Separator className="my-4 h-px w-48 bg-zinc-200 dark:bg-zinc-700" /> */}
         </div>
-        <CreateProject />
       </main>
     </div>
   );

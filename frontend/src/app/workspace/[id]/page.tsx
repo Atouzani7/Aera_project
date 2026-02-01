@@ -3,7 +3,7 @@ import { useCurrentUser } from "@/lib/useCurrentUser";
 import { UserType } from "../../hook/context/authContext";
 import ProjectID from "../../project/[id]/page";
 import { Button } from "@/components/ui/button";
-import CreateProject from "../../project/CreateProject";
+import { useRouter } from "next/navigation";
 
 export default function WorkspaceIdPage() {
 
@@ -11,6 +11,13 @@ export default function WorkspaceIdPage() {
 
     console.log("🚀 WorkspaceIdPage - user:", user?.workspace);
     console.log("🚀 WorkspaceIdPage - project:", user?.workspace?.projects);
+
+    const router = useRouter()
+
+    const handClickCreateProject = () => {
+        router.push("/project/newProject")
+    }
+
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -33,11 +40,9 @@ export default function WorkspaceIdPage() {
 
         </h1>
         <p>Votre id : {user?.id}</p>
-        <Button>
-            {/* <CreateProject /> */} Creer un nouveau projet
-        </Button>
-        <Button>
-            Gerer les projets
+        {/* <CreateProject /> */}
+        <Button onClick={handClickCreateProject}>
+            Créer un nouveau projet
         </Button>
         {user?.workspace?.id ? (
             <div className="mt-4 p-6 border rounded shadow">
@@ -57,7 +62,7 @@ export default function WorkspaceIdPage() {
                 <p><strong>{"    "}</strong> {user?.firstname}</p>
             </div>
             <div>
-                <p><strong>ID de l&apos;utilisateur :</strong> {user?.role}</p>
+                <p><strong>ID de l&apos;utilisateur :</strong> {user?.id}</p>
                 <p><strong>Email :</strong> {user?.email}</p>
             </div>
         </div>

@@ -17,16 +17,17 @@ export default function CreateProject() {
 
     const [createProject, { data, loading, error }] = useMutation(CREATE_PROJECT)
     console.log("data in Crete project", data)
-    console.log("user in Crete project", user)
 
     return (
         <motion.div className="flex flex-col items-center mt-40 text-center w-full border-2">
-            {/* <motion.h1>CREATE PROJECT</motion.h1> */}
-            <motion.div>
+            {/* <motion.div  > */}
+            <motion.div className="w-full max-w-2xl px-4">
                 <h2>Création d&apos;un nouveau projet</h2>
             </motion.div>
-            <motion.div>
-                <Card>
+            {/* <motion.div> */}
+            <motion.div className="w-full max-w-2xl px-4 space-y-6">
+                {/* <Card className="w-full"> */}
+                <Card className="w-full">
                     <CardHeader>
                         <CardTitle><motion.h1>Information client</motion.h1></CardTitle>
                         {/* <CardDescription>Card Description</CardDescription> */}
@@ -34,7 +35,7 @@ export default function CreateProject() {
                     <CardContent>
 
 
-                        <form className="w-full max-w-sm border-2">
+                        <form className=" border-2">
                             <FieldGroup>
                                 <Field>
                                     <FieldLabel htmlFor="form-name">Nom - Prenom du client</FieldLabel>
@@ -160,21 +161,22 @@ export default function CreateProject() {
 
                                     <PlusCircleIcon />
                                     <p>Ajouter une etape</p>
+                                    {/* Ajouter modal pour les étapes */}
                                 </div>
                             </Field>
                         </FieldGroup>
 
                     </CardContent>
                     <CardFooter>
-                        <p>Card Footer</p>
+                        {/* <p>Card Footer</p> */}
                     </CardFooter>
                 </Card>
 
 
 
             </motion.div>
-            <Button onClick={() => createProject()}>Create Project</Button>
-            <Field orientation="horizontal">
+            <Button className="m-4" onClick={() => createProject()}>Create Project</Button>
+            <Field orientation="horizontal" className="justify-end mb-4 mr-6">
                 <Button type="button" variant="destructive">
                     Cancel
                 </Button>
