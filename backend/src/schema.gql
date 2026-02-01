@@ -39,9 +39,12 @@ input CreateFileInput {
 }
 
 input CreateProjectInput {
+  contact_email: String!
   contact_name: String!
+  contact_phone: String!
   description: String
   name: String!
+  tag: ProjectTagEnum!
 }
 
 input CreateStepInput {
@@ -179,6 +182,17 @@ type ProjectEntity {
   updatedAt: DateTime!
   users: [UserEntity!]!
   workspace: WorkspaceEntity!
+}
+
+enum ProjectTagEnum {
+  ACCOMPAGNEMENT
+  AUTRE
+  BUSINESS
+  COMMUNICATION
+  CREATION
+  DIGITAL
+  EVENEMENTIEL
+  ORGANISATION
 }
 
 type Query {
