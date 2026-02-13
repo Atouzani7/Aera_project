@@ -26,9 +26,9 @@ export default function CreateProject() {
         contact_email: "",
         description: "",
         project_name: "",
-        project_tag: "DIGITAL",
+        project_tag: "AUTRE",
         deadline: "",
-        status: "PLANNED",
+        status: "NOT_STARTED",
         step: "Découverte projet"
     })
 
@@ -50,6 +50,7 @@ export default function CreateProject() {
     })
     console.log("data in Crete project", data)
 
+
     const router = useRouter();
     const handleFormSubmit = async (e: { preventDefault: () => void; }) => {
         // Empêche l'URL de se remplir avec ?firstname=...
@@ -66,8 +67,8 @@ export default function CreateProject() {
                         description: formData.description,
                         name: formData.project_name,
                         tag: formData.project_tag,
-                        // endDate: formData.deadline,
-                        // status: formData.status,
+                        deadline: formData.deadline,
+                        status: formData.status,
                         // step: formData.step,
                     },
                 },
@@ -122,12 +123,12 @@ export default function CreateProject() {
                         </Field>
                         <Field>
                             <FieldLabel htmlFor="form-country">Country</FieldLabel>
-                            <Select defaultValue="us">
+                            <Select defaultValue="fr">
                                 <SelectTrigger id="form-country">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="us">France</SelectItem>
+                                    <SelectItem value="fr">France</SelectItem>
                                     <SelectItem value="uk">Autre</SelectItem>
                                 </SelectContent>
                             </Select>
@@ -161,7 +162,17 @@ export default function CreateProject() {
                     <Field>
                         <FieldLabel htmlFor="form-tag">Tag</FieldLabel>
 
-                        <Select defaultValue="DIGITAL">
+                        <Select
+                            value={formData.project_tag}
+                            onValueChange={(value) =>
+                                setFormData((prev) => ({
+                                    ...prev,
+                                    project_tag: value,
+                                }))
+                            }
+                        >
+
+
                             <SelectTrigger id="form-tag">
                                 <SelectValue placeholder="Choisir un tag" />
                             </SelectTrigger>
@@ -195,19 +206,29 @@ export default function CreateProject() {
                     </Field>
                     <Field>
                         <FieldLabel htmlFor="form-Statut">Statut</FieldLabel>
-                        <Select defaultValue="Digital">
+                        <Select
+                            value={formData.status}
+                            onValueChange={(value) =>
+                                setFormData((prev) => ({
+                                    ...prev,
+                                    status: value,
+                                }))
+                            }
+                        >
+
                             <SelectTrigger id="form-Statut">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="Planifié">Planifié</SelectItem>
-                                <SelectItem value="Terminé">Terminé</SelectItem>
-                                <SelectItem value="En progression">En progression</SelectItem>
-                                <SelectItem value="attente">En attente</SelectItem>
-                                <SelectItem value="Annulé">Annulé</SelectItem>
-                                <SelectItem value="Archivé">Archivé</SelectItem>
-                                <SelectItem value="Approuvé">Approuvé</SelectItem>
-                                <SelectItem value="Rejeté">Rejeté</SelectItem>
+                                <SelectItem value="PLANNED">Planifié</SelectItem>
+                                <SelectItem value="TERMINED">Terminé</SelectItem>
+                                <SelectItem value="NOT_STARTED">Non commencé</SelectItem>
+                                <SelectItem value="IN_PROGRESS">En progression</SelectItem>
+                                <SelectItem value="PENDING">En attente</SelectItem>
+                                <SelectItem value="CANCELLED">Annulé</SelectItem>
+                                <SelectItem value="ARCHIVED">Archivé</SelectItem>
+                                <SelectItem value="APPROVED">Approuvé</SelectItem>
+                                <SelectItem value="REJECTED">Rejeté</SelectItem>
                             </SelectContent>
                         </Select>
                     </Field>
@@ -243,7 +264,7 @@ export default function CreateProject() {
                 </div>
 
             </form>
-        </motion.div>
+        </motion.div >
 
 
     )

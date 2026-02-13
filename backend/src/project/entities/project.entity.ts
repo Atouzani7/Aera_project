@@ -1,10 +1,4 @@
-import {
-  ObjectType,
-  Field,
-  Int,
-  ID,
-  GraphQLISODateTime,
-} from '@nestjs/graphql';
+import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
 import { IsEmail } from 'class-validator';
 import { GraphQLEmailAddress } from 'graphql-scalars';
 import { Comment } from 'src/comment/entities/comment.entity';
@@ -21,43 +15,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { registerEnumType } from '@nestjs/graphql';
+import { ProjectStatus, ProjectTagEnum } from './enums/project.enums';
 
-export type ProjectStatus =
-  | 'PLANNED' // planifié
-  | 'IN_PROGRESS'
-  | 'COMPLETED' // terminé
-  | 'ON_HOLD' // en attente
-  | 'CANCELLED' // annulé
-  | 'ARCHIVED' // archivé
-  | 'DELETED' // supprimé
-  | 'APPROVED' // approuvé
-  | 'REJECTED'; // rejeté
-
-//     1. Création
-// → tout ce qui est production, conception, création de valeur
-//     2.    Communication
-// → contenu, messages, échanges, visibilité
-//     3.    Digital
-// → web, outils en ligne, automatisation, tech au sens large
-//     4.    Business
-// → stratégie, offres, ventes, organisation
-//     5.    Contenu
-// → rédaction, médias, documents, livrables
-//     6.    Organisation
-// → gestion, structuration, planification, suivi
-//     7.    Accompagnement
-// → coaching, conseil, support, prestation humaine
-//     8.    Autre
-// → liberté totale sans friction
-export type ProjectTag =
-  | 'Création'
-  | 'Communication'
-  | 'Digital'
-  | 'Business'
-  | 'Evénementiel'
-  | 'Organisation'
-  | 'Accompagnement'
-  | 'Autre';
+//////////////////////
+// ENTITÉ
+//////////////////////
 
 @ObjectType()
 @Entity('project')
@@ -67,24 +30,39 @@ export class ProjectEntity {
   id: number;
 
   @Field(() => String, { description: 'Project Name' })
-  @Column({ length: 100 /*unique: true */ })
+  @Column({ length: 100 })
   name: string;
 
-  @Field(() => String, { description: 'Project Description' })
+  @Field(() => String, { description: 'Project Description', nullable: true })
   @Column({ nullable: true })
   description: string;
 
-  @Field(() => String, { description: 'Project Status' })
-  @Column({ default: 'PLANNED' })
+  @Field(() => ProjectStatus, { description: 'Project Status' })
+  @Column({
+    type: 'enum',
+    enum: ProjectStatus,
+    default: ProjectStatus.PLANNED,
+  })
   status: ProjectStatus;
+
+  @Field(() => ProjectTagEnum, { description: 'Project Tag', nullable: true })
+  @Column({
+    type: 'enum',
+    enum: ProjectTagEnum,
+    nullable: true,
+  })
+  tag: ProjectTagEnum;
 
   @Field(() => GraphQLISODateTime, { description: 'Project Start Date' })
   @CreateDateColumn()
   createdAt: Date;
 
-  @Field(() => GraphQLISODateTime, { description: 'Project End Date' })
+  @Field(() => GraphQLISODateTime, {
+    description: 'Project End Date',
+    nullable: true,
+  })
   @Column({ nullable: true })
-  endDate: Date;
+  deadline: Date;
 
   @Field(() => GraphQLISODateTime, { description: 'Project Update Date' })
   @Column({
@@ -94,38 +72,43 @@ export class ProjectEntity {
   })
   updatedAt: Date;
 
-  @Field(() => GraphQLISODateTime, { description: 'Project Archive Date' })
+  @Field(() => GraphQLISODateTime, {
+    description: 'Project Archive Date',
+    nullable: true,
+  })
   @Column({ nullable: true })
   archivedAt: Date;
 
-  @Field(() => String, { description: 'Project Google DriveId' })
+  @Field(() => String, {
+    description: 'Project Google DriveId',
+    nullable: true,
+  })
   @Column({ nullable: true })
   GDriveId: string;
 
-  @Field(() => String, { description: 'Project NotionId' })
+  @Field(() => String, { description: 'Project NotionId', nullable: true })
   @Column({ nullable: true })
   Notion_id: string;
 
-  @Field(() => String, { description: 'Project img' })
+  @Field(() => String, { description: 'Project img', nullable: true })
   @Column({ nullable: true })
   Brand_identity: string;
 
-  @Field(() => GraphQLEmailAddress, { description: 'Email client' })
+  @Field(() => GraphQLEmailAddress, {
+    description: 'Email client',
+    nullable: true,
+  })
   @Column({ nullable: true })
   @IsEmail({}, { message: 'Email must be a valid email address' })
   contact_email: string;
 
-  @Field(() => String, { description: 'name client' })
+  @Field(() => String, { description: 'Name client' })
   @Column({ nullable: false })
   contact_name: string;
 
-  @Field(() => String, { description: 'phone client' })
+  @Field(() => String, { description: 'Phone client', nullable: true })
   @Column({ nullable: true })
   contact_phone: string;
-
-  @Field(() => String, { description: 'tag project' })
-  @Column({ nullable: true })
-  tag: ProjectTag;
 
   @Field(() => [UserEntity])
   @ManyToMany(() => UserEntity, (user) => user.project)
@@ -143,7 +126,7 @@ export class ProjectEntity {
 
   @Field(() => WorkspaceEntity)
   @ManyToOne(() => WorkspaceEntity, (workspace) => workspace.projects, {
-    onDelete: 'CASCADE', // Si on supprime le workspace, on supprime ses projets
+    onDelete: 'CASCADE',
   })
   workspace: WorkspaceEntity;
 }

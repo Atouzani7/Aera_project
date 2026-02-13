@@ -10,8 +10,11 @@ import { UpdateProjectInput } from './dto/update-project.input';
 import { WorkspaceService } from 'src/workspace/workspace.service';
 import { UserService } from 'src/user/user.service';
 import { ProjectEntity } from './entities/project.entity';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
+import { ProjectStatus, ProjectTagEnum } from './entities/enums/project.enums';
 
 @Injectable()
 export class ProjectService {
@@ -28,7 +31,10 @@ export class ProjectService {
   create(createProjectInput: CreateProjectInput) {
     const project = this.projectRepository.create({
       ...createProjectInput,
+      status: (createProjectInput.status ??
+        ProjectStatus.PLANNED) as ProjectStatus,
     });
+
     console.log('--- project ---', project);
     return this.projectRepository.save(project);
   }
@@ -47,8 +53,7 @@ export class ProjectService {
     const user = await this.userService.findOne(userId);
     if (!user) throw new NotFoundException(`Utilisateur ${userId} introuvable`);
 
-    // 3. Vérification de l'accès (plus robuste que [0])
-    // On utilise Number() pour éviter le piège String vs Number
+    // 3. Vérification de l'accès
     const isMember = workspace.users?.some((u) => u.id === userId);
     if (!isMember) {
       throw new ForbiddenException(
@@ -56,14 +61,19 @@ export class ProjectService {
       );
     }
 
-    // 4. Création simplifiée
-    const newProject = this.projectRepository.create({
+    // 4. Préparer l'objet avec cast DeepPartial pour TypeORM
+    const projectData: DeepPartial<ProjectEntity> = {
       ...dto,
-      workspace: workspace,
-      users: [user],
-    });
+      status: (dto.status ?? ProjectStatus.PLANNED) as ProjectStatus,
+      tag: dto.tag as ProjectTagEnum,
+      workspace: workspace as DeepPartial<WorkspaceEntity>,
+      users: [user] as DeepPartial<UserEntity>[],
+    };
 
+    // 5. Créer et sauvegarder
+    const newProject = this.projectRepository.create(projectData);
     console.log('Création du projet pour le workspace:', workspace.id);
+
     return await this.projectRepository.save(newProject);
   }
 
