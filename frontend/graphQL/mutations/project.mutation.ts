@@ -9,37 +9,10 @@ export const CREATE_PROJECT = gql`
       contact_name
       contact_email
       contact_phone
-      status
-      tag
+      status: status
+      tag: tag
       createdAt
+      deadline
     }
   }
 `;
-
-// export const CREATE_PROJECT = gql`
-//   mutation CreateProject($createProjectInput: CreateProjectInput!) {
-//     createProject(
-//       createProjectInput: {
-//         contact_name: $contact_name
-//         name: $name
-//         description: $description
-//       }
-//     ) {
-//       Brand_identity
-//       GDriveId
-//       Notion_id
-//       archivedAt
-//       contact_email
-//       contact_name
-//       contact_phone
-//       createdAt
-//       description
-//       endDate
-//       id
-//       name
-//       status
-//       tag
-//       updatedAt
-//     }
-//   }
-// `;

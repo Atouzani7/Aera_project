@@ -1,24 +1,7 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
 import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
-import { ProjectStatus, ProjectTag } from '../entities/project.entity';
-// import { ProjectStatus } from './entities/project.entity';
 import { registerEnumType } from '@nestjs/graphql';
-
-// project-tag.enum.ts
-export enum ProjectTagEnum {
-  CREATION = 'Création',
-  COMMUNICATION = 'Communication',
-  DIGITAL = 'Digital',
-  BUSINESS = 'Business',
-  EVENEMENTIEL = 'Evénementiel',
-  ORGANISATION = 'Organisation',
-  ACCOMPAGNEMENT = 'Accompagnement',
-  AUTRE = 'Autre',
-}
-
-registerEnumType(ProjectTagEnum, {
-  name: 'ProjectTagEnum',
-});
+import { ProjectStatus, ProjectTagEnum } from '../entities/enums/project.enums';
 
 @InputType()
 export class CreateProjectInput {
@@ -49,12 +32,12 @@ export class CreateProjectInput {
   @Field(() => ProjectTagEnum)
   tag?: ProjectTagEnum;
 
-  //   @Field(() => Enumerator, { nullable: true })
-  //   status?: ProjectStatus;
+  @Field(() => ProjectStatus, { nullable: true })
+  status?: ProjectStatus;
 
   //   @Field(() => String, { nullable: true })
   //   step?: string;
 
-  //   @Field(() => String, { nullable: true })
-  //   endDate?: string;
+  @Field(() => Date, { nullable: true })
+  deadline?: Date;
 }

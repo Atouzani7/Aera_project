@@ -42,8 +42,10 @@ input CreateProjectInput {
   contact_email: String!
   contact_name: String!
   contact_phone: String!
+  deadline: DateTime
   description: String
   name: String!
+  status: ProjectStatus
   tag: ProjectTagEnum!
 }
 
@@ -135,35 +137,35 @@ type Mutation {
 
 type ProjectEntity {
   """Project img"""
-  Brand_identity: String!
+  Brand_identity: String
 
   """Project Google DriveId"""
-  GDriveId: String!
+  GDriveId: String
 
   """Project NotionId"""
-  Notion_id: String!
+  Notion_id: String
 
   """Project Archive Date"""
-  archivedAt: DateTime!
+  archivedAt: DateTime
   comments: [Comment!]!
 
   """Email client"""
-  contact_email: EmailAddress!
+  contact_email: EmailAddress
 
-  """name client"""
+  """Name client"""
   contact_name: String!
 
-  """phone client"""
-  contact_phone: String!
+  """Phone client"""
+  contact_phone: String
 
   """Project Start Date"""
   createdAt: DateTime!
 
-  """Project Description"""
-  description: String!
-
   """Project End Date"""
-  endDate: DateTime!
+  deadline: DateTime
+
+  """Project Description"""
+  description: String
 
   """ID"""
   id: ID!
@@ -172,16 +174,30 @@ type ProjectEntity {
   name: String!
 
   """Project Status"""
-  status: String!
+  status: ProjectStatus!
   step: [Step!]!
 
-  """tag project"""
-  tag: String!
+  """Project Tag"""
+  tag: ProjectTagEnum
 
   """Project Update Date"""
   updatedAt: DateTime!
   users: [UserEntity!]!
   workspace: WorkspaceEntity!
+}
+
+enum ProjectStatus {
+  APPROVED
+  ARCHIVED
+  CANCELLED
+  COMPLETED
+  DELETED
+  IN_PROGRESS
+  NOT_STARTED
+  PENDING
+  PLANNED
+  REJECTED
+  TERMINED
 }
 
 enum ProjectTagEnum {
