@@ -13,6 +13,24 @@ export const FIND_WORKSPACE_BY_USERID = gql`
       projects {
         id
         name
+        description
+        deadline
+        status
+        tag
+        createdAt
+        updatedAt
+        archivedAt
+        # step {
+        #   id
+        #   name
+        #   description
+        # }
+        contact_name
+        contact_email
+        contact_phone
+        Notion_id
+        GDriveId
+        avatar
       }
     }
   }

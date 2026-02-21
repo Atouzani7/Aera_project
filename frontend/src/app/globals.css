@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
 @theme inline {
   /* --- Polices --- */
   --font-avenir: "Avenir", "sans-serif";
@@ -49,6 +50,12 @@
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 }
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
 
 
 /* --- Variables de Design (Light Mode) --- */
@@ -73,6 +80,9 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  --font-avenir: "Avenir", "sans-serif";
+  --font-gill-sans: 'GillSans', sans-serif;
+
 }
 
 /* --- Dark Mode --- */
@@ -83,10 +93,19 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
   body {
     @apply bg-background text-foreground font-avenir;
   }
+
+  /* .font-avenir {
+    font-family: var(--font-avenir);
+  }
+
+  .font-gill {
+    font-family: var(--font-gill-sans);
+  } */
+
+  .font-avenir { font-family: var(--font-avenir); }
+.font-gill { font-family: var(--font-gill-sans); }
+
 }
