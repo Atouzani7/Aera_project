@@ -13,11 +13,11 @@ export type StepStatus =
   | 'UNDER_REVIEW' // en cours de révision
   | 'WAITING_FOR_FEEDBACK'; // en attente de retour
 @ObjectType()
-@Entity()
-export class Step {
+@Entity('steps')
+export class StepEntity {
   @Field(() => ID, { description: 'ID' })
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Field(() => String, { description: 'Step Name' })
   @Column({ length: 100, default: 'First Step' })

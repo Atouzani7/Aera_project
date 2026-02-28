@@ -2,7 +2,7 @@ import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
 import { IsEmail } from 'class-validator';
 import { GraphQLEmailAddress } from 'graphql-scalars';
 import { Comment } from 'src/comment/entities/comment.entity';
-import { Step } from 'src/step/entities/step.entity';
+import { StepEntity } from 'src/step/entities/step.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
 import {
@@ -110,15 +110,24 @@ export class ProjectEntity {
   @Column({ nullable: true })
   contact_phone: string;
 
+  @Field(() => String, {
+    description: 'avatar',
+    nullable: true,
+    defaultValue:
+      'https://raw.githubusercontent.com/Atouzani7/Aera_project/refs/heads/main/frontend/public/logo.png',
+  })
+  @Column({ nullable: true })
+  avatar: string;
+
   @Field(() => [UserEntity])
   @ManyToMany(() => UserEntity, (user) => user.project)
   @JoinTable()
   users: UserEntity[];
 
-  @Field(() => [Step])
-  @ManyToMany(() => Step, (step) => step.projects)
+  @Field(() => [StepEntity])
+  @ManyToMany(() => StepEntity, (step) => step.projects)
   @JoinTable()
-  step: Step[];
+  step: StepEntity[];
 
   @Field(() => [Comment])
   @OneToMany(() => Comment, (comment) => comment.project)

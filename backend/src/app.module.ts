@@ -15,7 +15,7 @@ import { StepModule } from './step/step.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 import { UserEntity } from './user/entities/user.entity';
 import { ProjectEntity } from './project/entities/project.entity';
-import { Step } from './step/entities/step.entity';
+import { StepEntity } from './step/entities/step.entity';
 import { Comment } from './comment/entities/comment.entity';
 import { WorkspaceEntity } from './workspace/entities/workspace.entity';
 import { File } from './file/entities/file.entity';
@@ -34,7 +34,7 @@ import { Request, Response } from 'express';
       entities: [
         UserEntity,
         ProjectEntity,
-        Step,
+        StepEntity,
         Comment,
         File,
         WorkspaceEntity,
