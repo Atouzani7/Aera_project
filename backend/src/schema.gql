@@ -50,8 +50,10 @@ input CreateProjectInput {
 }
 
 input CreateStepInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  description: String!
+  endDate: DateTime
+  name: String! = "First Step"
+  status: String!
 }
 
 input CreateUserInput {
@@ -117,20 +119,20 @@ type Mutation {
   createComment(createCommentInput: CreateCommentInput!): Comment!
   createFile(createFileInput: CreateFileInput!): File!
   createProject(createProjectInput: CreateProjectInput!): ProjectEntity!
-  createStep(createStepInput: CreateStepInput!): Step!
+  createStep(createStepInput: CreateStepInput!, projectId: String!): StepEntity!
   createUser(createUserInput: CreateUserInput!): UserEntity!
   createWorkspace(createWorkspaceInput: CreateWorkspaceInput!): WorkspaceEntity!
   logout: LogoutResponse!
   register(email: String!, firstname: String!, lastname: String!, password: String!, workspaceName: String): RegisterResponse!
   removeComment(id: Int!): Comment!
   removeFile(id: Int!): File!
-  removeStep(id: Int!): Step!
+  removeStep(id: Int!): StepEntity!
   removeUser(id: Int!): UserEntity!
   removeWorkspace(id: Int!): WorkspaceEntity!
   signIn(email: String!, password: String!): Auth!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   updateFile(updateFileInput: UpdateFileInput!): File!
-  updateStep(updateStepInput: UpdateStepInput!): Step!
+  updateStep(updateStepInput: UpdateStepInput!): StepEntity!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): UserEntity!
   updateWorkspace(updateWorkspaceInput: UpdateWorkspaceInput!): WorkspaceEntity!
 }
@@ -147,6 +149,9 @@ type ProjectEntity {
 
   """Project Archive Date"""
   archivedAt: DateTime
+
+  """avatar"""
+  avatar: String
   comments: [Comment!]!
 
   """Email client"""
@@ -175,7 +180,7 @@ type ProjectEntity {
 
   """Project Status"""
   status: ProjectStatus!
-  step: [Step!]!
+  step: [StepEntity!]!
 
   """Project Tag"""
   tag: ProjectTagEnum
@@ -216,7 +221,8 @@ type Query {
   comment(id: Int!): Comment!
   file(id: Int!): File!
   me: UserEntity!
-  step(id: Int!): Step!
+  step(id: Int!): StepEntity!
+  steps: [StepEntity!]!
   user: [UserEntity!]!
   userWorkspaces(userId: String!): [WorkspaceEntity!]!
   workspace: [WorkspaceEntity!]!
@@ -232,7 +238,7 @@ type RegisterResponse {
   workspace: WorkspaceEntity
 }
 
-type Step {
+type StepEntity {
   """Step Creation Date"""
   createdAt: DateTime!
 
@@ -271,9 +277,11 @@ input UpdateFileInput {
 }
 
 input UpdateStepInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  description: String
+  endDate: DateTime
   id: Int!
+  name: String = "First Step"
+  status: String
 }
 
 input UpdateUserInput {
