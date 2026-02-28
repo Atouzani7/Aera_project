@@ -39,7 +39,7 @@ export default function Header() {
     }
 
     return (
-        <header className="bg-white/10 backdrop-blur-xl w-full fixed top-0 left-0 z-50 border-b-1 px-4 py-4">
+        <header className="bg-white/10 backdrop-blur-xl w-full fixed top-0 left-0 z-50 shadow px-4 py-4">
 
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo cliquable */}

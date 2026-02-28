@@ -72,7 +72,6 @@ export class ProjectService {
 
     // 5. Créer et sauvegarder
     const newProject = this.projectRepository.create(projectData);
-    console.log('Création du projet pour le workspace:', workspace.id);
 
     return await this.projectRepository.save(newProject);
   }

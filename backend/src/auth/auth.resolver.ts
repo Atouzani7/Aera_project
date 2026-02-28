@@ -76,12 +76,7 @@ export class AuthResolver {
   @Query(() => UserEntity, { name: 'me' })
   @UseGuards(GqlAuthGuard)
   async me(@Context() context) {
-    console.log('--- HEADERS REÇUS ---');
-    console.log(context.req.headers); // Regarde si "authorization" existe ici
-
     const user = context.req.user;
-    console.log('--- USER DÉCODÉ ---');
-    console.log(user);
 
     // return this.userService.findOne(user.id); // le bon code pour id dans useCurrent
     return this.userService.findOne(user.sub);

@@ -18,8 +18,6 @@ export class ProjectResolver {
     @Args('createProjectInput') createProjectInput: CreateProjectInput,
     @CurrentUser() user: UserEntity,
   ) {
-    console.log('User extrait du décorateur:', user);
-
     const userId = user.id;
     const workspaceId = user.workspaceId;
     if (!workspaceId) {

@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         fetchPolicy: "cache-and-network",
 
     });
-    console.log(" AuthProvider - ME query data:", data, "loading:", loading, "error:", error);
+    // console.log(" AuthProvider - ME query data:", data, "loading:", loading, "error:", error);
 
     useEffect(() => {
         // 1. Tenter de récupérer les données locales tout de suite pour l'UX
@@ -109,16 +109,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("token", token);
         localStorage.setItem("userData", JSON.stringify(userData));
         setUser(userData);
-        // console.log("TOKEN SAVED:", token);
-        // console.log("LOCAL STORAGE NOW:", localStorage.getItem("token"));
 
         console.log("🍄 USER DATA PASSED TO LOGIN:", userData);
 
         localStorage.setItem("token", token);
 
     }, []);
-
-    console.log("👉🏼 USER STORED IN CONTEXT:", user);
 
     return (
         <AuthContext.Provider value={{ user, login, contextLogout, isLoading, }}>
