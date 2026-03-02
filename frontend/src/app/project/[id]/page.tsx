@@ -11,6 +11,8 @@ import Step from "@/src/components/Step/Step";
 import { useRouter } from "next/navigation";
 import { Project, UserWorkspacesQuery } from "@/types/types";
 import { useState } from "react";
+import { HorizontalStepper } from "@/src/components/Step/Stepper";
+import StatusBadge from "@/src/components/StatusBadge";
 
 
 
@@ -67,11 +69,6 @@ export default function CardProjectID() {
     const { user, isLoading, isAuthenticated } = useCurrentUser();
 
     const userId = user?.id;
-
-    // const { data, loading, error } = useQuery<WorkspaceQueryResult>(FIND_WORKSPACE_BY_USERID, {
-    //     variables: { userId },
-    //     skip: !isAuthenticated || !userId,
-    // });
 
     const { data, loading, error } = useQuery<UserWorkspacesQuery>(
         FIND_WORKSPACE_BY_USERID,
@@ -149,14 +146,12 @@ export default function CardProjectID() {
                                 <Step />
                             </div>
                             <div className="flex flex-col gap-2  min-w-[100px]">
-                                <div className="flex-1 px-8  bg-yellow-200">
-                                    <span className="px-3 py-1  text-yellow-700 rounded-full text-xs font-medium">
-                                        En attente du feedback
-                                    </span>
-                                    {/* Ici tu pourras ajouter ta barre d'étape plus tard */}
+                                <div className="flex-1 px-8  ">
+
+                                    <StatusBadge status={project.status} />
+
 
                                 </div>
-
                                 {/* SECTION DROITE : Boutons d'action */}
                                 <div className="flex flex-col gap-2 min-w-[150px]">
 
@@ -187,6 +182,7 @@ export default function CardProjectID() {
 
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error.message}</p>}
+
 
 
         </motion.div >

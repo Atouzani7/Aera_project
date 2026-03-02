@@ -96,6 +96,7 @@ import { useParams } from "next/navigation"
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import Step from "@/src/components/Step/Step";
+import StatusBadge from "@/src/components/StatusBadge";
 
 function formatDate(dateString?: string) {
     if (!dateString) return "";
@@ -143,7 +144,7 @@ export default function ProjectIdPage() {
     if (!project) return <div>Projet non trouvé</div>;
 
 
-    const ExternalLink = ({ href, children }) => (
+    const ExternalLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
         <a
             href={href}
             target="_blank"
@@ -158,7 +159,7 @@ export default function ProjectIdPage() {
         { label: "Google Drive", url: project.GDriveId },
         { label: "Notion", url: project.Notion_id },
     ];
-
+    const filteredLinks = links.filter((link) => link.url)
     return (
         <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -169,6 +170,8 @@ export default function ProjectIdPage() {
                 <h1 className="text-2xl font-light tracking-wider">Mon projet</h1>
                 <h1 className="text-m font-medium text-muted-foreground md:mr-4 ">
                     <span className="text-muted-foreground md:m-auto italic">{project.name}</span>&nbsp; <br />
+                    <span className="text-foreground text-muted-foreground text-sm">Statut :&nbsp;<StatusBadge status={project.status} /> </span>&nbsp; <br />
+
                 </h1>
             </div>
             <motion.div className="flex items-center md:m-10">
@@ -187,6 +190,7 @@ export default function ProjectIdPage() {
             <div className="m-10">
                 <motion.div className=" border-1 border-muted-foreground/10 p-6 rounded-lg shadow">
                     <h1 className="text-2xl font-light tracking-wider pb-4">Détails du projet</h1>
+
                     <h1 className="text-m font-medium md:m-auto">
                         <span className="text-foreground">Nom du projet :&nbsp; {project.name}</span>&nbsp; <br />
                         <div className="mt-4">
@@ -207,20 +211,13 @@ export default function ProjectIdPage() {
                     </h1>
                 </motion.div>
                 <Separator className="my-10" />
-                <motion.div className=" border-1 border-muted-foreground/10 p-6 rounded-lg">
-                    <h1 className="text-2xl font-light tracking-wider pb-4">Etape du projet</h1>
-                    <h1 className="text-m font-medium text-muted-foreground md:mr-4">
-                        <span className="text-foreground">Statut :&nbsp; {project.status}</span>&nbsp; <br />
-                        <span className="text-m font-medium text-muted-foreground md:mr-4">Deadline :&nbsp; {formatDate(project.deadline)}</span>
-                    </h1>
-                </motion.div>
 
                 <Separator className="my-10" />
                 <motion.div className=" border-1 border-muted-foreground/10 p-6 rounded-lg shadow-sm ">
 
-                    <h1 className="text-2xl font-light tracking-wider pb-4 ">Etat du projet</h1>
+                    <h1 className="text-2xl font-light tracking-wider pb-4 ">Etape du projet</h1>
                     <h1 className="text-m font-medium text-muted-foreground md:mr-4">
-                        <span className="text-foreground">Statut :&nbsp; {project.status}</span>&nbsp; <br />
+                        <span className="text-foreground">Statut :&nbsp;<StatusBadge status={project.status} /> </span>&nbsp; <br />
                         <span className="text-m font-medium text-muted-foreground md:mr-4">Deadline :&nbsp; {formatDate(project.deadline)}</span>
                     </h1>
                     <Step />
@@ -230,13 +227,17 @@ export default function ProjectIdPage() {
 
                     <h1 className="text-2xl font-light tracking-wider pb-4 ">Documents liés au projet</h1>
                     <h1 className="text-m font-medium text-muted-foreground md:mr-4">
-                        {links.map((link, index) => (
-                            <span key={link.label}>
-                                {link.label} :{" "}
-                                <ExternalLink href={link.url}>Lien du dossier</ExternalLink>
-                                {index < links.length - 1 && " | "}
-                            </span>
-                        ))}
+                        {filteredLinks.length > 0 ? (
+                            filteredLinks.map((link, index) => (
+                                <span key={link.label}>
+                                    {link.label} :{" "}
+                                    <ExternalLink href={link.url!}>Lien du dossier</ExternalLink>
+                                    {index < filteredLinks.length - 1 && " | "}
+                                </span>
+                            ))
+                        ) : (
+                            "Aucun document"
+                        )}
                     </h1>
                 </motion.div>
             </div>
