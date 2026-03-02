@@ -31,4 +31,16 @@ type UserWorkspacesQuery = {
   userWorkspaces: Workspace[];
 };
 
-export type { Project, Workspace, UserWorkspacesQuery };
+type StepsByProjectQuery = {
+  stepsByProject: {
+    createdAt: string;
+    description: string;
+    endDate: string;
+    id: string;
+    name: string;
+    status: string;
+    updatedAt: string;
+  }[];
+};
+
+export type { Project, Workspace, UserWorkspacesQuery, StepsByProjectQuery };

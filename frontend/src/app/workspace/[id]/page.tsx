@@ -34,9 +34,9 @@ export default function WorkspaceIdPage() {
     if (!user) {
         return <div>Please log in to access this workspace.</div>;
     }
-    return <div className="">
+    return <div className="md:min-h-[600px] min-h-[500px]  ">
 
-        <div className="mb-10 text-center mt-50 md:mt-40">
+        <div className="mb-10 text-center mt-50 md:mt-40 ">
             <h1 className="text-2xl font-light tracking-wider font-avenir">Dashboard</h1>
             <h1 className="text-m font-medium text-muted-foreground md:mr-4">
                 Bienvenue,&nbsp;

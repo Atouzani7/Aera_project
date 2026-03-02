@@ -26,7 +26,10 @@ export class StepResolver {
     return this.stepService.findAll();
   }
 
-  @Query(() => StepEntity, { name: 'step' })
+  @Query(() => [StepEntity], { name: 'stepsByProject' })
+  async findByProject(@Args('projectId') projectId: string) {
+    return this.stepService.findStepByProject(projectId);
+  }
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.stepService.findOne(id);
   }

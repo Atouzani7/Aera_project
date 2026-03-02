@@ -58,6 +58,17 @@ export class StepService {
     return this.stepRepository.save(step);
   }
 
+  async findStepByProject(projectId: string): Promise<StepEntity[]> {
+    const project = await this.projectRepository.findOne({
+      where: { id: Number(projectId) },
+      relations: ['step'],
+    });
+
+    if (!project) throw new NotFoundException('Project not found');
+
+    return project.step || [];
+  }
+
   findAll() {
     return `This action returns all step`;
   }
