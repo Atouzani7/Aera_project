@@ -14,6 +14,15 @@ type Project = {
   Notion_id?: string;
   GDriveId?: string;
   avatar?: string;
+  step: {
+    id: string;
+    name: string;
+    description: string;
+    status: string;
+    endDate: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
 };
 
 type Workspace = {

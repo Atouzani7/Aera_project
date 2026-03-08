@@ -5,6 +5,7 @@ import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export type StepStatus =
   | 'NOT_STARTED' // non commencé
+  | 'PLANNED' // planifié
   | 'IN_PROGRESS'
   | 'COMPLETED'
   | 'BLOCKED'
