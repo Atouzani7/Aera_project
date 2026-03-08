@@ -9,17 +9,18 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-indigo-100 text-zinc-900 hover:bg-indigo-100/40 backdrop-blur-lg border border-white/40 transition-all",
+        default: "bg-indigo-100 text-zinc-900 hover:bg-indigo-100/40 backdrop-blur-lg border border-white/40 transition-all shadow-sm hover:shadow-md",
         destructive:
-          "bg-destructive text-foreground hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-destructive text-foreground hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 shadow-sm hover:shadow-md",
         outline:
           "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
-        validation: "bg-emerald-200 text-zinc-900 hover:bg-emerald-200/40 backdrop-blur-lg border border-white/40 transition-all",
+        link: "text-primary underline-offset-4 hover:underline shadow-sm hover:shadow-md",
+        validation: "bg-emerald-200 text-zinc-900 hover:bg-emerald-200/40 backdrop-blur-lg border border-white/40 transition-all shadow-sm hover:shadow-md",
+        create: "bg-orange-200/60 text-zinc-900 hover:bg-orange-200/40 backdrop-blur-lg border border-white/40 transition-all shadow-sm hover:shadow-md",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

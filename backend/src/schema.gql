@@ -221,8 +221,8 @@ type Query {
   comment(id: Int!): Comment!
   file(id: Int!): File!
   me: UserEntity!
-  step(id: Int!): StepEntity!
   steps: [StepEntity!]!
+  stepsByProject(projectId: String!): [StepEntity!]!
   user: [UserEntity!]!
   userWorkspaces(userId: String!): [WorkspaceEntity!]!
   workspace: [WorkspaceEntity!]!
