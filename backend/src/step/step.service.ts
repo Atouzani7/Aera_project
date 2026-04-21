@@ -66,7 +66,7 @@ export class StepService {
 
     if (!project) throw new NotFoundException('Project not found');
 
-    return project.step || [];
+    return project.steps || [];
   }
 
   findAll() {
