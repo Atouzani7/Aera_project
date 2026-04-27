@@ -47,7 +47,7 @@ export class WorkspaceService {
 
   async findUserWorkspaces(userId: string): Promise<WorkspaceEntity[]> {
     const workspaces = await this.workspaceRepository.find({
-      relations: ['users', 'projects'],
+      relations: ['users', 'projects', 'projects.steps'],
       where: {
         users: {
           id: userId,

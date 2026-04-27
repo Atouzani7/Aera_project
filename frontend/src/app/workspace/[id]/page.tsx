@@ -1,96 +1,21 @@
-// "use client";
-// import { useCurrentUser } from "@/lib/useCurrentUser";
-// import { UserType } from "../../hook/context/authContext";
-// import ProjectID from "../../project/[id]/page";
-// import { Button } from "@/components/ui/button";
-// import { useRouter } from "next/navigation";
-// import CardProjectID from "../../project/[id]/page";
-// import { PlusCircleIcon } from "lucide-react";
-// import { TabsContent } from "@/components/ui/tabs";
-
-// export default function WorkspaceIdPage() {
-
-//     const { user, isLoading, isAuthenticated } = useCurrentUser() as unknown as { user: UserType | null; isLoading: boolean; isAuthenticated: boolean };
-
-//     console.log("🚀 WorkspaceIdPage - user:", user?.workspace);
-
-//     const router = useRouter()
-
-//     const handClickCreateProject = () => {
-//         router.push("/project/newProject")
-//     }
-
-
-//     if (isLoading) {
-//         return <div>Loading...</div>;
-//     }
-
-//     if (!user) {
-//         return <div>Please log in to access this workspace.</div>;
-//     }
-
-//     if (!isAuthenticated) {
-//         return <div>Please log in to access this workspace.</div>;
-//     }
-
-//     if (!user) {
-//         return <div>Please log in to access this workspace.</div>;
-//     }
-//     return <div className="md:min-h-[600px] min-h-[500px]  ">
-
-//         <div className="mb-10 text-center mt-50 md:mt-40 ">
-//             <h1 className="text-2xl font-light tracking-wider font-avenir">Dashboard</h1>
-//             <h1 className="text-m font-medium text-muted-foreground md:mr-4">
-//                 Bienvenue,&nbsp;
-//                 <span className="text-foreground">{user?.firstname}</span>
-//             </h1>
-//         </div>
-
-//         {/* <p>Votre id : {user?.id}</p> */}
-//         <Button variant="create" onClick={handClickCreateProject} className="m-2">
-//             <PlusCircleIcon className="mr-2 h-4 w-4" />
-//             Créer un nouveau projet
-//         </Button>
-
-//         {user?.workspace?.id ? (
-//             <div className="mt-4 p-6 shadow">
-//                 <p>Votre Workspace : <strong>{user.workspace.name}</strong></p>
-//                 <p>ID du Workspace : {user?.workspace.id}</p>
-//             </div>
-//         ) : (
-//             <p>Aucun workspace trouvé pour cet utilisateur.</p>
-//         )}
-//         <div className="mt-4 p-6 shadow">
-//             filtre par status et avancement du projet
-//         </div>
-//         <div className="mt-4 p-6 @ shadow ">
-//             <h2 className="text-xl font-semibold mb-2 ">Détails des Projets :</h2>
-//             <CardProjectID />
-
-//         </div>
-
-//     </div>
-
-// }
-
 "use client";
-
 import { useCurrentUser } from "@/lib/useCurrentUser";
 import { useQuery } from "@apollo/client/react";
 import { FIND_WORKSPACE_BY_USERID } from "@/graphQL/queries/workspace.queries";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CardProjectID from "../../project/[id]/page";
-import { FolderCheck, FolderClock, FolderCog, FolderDown, FolderHeart, FolderInputIcon, ListFilter, Menu, PlusCircleIcon, X } from "lucide-react";
+import { FolderCheck, FolderClock, FolderCog, FolderDown, FolderHeart, FolderInputIcon, ListFilter, PlusCircleIcon, X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import ResumeCountProject from "@/src/components/ResumeCountProject";
 
 export default function WorkspaceIdPage() {
     const { user, isLoading, isAuthenticated } = useCurrentUser();
 
     const userId = user?.id;
 
-    const { data, loading, error } = useQuery(FIND_WORKSPACE_BY_USERID, { variables: { userId } });
+    const { data, loading, error } = useQuery<{ userWorkspaces: Array<{ projects: any[] }> }>(FIND_WORKSPACE_BY_USERID, { variables: { userId } });
 
     const projects = data?.userWorkspaces?.flatMap(ws => ws.projects ?? []) ?? [];
 
@@ -122,14 +47,27 @@ export default function WorkspaceIdPage() {
                     Bienvenue,&nbsp;
                     <span className="text-foreground">{user?.firstname}</span>
                 </h1>
+
+                <div className="items-center md:m-10">
+                    <ResumeCountProject />
+                    {projects.length === 0 && <p className="text-gray-500 text-sm">Aucun projet trouvé. Crée ton premier projet ✨</p>}
+                    {projects.length === 0 && <Button variant="create" onClick={handClickCreateProject} className="m-2">
+                        <PlusCircleIcon className="mr-2 h-4 w-4" />
+                        Créer un nouveau projet
+                    </Button>}
+
+                </div>
+
             </div>
+
             <Button variant="default" onClick={handClickCreateProject} className="m-2">
                 <PlusCircleIcon className="mr-2 h-4 w-4" />
                 Créer un nouveau projet
             </Button>
+
             <Tabs defaultValue="All" className="relative w-full">
 
-                {/* header */}
+
                 <div className="flex items-center justify-between">
                     <button
                         className="md:hidden rounded-lg hover:bg-gray-100"

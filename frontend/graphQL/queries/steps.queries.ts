@@ -5,7 +5,6 @@ export const STEPS_BY_PROJECT = gql`
     stepsByProject(projectId: $projectId) {
       createdAt
       description
-      #   endDate
       id
       name
       status

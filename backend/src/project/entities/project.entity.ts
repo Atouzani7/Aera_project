@@ -124,10 +124,10 @@ export class ProjectEntity {
   @JoinTable()
   users: UserEntity[];
 
-  @Field(() => [StepEntity])
-  @ManyToMany(() => StepEntity, (step) => step.projects)
+  @Field(() => [StepEntity], { nullable: 'itemsAndList' })
+  @ManyToMany(() => StepEntity, (step) => step.projects, { eager: true })
   @JoinTable()
-  step: StepEntity[];
+  steps: StepEntity[];
 
   @Field(() => [Comment])
   @OneToMany(() => Comment, (comment) => comment.project)

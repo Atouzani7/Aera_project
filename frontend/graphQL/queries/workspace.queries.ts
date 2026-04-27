@@ -20,11 +20,11 @@ export const FIND_WORKSPACE_BY_USERID = gql`
         createdAt
         updatedAt
         archivedAt
-        # step {
-        #   id
-        #   name
-        #   description
-        # }
+        steps {
+          id
+          name
+          description
+        }
         contact_name
         contact_email
         contact_phone

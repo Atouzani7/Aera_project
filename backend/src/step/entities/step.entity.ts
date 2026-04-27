@@ -51,6 +51,6 @@ export class StepEntity {
   @Field(() => [ProjectEntity], {
     description: 'Projects associated with this Step',
   })
-  @ManyToMany(() => ProjectEntity, (project) => project.step)
+  @ManyToMany(() => ProjectEntity, (project) => project.steps)
   projects: ProjectEntity[];
 }
