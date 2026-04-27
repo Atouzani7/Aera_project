@@ -11,6 +11,9 @@ import { Button } from "@/components/ui/button";
 import Step from "@/src/components/Step/Step";
 import StatusBadge from "@/src/components/StatusBadge";
 import { HorizontalStepper } from "@/src/components/Step/Stepper";
+import { ArrowLeftIcon } from "lucide-react";
+import useProject from "@/src/app/hook/useProject";
+
 
 function formatDate(dateString?: string) {
     if (!dateString) return "";
@@ -47,9 +50,6 @@ export default function ProjectIdPage() {
         w.projects.some((p) => p.id === id || p.name === decodeURIComponent(slug))
     );
 
-    // const project = workspace?.projects.find(
-    //     (p) => p.id === id || p.name === decodeURIComponent(slug)
-    // );
     const project = data?.userWorkspaces
         ?.flatMap((w) => w.projects)
         .find((p) => p.id === id || toSlug(p.name) === slug);
@@ -93,7 +93,7 @@ export default function ProjectIdPage() {
                         window.location.href = `/workspace/${workspace?.id}`;
                     }}
                 >
-                    Retourner au workspace
+                    <ArrowLeftIcon className="mr-2 h-4 w-4" /> Retourner au workspace
                 </Button>
             </motion.div>
 
@@ -136,14 +136,11 @@ export default function ProjectIdPage() {
                 <motion.div className=" border-1 border-muted-foreground/10 p-6 rounded-lg shadow-sm ">
 
                     <h1 className="text-2xl font-light tracking-wider pb-4 ">Etape du projet</h1>
-                    <h1 className="text-m font-medium text-muted-foreground md:mr-4">
+                    {/* <h1 className="text-m font-medium text-muted-foreground md:mr-4">
                         <span className="text-foreground">Statut :&nbsp;<StatusBadge status={project.status} /> </span>&nbsp; <br />
-                    </h1>
+                    </h1> */}
                     {/* <Step /> */}
-                    <HorizontalStepper />
-                </motion.div>
-                <Separator className="my-5" />
-                <motion.div className=" border-1 border-muted-foreground/10 p-6 rounded-lg shadow-sm ">
+                    <HorizontalStepper projectId={project.id} />
                 </motion.div>
                 <Separator className="my-5" />
                 <motion.div className=" border-1 border-muted-foreground/10 p-6 rounded-lg shadow ">

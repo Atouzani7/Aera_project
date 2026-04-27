@@ -88,7 +88,7 @@ export default function Header() {
                                 Mon Profil
                             </Button>
                             <Button
-                                className="bg-primary text-primary-foreground w-full md:w-auto"
+                                // className="bg-primary text-primary-foreground w-full md:w-auto"
                                 // onClick={() => { router.push({ pathname: pathname }); setIsOpen(false); }}
                                 onClick={() => { router.push(pathnameWorkspace); setIsOpen(false); }}
                             >
