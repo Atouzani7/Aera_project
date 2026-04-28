@@ -89,10 +89,10 @@ export default function ListClientPage() {
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end" className="bg-background/80 text-300">
-                                        <DropdownMenuItem><PenBox /> Edit</DropdownMenuItem>
+                                        <DropdownMenuItem><PenBox /> Modifier</DropdownMenuItem>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem variant="destructive" >
-                                            <Trash2 /> Delete
+                                        <DropdownMenuItem >
+                                            <Trash2 /> Supprimer
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>

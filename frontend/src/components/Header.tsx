@@ -4,7 +4,7 @@ import Image from "next/image";
 import LogoutButton from "./Auth/LogoutButton";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { LayoutDashboard, Menu, X } from "lucide-react"; // 2. Import des icônes pour le burger
+import { LayoutDashboard, Menu, UserSearch, X } from "lucide-react"; // 2. Import des icônes pour le burger
 import { LogIn } from 'lucide-react';
 import { UserRoundPlus } from 'lucide-react';
 import { User } from 'lucide-react';
@@ -26,6 +26,7 @@ export default function Header() {
 
     const pathnameWorkspace = `/workspace/${user?.workspace?.id}`;
     const pathnameMyAccount = `/profil/${userCo.user?.id}`;
+    const pathnameListClients = `/client/listClient`;
 
     if (isLoading) {
         return (
@@ -67,7 +68,7 @@ export default function Header() {
                     ${isOpen ? "flex" : "hidden"} 
                     flex-col md:flex md:flex-row items-center gap-4
                     absolute md:static top-[74px] left-0 w-full md:w-auto
-                    bg-white/80 backdrop-blur-sm md:bg-white/10 p-6 md:p-0
+                    bg-background/80 backdrop-blur-sm md:bg-background p-6 md:p-0
                     border-b md:border-none shadow-lg md:shadow-none
                     transition-all duration-300 ease-in-out z-40
                 `}>
@@ -88,12 +89,19 @@ export default function Header() {
                                 Mon Profil
                             </Button>
                             <Button
-                                // className="bg-primary text-primary-foreground w-full md:w-auto"
+                                className="w-full md:w-auto"
                                 // onClick={() => { router.push({ pathname: pathname }); setIsOpen(false); }}
                                 onClick={() => { router.push(pathnameWorkspace); setIsOpen(false); }}
                             >
                                 <LayoutDashboard />
                                 Mon workspace
+                            </Button>
+                            <Button
+                                className="w-full md:w-auto"
+                                onClick={() => { router.push(pathnameListClients); setIsOpen(false); }}
+                            >
+                                <UserSearch className="mr-2 h-4 w-4" />
+                                Mes clients
                             </Button>
                             <LogoutButton />
                         </>

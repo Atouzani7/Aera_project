@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-indigo-100 text-zinc-900 hover:bg-indigo-100/40 backdrop-blur-lg border border-white/40 transition-all shadow-sm hover:shadow-md",
+        default: "px-4 py-2 rounded-xl bg-glassButton hover:bg-glassButtonHover backdrop-blur-md text-slate-800 border border-white/40 shadow-sm shadow-glassButtonShadow hover:shadow-md hover:bg-white/50 hover:text-black transition-all duration-200",
         destructive:
           "bg-destructive text-foreground hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 shadow-sm hover:shadow-md",
         outline:
@@ -19,13 +19,13 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline shadow-sm hover:shadow-md",
-        validation: "bg-emerald-200 text-zinc-900 hover:bg-emerald-200/40 backdrop-blur-lg border border-white/40 transition-all shadow-sm hover:shadow-md",
-        create: "bg-orange-200/60 text-zinc-900 hover:bg-orange-200/40 backdrop-blur-lg border border-white/40 transition-all shadow-sm hover:shadow-md",
+        validation: "bg-emerald-200/40 text-zinc-900 hover:bg-emerald-200/40 backdrop-blur-lg border border-white/40 transition-all shadow-sm hover:shadow-md",
+        create: "bg-orange-100/80 text-zinc-900 rounded-full hover:bg-orange-200/40 backdrop-blur-lg border border-white/40 transition-all shadow-sm hover:shadow-md",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+        lg: "h-10 rounded-full px-6 has-[>svg]:px-4",
         icon: "size-9",
         "icon-sm": "size-8",
         "icon-lg": "size-10",
