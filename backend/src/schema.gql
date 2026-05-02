@@ -180,7 +180,7 @@ type ProjectEntity {
 
   """Project Status"""
   status: ProjectStatus!
-  step: [StepEntity!]!
+  steps: [StepEntity]
 
   """Project Tag"""
   tag: ProjectTagEnum
@@ -256,6 +256,7 @@ type StepEntity {
 
   """Projects associated with this Step"""
   projects: [ProjectEntity!]!
+  sequence_number: Int!
 
   """Step Status"""
   status: String!

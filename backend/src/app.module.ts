@@ -21,6 +21,8 @@ import { WorkspaceEntity } from './workspace/entities/workspace.entity';
 import { File } from './file/entities/file.entity';
 import { AuthModule } from './auth/auth.module';
 import { Request, Response } from 'express';
+import { ClientModule } from './client/client.module';
+import { ClientEntity } from './client/entities/client.entity';
 
 @Module({
   imports: [
@@ -38,6 +40,7 @@ import { Request, Response } from 'express';
         Comment,
         File,
         WorkspaceEntity,
+        ClientEntity,
       ],
       synchronize: true,
       logging: true,
@@ -78,6 +81,7 @@ import { Request, Response } from 'express';
     FileModule,
     StepModule,
     AuthModule,
+    ClientModule,
   ],
   controllers: [AppController],
   providers: [AppService /*AppResolver*/],

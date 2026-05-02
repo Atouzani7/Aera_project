@@ -37,15 +37,15 @@ export default function ResumeCountProject() {
 
     const statusConfig = [
         { key: "PLANNED", label: "Planifiés", color: "bg-blue-100 text-blue-600", icons: <Folder color="#322abe" /> },
-        { key: "IN_PROGRESS", label: "En cours", color: "bg-purple-100 text-purple-600", icons: <Clock color="#b992b8" /> },
+        { key: "IN_PROGRESS", label: "En cours", color: "bg-purple-300/20 text-purple-600", icons: <Clock color="#b992b8" /> },
         { key: "PENDING", label: "En attente", color: "bg-yellow-100 text-yellow-600", icons: <Hourglass color="#e3d24d" /> },
-        { key: "NOT_STARTED", label: "Non commencés", color: "bg-gray-200 text-gray-600", icons: <ListTodoIcon color="#6b7280" /> },
-        { key: "TERMINED", label: "Terminés", color: "bg-green-100 text-green-600", icons: <BookmarkCheck color="#16a34a" /> },
+        { key: "NOT_STARTED", label: "Non commencés", color: "bg-gray-500/20 text-gray-600", icons: <ListTodoIcon color="#6b7280" /> },
+        { key: "TERMINED", label: "Terminés", color: "bg-green-300/20 text-green-600", icons: <BookmarkCheck color="#16a34a" /> },
     ];
 
     return (
-        <div>
-            <p className="text-lg text-muted-foreground text-sm mb-2">Tu as {Object.values(counts).reduce((a, b) => a + b, 0)} projet{Object.values(counts).reduce((a, b) => a + b, 0) > 1 ? "s" : ""} au total</p>
+        <div className="mb-10 text-center flex flex-col items-center">
+            <p className="text-lg text-muted-foreground text-sm mb-2 ">Tu as {Object.values(counts).reduce((a, b) => a + b, 0)} projet{Object.values(counts).reduce((a, b) => a + b, 0) > 1 ? "s" : ""} au total</p>
             <p>
             </p>
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">

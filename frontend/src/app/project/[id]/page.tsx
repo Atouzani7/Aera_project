@@ -48,7 +48,6 @@ export default function CardProjectID({ projects, status, projectId }: CardProje
         }
     )
 
-    const { steps, isLoadingP } = useProjectSteps(projectId ?? "");
     const router = useRouter();
 
     const filteredProjects =
@@ -87,24 +86,26 @@ export default function CardProjectID({ projects, status, projectId }: CardProje
                 {filteredProjects.map((project) => (
                     <div
                         key={project.id}
-                        className="flex flex-col md:flex-row items-start md:items-start justify-start bg-background/90 shadow-glassButtonShadow shadow-sm hover:shadow-md rounded-xl sm:p-6 p-4 border border-white border-1 transition-all"
+                        className="flex flex-col md:flex-row w-full  bg-white/20 shadow-glassButtonShadow shadow-sm hover:shadow-md rounded-xl sm:p-6 p-4 border border-white border-1 transition-all"
                     >
                         {/* SECTION GAUCHE : Avatar + Infos de base */}
 
-                        <div className=" flex md:flex-row flex-col items-start shadow-sm p-3 rounded-lg bg-gray-100/50  w-full md:w-1/2 m-auto md:m-0">
+                        <div className=" flex md:flex-row flex-col items-start shadow-sm p-3 rounded-lg bg-gray-100/50  md:w-1/2 w-full m-auto md:m-0">
 
 
-                            <div className="flex gap-4 items-start flex-1 w-[190%]">
+                            <div className="flex gap-4 items-start flex-1 w-full">
                                 <div className="flex flex-col">
                                     <h2 className="text-lg font-bold text-gray-800">{project.name}</h2>
                                     <p className="text-sm text-gray-500">{project.contact_email || "email@gmail.com"}</p>
                                     <p className="text-sm text-gray-500">{project.contact_phone}</p>
 
-                                    <div className="mt-4 max-w-xs ">
+                                    <div className="mt-4 ">
                                         <h4 className="text-xs font-bold uppercase text-gray-400">Description</h4>
                                         <p className="text-sm text-gray-600 line-clamp-2">{project.description}</p>
                                     </div>
-                                    <div className="mt-8 text-xs text-gray-400 flex flex-col md:flex-row gap-2 md:flex-col ">
+                                    {/* <div className="mt-8 text-xs text-gray-400 w-full flex flex-col md:flex-row gap-2"> */}
+                                    {/* <div className="flex gap-4 items-start flex-1 w-full"> */}
+                                    <div className="mt-8 text-xs text-gray-400 w-full gap-4 flex flex-col md:flex-row">
                                         <p><CalendarIcon /> Créer le: {formatDate(project.createdAt)}</p>
                                         <p><RefreshCw /> Dernière mise à jour: {formatDate(project.updatedAt)}</p>
                                         <p><Clock /> Deadline: {formatDate(project.deadline)}</p>
@@ -120,7 +121,7 @@ export default function CardProjectID({ projects, status, projectId }: CardProje
                                 <div className="flex flex-col flex-end gap-2 min-w-[150px] m-auto ">
                                     <Button
                                         variant="default"
-                                        className="bg-[#1e293b] text-white hover:text-black shadow-sm hover:shadow-md"
+                                        className="bg-[#1e293d] text-white hover:text-black shadow-sm hover:shadow-md"
                                         onClick={() => {
                                             if (!project?.name || !project.id) return;
                                             router.push(`/project/${project.id}/${toSlug(project.name)}`);
@@ -134,13 +135,13 @@ export default function CardProjectID({ projects, status, projectId }: CardProje
                                 </div>
                             </div>
                         </div>
-                        <div className="hiden md:h-[200px] m-auto md:flex">
+                        <div className="m-4">
 
-                            <Separator orientation="vertical" className="h-full w-px bg-white hidden md:flex" />
+                            <Separator orientation="vertical" className="h-full hiden md:h-[200px] m-auto md:flex w-px bg-primary/70 hidden md:flex" />
                         </div>
 
                         {/* SECTION CENTRALE : Statut & Progress */}
-                        <div className="flex flex-col items-center gap-2 min-w-[100px] w-1/2 md:w-1/3 h-full m-auto">
+                        <div className=" flex md:flex-row flex-col items-start shadow-sm p-3 rounded-lg bg-gray-100/50  md:w-1/2 m-auto md:m-0">
 
                             <HorizontalStepper projectId={project.id} withoutDetails={true} />
 
@@ -150,26 +151,7 @@ export default function CardProjectID({ projects, status, projectId }: CardProje
 
 
                         {/* SECTION DROITE : Status & Boutons */}
-                        {/* <div className="flex flex-col gap-2 min-w-[100px]">
-                            <div className="flex-1 px-8">
-                                <StatusBadge status={project.status} />
-                            </div>
-                            <div className="flex flex-col gap-2 min-w-[150px]">
-                                <Button
-                                    variant="default"
-                                    className="bg-[#1e293b] text-white hover:text-black shadow-sm hover:shadow-md"
-                                    onClick={() => {
-                                        if (!project?.name || !project.id) return;
-                                        router.push(`/project/${project.id}/${toSlug(project.name)}`);
-                                    }}
-                                >
-                                    <ContactIcon /> Espace client
-                                </Button>
-                                <div className="flex gap-2">
-                                    <Button className="flex-1"> <SquarePenIcon /> Modifier</Button>
-                                </div>
-                            </div>
-                        </div> */}
+
                     </div>
                 ))}
             </div>

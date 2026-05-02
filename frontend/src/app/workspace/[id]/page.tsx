@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useCurrentUser } from "@/lib/useCurrentUser";
 import { useQuery } from "@apollo/client/react";
@@ -9,9 +10,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import ResumeCountProject from "@/src/components/ResumeCountProject";
+import Filter from "@/src/components/Filter";
 
 export default function WorkspaceIdPage() {
     const { user, isLoading, isAuthenticated } = useCurrentUser();
+
+    const [search, setSearch] = useState("");
 
     const userId = user?.id;
 
@@ -60,10 +64,14 @@ export default function WorkspaceIdPage() {
 
             </div>
 
-            <Button variant="default" onClick={handClickCreateProject} className="m-2">
-                <PlusCircleIcon className="mr-2 h-4 w-4" />
-                Créer un nouveau projet
-            </Button>
+            <div className="flex items-center justify-between mb-4">
+
+                <Filter onSearch={setSearch} />
+                <Button variant="default" onClick={handClickCreateProject} className="m-2">
+                    <PlusCircleIcon className="mr-2 h-4 w-4" />
+                    Créer un nouveau projet
+                </Button>
+            </div>
 
             <Tabs defaultValue="All" className="relative w-full">
 
@@ -77,7 +85,7 @@ export default function WorkspaceIdPage() {
                     </button>
 
                     {/* desktop tabs */}
-                    <TabsList className="hidden md:flex gap-2">
+                    <TabsList className="hidden md:flex gap-2 ">
                         {statuses.map((status) => (
                             <TabsTrigger key={status.key} value={status.key}>
                                 {status.icon} {status.label} ({status.count})
@@ -105,11 +113,42 @@ export default function WorkspaceIdPage() {
                 )}
 
                 {/* content */}
+
                 {statuses.map((status) => (
-                    <TabsContent key={status.key} value={status.key} className="mt-4">
-                        <CardProjectID projects={projects} status={status.key} />
+                    <TabsContent key={status.key} value={status.key} className="mt-4 flex flex-col gap-4 w-full">
+
+                        {/* 1. On filtre d'abord les projets qui correspondent au status de l'onglet */}
+                        {projects
+                            .filter((project) => {
+                                const matchStatus =
+                                    status.key === "All" || project.status === status.key;
+
+                                const matchSearch =
+                                    (project.name || "")
+                                        .toLowerCase()
+                                        .includes(search.toLowerCase());
+
+                                return matchStatus && matchSearch;
+                            })
+                            .map((project) => (
+                                <CardProjectID
+                                    key={project.id}
+                                    projects={[project]}
+                                    projectId={project.id}
+                                />
+
+                            ))}
+
+                        {/* Optionnel : Message si l'onglet est vide */}
+                        {projects.filter((project) => status.key === "All" || project.status === status.key).length === 0 && (
+                            <p className="text-center text-muted-foreground py-10">
+                                Aucun projet dans la catégorie {status.label}
+                            </p>
+                        )}
+
                     </TabsContent>
                 ))}
+
             </Tabs>
 
 

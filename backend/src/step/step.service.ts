@@ -27,41 +27,39 @@ export class StepService {
 
   async createStep(
     createStepInput: CreateStepInput,
-    userId: string, // UUID de l'utilisateur connecté
+    userId: string,
     projectId: string,
   ): Promise<StepEntity> {
-    // 1️⃣ Récupérer l'utilisateur et ses projets
+    // 1️⃣ Récupérer l'utilisateur avec le projet spécifique et SES étapes
     const user = await this.userRepository.findOne({
       where: { id: userId },
-      relations: ['project'],
+      relations: ['project', 'project.steps'], // 👈 Important: on charge les steps existantes
     });
+
     if (!user) throw new NotFoundException('User not found');
 
-    // 2️⃣ Vérifier que le projet appartient à l'utilisateur
-    // const project = user.project.find((p) => p.id === projectId);
     const project = user.project.find((p) => p.id === Number(projectId));
-    if (!project)
-      throw new ForbiddenException(
-        'You are not allowed to create a step in this project',
-      );
+    if (!project) throw new ForbiddenException('Access denied');
 
-    // 3️⃣ Créer la step avec le projet dans le tableau
+    // 2️⃣ Calculer la position (le nombre de steps actuelles + 1)
+    // Si le projet n'a pas encore de steps, on commence à 1
+    const nextOrder = (project.steps?.length || 0) + 1;
+
+    // 3️⃣ Créer la step avec son numéro de séquence
     const step = this.stepRepository.create({
-      name: createStepInput.name,
-      description: createStepInput.description,
+      ...createStepInput,
       status: createStepInput.status || 'NOT_STARTED',
-      endDate: createStepInput.endDate || null,
-      projects: [project], // ✅ Must be array because @ManyToMany
+      projects: [project],
+      sequence_number: nextOrder, // ✅ Voilà ton "Etape 1", "Etape 2"...
     });
 
-    // 4️⃣ Sauvegarder et retourner
     return this.stepRepository.save(step);
   }
 
   async findStepByProject(projectId: string): Promise<StepEntity[]> {
     const project = await this.projectRepository.findOne({
       where: { id: Number(projectId) },
-      relations: ['step'],
+      relations: ['steps'],
     });
 
     if (!project) throw new NotFoundException('Project not found');

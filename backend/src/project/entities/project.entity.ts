@@ -17,6 +17,7 @@ import {
 } from 'typeorm';
 import { registerEnumType } from '@nestjs/graphql';
 import { ProjectStatus, ProjectTagEnum } from './enums/project.enums';
+import { ClientEntity } from 'src/client/entities/client.entity';
 
 //////////////////////
 // ENTITÉ
@@ -138,4 +139,10 @@ export class ProjectEntity {
     onDelete: 'CASCADE',
   })
   workspace: WorkspaceEntity;
+
+  @ManyToOne(() => ClientEntity, (client) => client.projects)
+  client: ClientEntity;
+
+  @Column({ nullable: true })
+  clientId: string;
 }
