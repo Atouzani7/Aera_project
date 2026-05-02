@@ -1,18 +1,14 @@
 import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
 import { ProjectEntity } from 'src/project/entities/project.entity';
+import { Int } from 'type-graphql';
 
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export type StepStatus =
   | 'NOT_STARTED' // non commencé
-  | 'PLANNED' // planifié
   | 'IN_PROGRESS'
-  | 'COMPLETED'
-  | 'BLOCKED'
-  | 'ARCHIVED'
-  | 'DELETED'
-  | 'UNDER_REVIEW' // en cours de révision
-  | 'WAITING_FOR_FEEDBACK'; // en attente de retour
+  | 'PLANNED'
+  | 'TERMINED';
 @ObjectType()
 @Entity('steps')
 export class StepEntity {
@@ -53,4 +49,8 @@ export class StepEntity {
   })
   @ManyToMany(() => ProjectEntity, (project) => project.steps)
   projects: ProjectEntity[];
+
+  @Column({ type: 'int', default: 1 })
+  @Field(() => Int)
+  sequence_number: number;
 }

@@ -85,7 +85,7 @@ export default function WorkspaceIdPage() {
                     </button>
 
                     {/* desktop tabs */}
-                    <TabsList className="hidden md:flex gap-2">
+                    <TabsList className="hidden md:flex gap-2 ">
                         {statuses.map((status) => (
                             <TabsTrigger key={status.key} value={status.key}>
                                 {status.icon} {status.label} ({status.count})
@@ -115,7 +115,7 @@ export default function WorkspaceIdPage() {
                 {/* content */}
 
                 {statuses.map((status) => (
-                    <TabsContent key={status.key} value={status.key} className="mt-4 flex flex-col gap-4">
+                    <TabsContent key={status.key} value={status.key} className="mt-4 flex flex-col gap-4 w-full">
 
                         {/* 1. On filtre d'abord les projets qui correspondent au status de l'onglet */}
                         {projects
@@ -136,6 +136,7 @@ export default function WorkspaceIdPage() {
                                     projects={[project]}
                                     projectId={project.id}
                                 />
+
                             ))}
 
                         {/* Optionnel : Message si l'onglet est vide */}

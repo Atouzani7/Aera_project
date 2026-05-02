@@ -54,9 +54,10 @@ export function HorizontalStepper({ projectId, withoutDetails = false }: { proje
 
     if (withoutDetails) {
         return (
-            <div className="flex items-center justify-center flex-col items-center  rounded-lg max-w-[400px] ">
+            <div className="w-full">
 
-                <Stepper.Root className="flex items-center justify-center flex flex-col items-center  rounded-lg">
+
+                <Stepper.Root className=" ">
                     {({ stepper }) => (
                         <>
 
@@ -65,38 +66,25 @@ export function HorizontalStepper({ projectId, withoutDetails = false }: { proje
                                     {projectId && <CreateStep projectId={projectId} />}
                                 </>
                             ) : (
-                                <> <p className="text-sm font-bold mb-4">Avancement</p>
-                                    <Stepper.List className="m-0 flex list-none flex-wrap gap-2 p-0   overflow-x-auto scrollbar-hide  rounded-lg">
-                                        <div className="h-[120px] w-[400px] border border-gray-300 border-shadow bg-white rounded-lg p-2 m-2 overflow-y-auto scrollbar-thin">
+                                <>
+                                    <Stepper.List className="   overflow-x-auto scrollbar-hide  rounded-lg ">
+                                        <p className="text-sm font-bold mb-2 mt-2 ">Avancement</p>
+                                        <p className="text-sm font-bold mb-2 mt-2 text-primary">Etape en cours</p>
+                                        <div className="flex    border border-gray-300 border-shadow rounded-lg p-2 m-2 overflow-y-auto scrollbar-thin">
                                             {sortedSteps.map((step) => (
                                                 <Stepper.Content key={step.id} step={step.id}>
                                                     <p className="m-auto"> <StatusBadge status={step.status} onlyDot />&nbsp;  <span className="font-bold text-sm">{step.name}</span></p>
-                                                    {sortedSteps.find(s => s.id === step.id)?.description && <p className="text-sm text-muted-foreground">{step.description}</p>}
+                                                    {sortedSteps.find(s => s.id === step.id)?.description && <p className="text-sm text-muted-foreground hiden md:block">{step.description}</p>}
+                                                    {/* {step.description && (
+                                                        <p className="text-sm text-muted-foreground hidden md:block">
+                                                            {step.description}
+                                                        </p>
+                                                    )} */}
                                                 </Stepper.Content>
                                             ))}
                                         </div>
 
                                     </Stepper.List>
-                                    <div className="mt-4 flex flex-wrap gap-2">
-                                        {stepper.state.isLast ? (
-                                            <Button
-                                                type="button"
-                                                onClick={() => stepper.navigation.reset()}
-                                            >
-                                                Revenir à la première étape
-                                            </Button>
-                                        ) : (
-                                            <>
-                                                <Stepper.Prev className="border border-gray-300 bg-white px-2 py-1 text-sm rounded-md disabled:opacity-50 disabled:pointer-events-none">
-                                                    Précédent
-                                                </Stepper.Prev>
-                                                <Stepper.Next className="border border-primary bg-primary px-2 py-1 text-sm rounded-md disabled:opacity-50 disabled:pointer-events-none">
-                                                    Suivant
-                                                </Stepper.Next>
-                                            </>
-                                        )}
-                                        <Button> <CheckIcon /> Valider l&apos;étape</Button>
-                                    </div>
                                     <div className="m-4" >
 
                                         {projectId && <CreateStep projectId={projectId} />}
@@ -108,12 +96,14 @@ export function HorizontalStepper({ projectId, withoutDetails = false }: { proje
                     )}
                 </Stepper.Root>
             </div>
+
+
         );
     }
 
     return (
-        <div className="">
-            <h1 className="text-sm font-bold mb-4">Avancement</h1>
+        <div className=" ">
+            <h1 className="text-sm font-bold mb-2">Avancement </h1>
             <Tabs defaultValue={sortedSteps[0]?.id} className="w-[full] h-[400px] md:min-w-[400px] rounded-lg p-2">
                 <TabsList className="flex w-full overflow-x-auto scrollbar-hide scrollbar-thin rounded-lg  gap-2 mb-4 p-1">
                     {sortedSteps.map((step) => (
@@ -129,7 +119,7 @@ export function HorizontalStepper({ projectId, withoutDetails = false }: { proje
                     <TabsContent key={step.id} value={step.id} className="bg-white rounded-lg p-4 border border-gray-300 shadow-sm">
                         <StatusBadge status={step.status} /><span className="font-bold text-sm">{step.name}</span><br />
                         {step.description}
-                        <div className="flex justify-end m-auto gap-2" >
+                        <div className="flex m-auto gap-2" >
                             <Button className="px-8 py-4 bg-purple-600/10 hover:bg-purple-600/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg text-black font-medium transition-all duration-300 hover:bg-purple/20 hover:border-white/30 hover:scale-105 active:scale-95">
                                 <CheckIcon /> Valider l&apos;étape
                             </  Button>
@@ -137,7 +127,7 @@ export function HorizontalStepper({ projectId, withoutDetails = false }: { proje
                                 <SquarePenIcon /> Modifier
                             </  Button>
                         </div>
-
+                        Bouton suivant step a ajouter
                     </TabsContent>
                 ))}
                 <div className="m-4" >
@@ -155,53 +145,8 @@ export function HorizontalStepper({ projectId, withoutDetails = false }: { proje
                                 {projectId && <CreateStep projectId={projectId} />}
                             </>
                         ) : (
-                            <><Stepper.List className="m-0 flex list-none flex-wrap gap-2 p-0 ">
-                                {data.stepsByProject.map((step, index) => (
-                                    <React.Fragment key={step.id}>
-                                        <Stepper.Item step={step.id}>
-                                            <Stepper.Trigger>
-                                                <Stepper.Title className="flex text-center rounded-lg md:min-w-[100px] bg-purple-100 text-black text-sm px-2 py-1 text-s shadow-sm/50 hover:bg-green-200/30">
-                                                    {step.name}
-                                                </Stepper.Title>
-                                            </Stepper.Trigger>
-                                        </Stepper.Item>
+                            <>
 
-                                        {index !== sortedSteps.length - 1 && (
-                                            <span className="self-center text-gray-400">→</span>
-                                        )}
-                                    </React.Fragment>
-                                ))}
-                            </Stepper.List><div className="mt-4 min-h-12 rounded-lg p-4 w-full">
-                                    {sortedSteps.map((step) => (
-                                        <Stepper.Content key={step.id} step={step.id}>
-                                            <p className=""> <StatusBadge status={step.status} /></p>
-                                            <p>{step.description}</p>
-
-                                        </Stepper.Content>
-                                    ))}
-                                </div><div className="mt-4 flex flex-wrap gap-2">
-                                    {stepper.state.isLast ? (
-                                        <Button
-                                            type="button"
-                                            onClick={() => stepper.navigation.reset()}
-                                        >
-                                            Revenir à la première étape
-                                        </Button>
-                                    ) : (
-                                        <>
-                                            <Stepper.Prev className="border border-gray-300 bg-white px-2 py-1 text-sm rounded-md disabled:opacity-50 disabled:pointer-events-none">
-                                                Précédent
-                                            </Stepper.Prev>
-                                            <Stepper.Next className="border border-primary bg-primary px-2 py-1 text-sm rounded-md disabled:opacity-50 disabled:pointer-events-none">
-                                                Suivant
-                                            </Stepper.Next>
-                                        </>
-                                    )}
-                                </div>
-                                <div className="m-4" >
-
-                                    {projectId && <CreateStep projectId={projectId} />}
-                                </div>
                             </>
 
                             /*  todo : ajouter la validdation de l'étape (terminé ou pas) et faire en sorte que les étapes validées soient vertes et les étapes en cours soient jaunes et les étapes à venir soient grises */
