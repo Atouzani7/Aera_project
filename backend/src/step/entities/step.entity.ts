@@ -1,6 +1,11 @@
-import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
+import {
+  ObjectType,
+  Field,
+  ID,
+  GraphQLISODateTime,
+  Int,
+} from '@nestjs/graphql';
 import { ProjectEntity } from 'src/project/entities/project.entity';
-import { Int } from 'type-graphql';
 
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
