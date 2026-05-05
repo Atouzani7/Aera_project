@@ -2,6 +2,7 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 import { WorkspaceEntity } from 'src/workspace/entities/workspace.entity';
 import { registerEnumType } from '@nestjs/graphql';
 import { ProjectStatus, ProjectTagEnum } from '../entities/enums/project.enums';
+import { ClientEntity } from 'src/client/entities/client.entity';
 
 @InputType()
 export class CreateProjectInput {
@@ -9,25 +10,34 @@ export class CreateProjectInput {
   name: string;
 
   @Field(() => String, { nullable: true })
+  clientId?: string; // Si le client existe déjà
+
+  @Field(() => String, { nullable: true })
   description: string;
 
-  @Field(() => String)
-  contact_name: string;
+  @Field(() => String, { nullable: true })
+  contact_name: ClientEntity['name'];
 
-  // @Field(() => String)
-  // name: string;
+  @Field(() => String, { nullable: true })
+  contact_lastname: ClientEntity['lastname'];
 
-  // @Field(() => String, { nullable: true })
-  // description?: string;
+  @Field(() => String, { nullable: true })
+  contact_email?: ClientEntity['email'];
 
-  // @Field(() => String)
-  // contact_name: string;
+  @Field(() => String, { nullable: true })
+  contact_phone?: ClientEntity['phone'];
 
-  @Field(() => String)
-  contact_email?: string;
+  @Field(() => String, { nullable: true })
+  contact_address?: ClientEntity['address'];
 
-  @Field(() => String)
-  contact_phone?: string;
+  @Field(() => String, { nullable: true })
+  contact_city?: ClientEntity['city'];
+
+  @Field(() => String, { nullable: true })
+  contact_country?: ClientEntity['country'];
+
+  @Field(() => String, { nullable: true })
+  contact_postalCode?: ClientEntity['postalCode'];
 
   @Field(() => ProjectTagEnum)
   tag?: ProjectTagEnum;

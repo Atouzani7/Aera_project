@@ -34,6 +34,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ClientEntity } from 'src/client/entities/client.entity';
 
 export type Role = 'admin' | 'user' | 'guest' | 'customer';
 export type Status = 'ACTIVE' | 'ARCHIVED' | 'DELETED';
@@ -167,6 +168,9 @@ export class UserEntity {
   @Field(() => [File])
   @OneToMany(() => File, (file) => file.user)
   file: File[];
+
+  @OneToMany(() => ClientEntity, (client) => client.user)
+  client: ClientEntity[];
 }
 
 //? INPUT TYPES ____________________________________________________________

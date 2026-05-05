@@ -25,12 +25,15 @@ export const FIND_WORKSPACE_BY_USERID = gql`
           name
           description
         }
-        contact_name
-        contact_email
-        contact_phone
         Notion_id
         GDriveId
         avatar
+        client {
+          id
+          name
+          email
+          phone
+        }
       }
     }
   }
