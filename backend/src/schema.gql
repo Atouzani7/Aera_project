@@ -9,6 +9,39 @@ type Auth {
   workspace: WorkspaceEntity
 }
 
+type ClientEntity {
+  """Adresse du client"""
+  address: String!
+
+  """Ville du client"""
+  city: String!
+
+  """Pays du client"""
+  country: String!
+
+  """Date de création du client"""
+  createdAt: DateTime!
+
+  """Email du client"""
+  email: String!
+  id: ID!
+
+  """Nom de famille du client"""
+  lastname: String!
+
+  """Nom du client"""
+  name: String!
+
+  """Téléphone du client"""
+  phone: String!
+
+  """Code postal du client"""
+  postalCode: String!
+
+  """Date de mise à jour du client"""
+  updatedAt: DateTime!
+}
+
 type Comment {
   """Comment"""
   content: String!
@@ -28,6 +61,17 @@ type Comment {
   user: UserEntity!
 }
 
+input CreateClientInput {
+  address: String!
+  city: String!
+  country: String!
+  email: String!
+  lastname: String!
+  name: String!
+  phone: String!
+  postalCode: String!
+}
+
 input CreateCommentInput {
   """Example field (placeholder)"""
   exampleField: Int!
@@ -39,9 +83,15 @@ input CreateFileInput {
 }
 
 input CreateProjectInput {
-  contact_email: String!
-  contact_name: String!
-  contact_phone: String!
+  clientId: String
+  contact_address: String
+  contact_city: String
+  contact_country: String
+  contact_email: String
+  contact_lastname: String
+  contact_name: String
+  contact_phone: String
+  contact_postalCode: String
   deadline: DateTime
   description: String
   name: String!
@@ -116,6 +166,7 @@ type LogoutResponse {
 
 type Mutation {
   addUserToWorkspace(userId: Int!, workspaceId: Int!): WorkspaceEntity!
+  createClient(createClientInput: CreateClientInput!): ClientEntity!
   createComment(createCommentInput: CreateCommentInput!): Comment!
   createFile(createFileInput: CreateFileInput!): File!
   createProject(createProjectInput: CreateProjectInput!): ProjectEntity!
@@ -124,12 +175,14 @@ type Mutation {
   createWorkspace(createWorkspaceInput: CreateWorkspaceInput!): WorkspaceEntity!
   logout: LogoutResponse!
   register(email: String!, firstname: String!, lastname: String!, password: String!, workspaceName: String): RegisterResponse!
+  removeClient(id: Float!): ClientEntity!
   removeComment(id: Int!): Comment!
   removeFile(id: Int!): File!
   removeStep(id: Int!): StepEntity!
   removeUser(id: Int!): UserEntity!
   removeWorkspace(id: Int!): WorkspaceEntity!
   signIn(email: String!, password: String!): Auth!
+  updateClient(updateClientInput: UpdateClientInput!): ClientEntity!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   updateFile(updateFileInput: UpdateFileInput!): File!
   updateStep(updateStepInput: UpdateStepInput!): StepEntity!
@@ -152,16 +205,8 @@ type ProjectEntity {
 
   """avatar"""
   avatar: String
+  client: ClientEntity
   comments: [Comment!]!
-
-  """Email client"""
-  contact_email: EmailAddress
-
-  """Name client"""
-  contact_name: String!
-
-  """Phone client"""
-  contact_phone: String
 
   """Project Start Date"""
   createdAt: DateTime!
@@ -217,9 +262,13 @@ enum ProjectTagEnum {
 }
 
 type Query {
+  FindAllClients: [ClientEntity!]!
+  FindOneClient(id: Int!): ClientEntity!
   FindUserByID(id: String!): UserEntity!
   comment(id: Int!): Comment!
   file(id: Int!): File!
+  findMyClients: [ClientEntity!]!
+  getCLientProjects(id: String!): [ProjectEntity!]!
   me: UserEntity!
   steps: [StepEntity!]!
   stepsByProject(projectId: String!): [StepEntity!]!
@@ -263,6 +312,18 @@ type StepEntity {
 
   """Step Update Date"""
   updatedAt: DateTime!
+}
+
+input UpdateClientInput {
+  address: String
+  city: String
+  country: String
+  email: String
+  id: Int!
+  lastname: String
+  name: String
+  phone: String
+  postalCode: String
 }
 
 input UpdateCommentInput {
