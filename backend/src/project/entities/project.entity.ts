@@ -99,18 +99,17 @@ export class ProjectEntity {
     description: 'Email client',
     nullable: true,
   })
-  @Column({ nullable: true })
-  @IsEmail({}, { message: 'Email must be a valid email address' })
-  contact_email: string;
+  // @Column({ nullable: true })
+  // @IsEmail({}, { message: 'Email must be a valid email address' })
+  // contact_email: string;
 
-  @Field(() => String, { description: 'Name client' })
-  @Column({ nullable: false })
-  contact_name: string;
+  // @Field(() => String, { description: 'Name client' })
+  // @Column({ nullable: false })
+  // contact_name: string;
 
-  @Field(() => String, { description: 'Phone client', nullable: true })
-  @Column({ nullable: true })
-  contact_phone: string;
-
+  // @Field(() => String, { description: 'Phone client', nullable: true })
+  // @Column({ nullable: true })
+  // contact_phone: string;
   @Field(() => String, {
     description: 'avatar',
     nullable: true,
@@ -140,9 +139,9 @@ export class ProjectEntity {
   })
   workspace: WorkspaceEntity;
 
-  @ManyToOne(() => ClientEntity, (client) => client.projects)
+  @Field(() => ClientEntity, { nullable: true })
+  @ManyToOne(() => ClientEntity, (client) => client.projects, {
+    nullable: true,
+  })
   client: ClientEntity;
-
-  @Column({ nullable: true })
-  clientId: string;
 }

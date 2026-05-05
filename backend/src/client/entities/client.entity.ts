@@ -1,5 +1,6 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { ProjectEntity } from 'src/project/entities/project.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
@@ -11,12 +12,17 @@ import {
 @ObjectType()
 @Entity('clients')
 export class ClientEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Field(() => ID)
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   @Field(() => String, { description: 'Nom du client' })
   name: string;
+
+  @Column()
+  @Field(() => String, { description: 'Nom de famille du client' })
+  lastname: string;
 
   @Column()
   @Field(() => String, { description: 'Email du client' })
@@ -52,4 +58,7 @@ export class ClientEntity {
 
   @OneToMany(() => ProjectEntity, (project) => project.client)
   projects: ProjectEntity[];
+
+  @ManyToOne(() => UserEntity, (user) => user.client)
+  user: UserEntity;
 }

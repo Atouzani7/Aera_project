@@ -8,10 +8,8 @@ export default function useProject() {
   const params = useParams();
   const { id, slug } = params as { id?: string; slug?: string };
 
-  const { user, isLoading: userLoading, isAuthenticated } = useCurrentUser();
+  const { user, isLoading: userLoading } = useCurrentUser();
   const userId = user?.id;
-
-  const shouldSkip = !isAuthenticated || !userId;
 
   const {
     data,
@@ -19,13 +17,24 @@ export default function useProject() {
     error,
   } = useQuery<UserWorkspacesQuery>(FIND_WORKSPACE_BY_USERID, {
     variables: { userId },
-    skip: shouldSkip,
+    skip: !userId,
+    fetchPolicy: "cache-and-network",
   });
 
-  const projects = // 🛠️ Extraire tous les projets de tous les workspaces de l'utilisateur
-    data?.userWorkspaces?.flatMap((workspace) => workspace.projects) ?? [];
+  /**
+   * 🧠 Workspaces de l'utilisateur
+   */
+  const workspaces = data?.userWorkspaces ?? [];
 
-  // 🔍 Trouver LE projet
+  /**
+   * 📦 Tous les projets (tous workspaces)
+   */
+  const projects =
+    workspaces.flatMap((workspace) => workspace.projects ?? []) ?? [];
+
+  /**
+   * 🔍 Projet actif (par id ou slug)
+   */
   const project = projects.find((p) => {
     if (id && p.id === id) return true;
     if (slug && toSlug(p.name) === slug) return true;
@@ -35,16 +44,34 @@ export default function useProject() {
   return {
     project,
     projects,
+    workspaces,
     isLoading: userLoading || queryLoading,
     error,
   };
 }
 
-// 🔧 Utils
+/**
+ * 🔧 slug utilitaire
+ */
 function toSlug(name: string) {
   return name
     .toLowerCase()
     .trim()
-    .replace(/[\s]+/g, "-")
+    .replace(/\s+/g, "-")
     .replace(/[^\w\-]+/g, "");
+}
+
+export function useProjectByRoute() {
+  const params = useParams();
+  const { id, slug } = params as { id?: string; slug?: string };
+
+  const { projects, isLoading, error } = useProject();
+
+  const project = projects.find((p) => {
+    if (id && p.id === id) return true;
+    if (slug && toSlug(p.name) === slug) return true;
+    return false;
+  });
+
+  return { project, isLoading, error };
 }

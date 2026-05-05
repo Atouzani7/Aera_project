@@ -14,6 +14,19 @@ type Project = {
   Notion_id?: string;
   GDriveId?: string;
   avatar?: string;
+  client: {
+    id: string;
+    name: string;
+    lastname: string;
+    email: string;
+    address: string;
+    city: string;
+    country: string;
+    phone: string;
+    postalCode: string;
+    createdAt: string;
+    updatedAt: string;
+  };
   step: {
     id: string;
     name: string;
