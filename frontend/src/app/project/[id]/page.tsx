@@ -99,8 +99,8 @@ export default function CardProjectID({ projects, status, projectId }: CardProje
                             <div className="flex gap-4 items-start flex-1 w-full">
                                 <div className="flex flex-col">
                                     <h2 className="text-lg font-bold text-gray-800">{project.name}</h2>
-                                    <p className="text-sm text-gray-500">{clients?.find((client) => client.id === project.client.id)?.email || "email@erer.com"}</p>
-                                    <p className="text-sm text-gray-500">{clients?.find((client) => client.id === project.client.id)?.phone}</p>
+                                    <p className="text-sm text-gray-500">{clients?.find((client) => client.id === project.client?.id)?.email || "email@erer.com"}</p>
+                                    <p className="text-sm text-gray-500">{clients?.find((client) => client.id === project?.client.id)?.phone}</p>
 
                                     <div className="mt-4 ">
                                         <h4 className="text-xs font-bold uppercase text-gray-400">Description</h4>

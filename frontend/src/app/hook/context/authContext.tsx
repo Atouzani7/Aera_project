@@ -18,6 +18,11 @@ export interface UserType {
     firstname?: string;
     lastname?: string;
     role?: string;
+    profilePicture?: string;
+    phoneNumber?: string;
+    dateOfBirth?: string;
+    updatedAt?: Date;
+    createdAt?: Date;
     workspace?: {
         id: string;
         name: string;

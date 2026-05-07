@@ -33,6 +33,7 @@ export const FIND_WORKSPACE_BY_USERID = gql`
           name
           email
           phone
+          address
         }
       }
     }
