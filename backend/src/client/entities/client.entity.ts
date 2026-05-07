@@ -4,6 +4,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -24,7 +25,7 @@ export class ClientEntity {
   @Field(() => String, { description: 'Nom de famille du client' })
   lastname: string;
 
-  @Column()
+  @Column({ unique: true })
   @Field(() => String, { description: 'Email du client' })
   email: string;
 
@@ -33,19 +34,19 @@ export class ClientEntity {
   phone: string;
 
   @Column()
-  @Field(() => String, { description: 'Adresse du client' })
+  @Field({ description: 'Adresse du client' })
   address: string;
 
   @Column()
-  @Field(() => String, { description: 'Ville du client' })
+  @Field({ description: 'Ville du client' })
   city: string;
 
   @Column()
-  @Field(() => String, { description: 'Pays du client' })
+  @Field({ description: 'Pays du client' })
   country: string;
 
   @Column()
-  @Field(() => String, { description: 'Code postal du client' })
+  @Field({ description: 'Code postal du client' })
   postalCode: string;
 
   @Column()
@@ -59,6 +60,13 @@ export class ClientEntity {
   @OneToMany(() => ProjectEntity, (project) => project.client)
   projects: ProjectEntity[];
 
+  // @ManyToOne(() => UserEntity, (user) => user.client)
+  // user: UserEntity;
+
   @ManyToOne(() => UserEntity, (user) => user.client)
+  @JoinColumn({ name: 'userId' })
   user: UserEntity;
+
+  @Column()
+  userId: string;
 }

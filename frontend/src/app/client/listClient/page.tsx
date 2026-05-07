@@ -76,15 +76,16 @@ export default function ListClientPage() {
 
             <Filter onSearch={setSearch} />
             <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Nom - Prénom</TableHead>
-                        <TableHead>Project</TableHead>
-                        <TableHead>Adresse mail</TableHead>
-                        <TableHead>Téléphone</TableHead>
-                        <TableHead>Ville - CP</TableHead>
+                <TableHeader >
+                    <TableRow className="text-primary ">
+                        <TableHead className="bg-primary/20">Nom - Prénom</TableHead>
+                        <TableHead className="bg-primary/20">Project</TableHead>
+                        <TableHead className="bg-primary/20">Adresse mail</TableHead>
+                        <TableHead className="bg-primary/20">Téléphone</TableHead>
+                        <TableHead className="bg-primary/20">Ville </TableHead>
+                        <TableHead className="bg-primary/20">Code Postal</TableHead>
 
-                        <TableHead className="w-8"><MoreHorizontalIcon /> </TableHead>
+                        <TableHead className="w-8 bg-primary/20"><MoreHorizontalIcon /> </TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -103,10 +104,6 @@ export default function ListClientPage() {
                                     const clientProjects = projects.filter(
                                         p => p.client?.id === c.id
                                     );
-                                    console.log("CLIENT ID DEBUG", c.id, c.email);
-                                    console.log(projects)
-
-
                                     console.log(
                                         "PROJECTS DEBUG",
                                         projects.map(p => ({
@@ -143,7 +140,8 @@ export default function ListClientPage() {
 
                             <TableCell>{c.email}</TableCell>
                             <TableCell>{c.phone}</TableCell>
-                            <TableCell>{c.city} - {c.postalCode}</TableCell>
+                            <TableCell>{c.city}</TableCell>
+                            <TableCell>{c.postalCode}</TableCell>
                             <TableCell className="text-right">
                                 <DropdownMenu >
                                     <DropdownMenuTrigger asChild >

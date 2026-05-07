@@ -6,13 +6,21 @@ export const CREATE_PROJECT = gql`
       id
       name
       description
-      contact_name
-      contact_email
-      contact_phone
       status: status
       tag: tag
       createdAt
       deadline
+      client {
+        name
+        lastname
+        email
+        id
+        address
+        city
+        country
+        phone
+        postalCode
+      }
     }
   }
 `;

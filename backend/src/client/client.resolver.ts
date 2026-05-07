@@ -5,15 +5,18 @@ import { UpdateClientInput } from './dto/update-client.input';
 import { ClientEntity } from './entities/client.entity';
 import { ProjectEntity } from 'src/project/entities/project.entity';
 import { UseGuards } from '@nestjs/common';
-import { GqlAuthGuard } from 'src/auth/gqlAuthGuard';
+import { CurrentUser, GqlAuthGuard } from 'src/auth/gqlAuthGuard';
 
 @Resolver(() => ClientEntity)
 export class ClientResolver {
   constructor(private readonly clientService: ClientService) {}
 
-  @Mutation(() => ClientEntity, { name: 'createClient' })
-  create(@Args('createClientInput') createClientInput: CreateClientInput) {
-    return this.clientService.create(createClientInput);
+  @Mutation(() => ClientEntity)
+  create(
+    @Args('createClientInput') createClientInput: CreateClientInput,
+    @CurrentUser() user: any,
+  ) {
+    return this.clientService.create(createClientInput, user.id);
   }
 
   @UseGuards(GqlAuthGuard)
@@ -46,6 +49,11 @@ export class ClientResolver {
     }
     console.log('client.projects backend resolver', client.projects);
     return client;
+  }
+
+  @Query(() => ClientEntity, { name: 'findClientByEmail' })
+  async findClientByEmail(@Args('email') email: string) {
+    return this.clientService.findClientByEmail(email);
   }
 
   @Mutation(() => ClientEntity, { name: 'updateClient' })

@@ -1,4 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 @InputType()
 export class CreateClientInput {
@@ -14,15 +15,15 @@ export class CreateClientInput {
   @Field(() => String)
   phone?: string;
 
-  @Field(() => String)
+  @Field()
   address?: string;
 
-  @Field(() => String)
+  @Field()
   city?: string;
 
-  @Field(() => String)
+  @Field()
   country?: string;
 
-  @Field(() => String)
+  @Field({ nullable: true })
   postalCode?: string;
 }
