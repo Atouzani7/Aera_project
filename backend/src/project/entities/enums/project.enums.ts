@@ -22,6 +22,9 @@ export enum ProjectTagEnum {
   EVENEMENTIEL = 'Evénementiel',
   ORGANISATION = 'Organisation',
   ACCOMPAGNEMENT = 'Accompagnement',
+  OUTILS = 'Outils',
+  MARKETING = 'Marketing',
+  WEBSITE = 'Website',
   AUTRE = 'Autre',
 }
 

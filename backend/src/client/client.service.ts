@@ -10,6 +10,7 @@ import { ProjectService } from 'src/project/project.service';
 import { ClientEntity } from './entities/client.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { emit } from 'node:process';
 
 @Injectable()
 export class ClientService {
@@ -21,12 +22,20 @@ export class ClientService {
     private projectService: ProjectService,
   ) {}
 
-  async create(createClientInput: CreateClientInput): Promise<ClientEntity> {
+  async create(
+    createClientInput: CreateClientInput,
+    userId: string,
+  ): Promise<ClientEntity> {
     const newClient = this.clientRepository.create({
       ...createClientInput,
+
+      user: { id: userId },
+
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+
+    console.log('newClient back service', newClient);
 
     return await this.clientRepository.save(newClient);
   }
@@ -66,6 +75,13 @@ export class ClientService {
     });
     console.log('clients back service client', clients);
     return clients;
+  }
+
+  async findClientByEmail(email: string) {
+    const client = await this.clientRepository.findOne({
+      where: { email },
+    });
+    return client;
   }
 
   update(id: number, updateClientInput: UpdateClientInput) {

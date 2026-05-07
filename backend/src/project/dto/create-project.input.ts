@@ -39,7 +39,7 @@ export class CreateProjectInput {
   @Field(() => String, { nullable: true })
   contact_postalCode?: ClientEntity['postalCode'];
 
-  @Field(() => ProjectTagEnum)
+  @Field(() => ProjectTagEnum, { nullable: true })
   tag?: ProjectTagEnum;
 
   @Field(() => ProjectStatus, { nullable: true })
