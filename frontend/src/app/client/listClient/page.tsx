@@ -72,9 +72,12 @@ export default function ListClientPage() {
     }
     return (
         <div className="container mx-auto px-4 py-8 mt-[74px] min-h-screen">
-            <h1 className="text-2xl font-bold mb-4">Liste des clients</h1>
+            <div className="flex items-center  justify-between mb-4">
+                <h1 className="text-2xl font-bold ">Liste des clients</h1>
+                <Filter onSearch={setSearch} />
 
-            <Filter onSearch={setSearch} />
+            </div>
+
             <Table>
                 <TableHeader >
                     <TableRow className="text-primary ">

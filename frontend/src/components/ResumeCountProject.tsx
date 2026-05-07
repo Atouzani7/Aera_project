@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card"
 import { BookmarkCheck, Clock, Folder, Hourglass, ListTodoIcon } from "lucide-react";
 import StatusBadge from "./StatusBadge";
+import { motion } from "motion/react";
 
 export default function ResumeCountProject() {
 
@@ -44,35 +45,80 @@ export default function ResumeCountProject() {
     ];
 
     return (
-        <div className="mb-10 text-center flex flex-col items-center">
-            <p className="text-lg text-muted-foreground text-sm mb-2 ">Tu as {Object.values(counts).reduce((a, b) => a + b, 0)} projet{Object.values(counts).reduce((a, b) => a + b, 0) > 1 ? "s" : ""} au total</p>
-            <p>
-            </p>
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-                {statusConfig.map((status) => {
-                    const count = counts[status.key] || 0;
-                    if (count === 0) return null;
+        <div className="mb-10 text-center flex flex-col items-center min-w-90wh">
+            <div className="mb-10 text-center flex flex-col items-center w-full">
 
-                    return (
-                        <Card
-                            key={status.key}
-                            className="p-4 flex flex-row items-center gap-2 min-w-[200px] flex-shrink-0 bg-white/30 border-1 border-gray-200"
-                        >
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${status.color}`}>
-                                <p>{status.icons}</p>
-                            </div>
-                            <div>
-                                <p className="text-xl font-semibold">{count}</p>
-                                <div className="flex items-center gap-2">
-                                    <StatusBadge status={status.key} onlyDot={true} />
-                                    <p className="text-sm text-muted-foreground whitespace-nowrap">{status.label}</p>
+                {/* TITLE */}
+                <motion.p
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-sm text-muted-foreground mb-6"
+                >
 
+                    Tu as{" "}
+                    <span className="font-semibold text-foreground">
+                        {Object.values(counts).reduce((a, b) => a + b, 0)}
+                    </span>{" "}
+                    projet{Object.values(counts).reduce((a, b) => a + b, 0)} au total
+                </motion.p>
+
+                {/* CARDS SCROLL */}
+                <div className="flex gap-4 overflow-x-auto pb-4 w-full scrollbar-hide px-2">
+
+                    {statusConfig.map((status, index) => {
+                        const count = counts[status.key] || 0;
+                        if (count === 0) return null;
+
+                        return (
+                            <motion.div
+                                key={status.key}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                whileHover={{
+                                    scale: 1.05,
+                                    y: -3,
+                                    transition: { type: "spring", stiffness: 300, damping: 20 },
+                                }}
+                                className="
+                min-w-[200px]
+                flex-shrink-0
+                rounded-2xl
+                bg-white/50
+                border border-white/30
+                backdrop-blur-md
+                shadow-sm
+                p-4
+                flex items-center gap-3
+                hover:shadow-md
+                transition
+              "
+                            >
+
+                                {/* ICON */}
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${status.color}`}>
+                                    <span className="text-lg">{status.icons}</span>
                                 </div>
 
-                            </div>
-                        </Card>
-                    );
-                })}
+                                {/* TEXT */}
+                                <div className="text-left">
+                                    <p className="text-lg font-semibold leading-none">
+                                        {count}
+                                    </p>
+
+                                    <div className="flex items-center gap-2 mt-1">
+                                        <StatusBadge status={status.key} onlyDot />
+
+                                        <p className="text-sm text-muted-foreground whitespace-nowrap">
+                                            {status.label}
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </motion.div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     )

@@ -5,12 +5,14 @@ import { useQuery } from "@apollo/client/react";
 import { FIND_WORKSPACE_BY_USERID } from "@/graphQL/queries/workspace.queries";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CardProjectID from "../../project/[id]/page";
-import { FolderCheck, FolderClock, FolderCog, FolderDown, FolderHeart, FolderInputIcon, ListFilter, PlusCircleIcon, X } from "lucide-react";
+import { FolderCheck, FolderClock, FolderCog, FolderDown, FolderHeart, FolderInputIcon, ListFilter, PlusCircleIcon, PlusIcon, X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import ResumeCountProject from "@/src/components/ResumeCountProject";
 import Filter from "@/src/components/Filter";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { motion } from "motion/react";
 
 export default function WorkspaceIdPage() {
     const { user, isLoading, isAuthenticated } = useCurrentUser();
@@ -44,14 +46,27 @@ export default function WorkspaceIdPage() {
 
     return (
         <div className="mt-4 p-6 shadow">
-
             <div className="mb-10 text-center mt-30 md:mt-40 ">
-                <h1 className="text-2xl font-light tracking-wider font-avenir">Dashboard</h1>
-                <h1 className="text-m font-medium text-muted-foreground md:mr-4">
-                    Bienvenue,&nbsp;
-                    <span className="text-foreground">{user?.firstname}</span>
-                </h1>
 
+                <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className=" "
+                >
+                    <div className=" m-4 flex items-center justify-between">
+
+                        <h1 className="text-2xl font-light tracking-wider font-avenir">Dashboard</h1>
+                        <h1 className="text-m font-medium text-muted-foreground md:mr-4">
+                            Bienvenue,&nbsp;
+
+                            <span className="text-foreground">{user?.firstname}</span>
+                        </h1>
+                        <Avatar>
+                            <AvatarImage src={user?.profilePicture || "https://images.pexels.com/photos/30414203/pexels-photo-30414203.jpeg"} />
+                            <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                    </div>
+                </motion.div>
                 <div className="items-center md:m-10">
                     <ResumeCountProject />
                     {projects.length === 0 && <p className="text-gray-500 text-sm">Aucun projet trouvé. Crée ton premier projet ✨</p>}
