@@ -9,6 +9,7 @@ import { LogIn } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 import { UserType, useAuth } from "@/src/app/hook/context/authContext";
+import { buttonStyles } from "../ButtonStyle";
 
 type SignInData = {
     signIn: {
@@ -122,7 +123,8 @@ export default function LoginForm() {
             <Button
                 type="submit"
                 disabled={loading}
-                className="w-full h-11 rounded-xl bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 text-white font-medium shadow-md hover:shadow-lg transition-all active:scale-[0.98]"
+                // className="w-full h-11 rounded-xl bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 text-white font-medium shadow-md hover:shadow-lg transition-all active:scale-[0.98]"
+                className={buttonStyles.add}
             >
                 <LogIn className="mr-2 h-4 w-4" />
                 {loading ? "Connexion..." : "Se connecter"}

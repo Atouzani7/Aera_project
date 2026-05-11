@@ -11,14 +11,12 @@ import {
     DialogTrigger,
     DialogContent,
     DialogTitle,
-    DialogDescription,
-    DialogClose,
     DialogHeader,
-    DialogFooter,
 } from "@/components/ui/dialog"
 
 import { Button } from "../../../components/ui/button";
 import { useAuth } from "@/src/app/hook/context/authContext";
+import { buttonStyles } from "../ButtonStyle";
 
 export default function LogoutButton() {
     const [open, setOpen] = useState(false);
@@ -45,7 +43,7 @@ export default function LogoutButton() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="text-foreground " variant="destructive" >
+                <Button className={buttonStyles.danger} >
                     <LogOut className="mr-2 h-4 w-4" />
                     Se déconnecter
                 </Button>
@@ -62,14 +60,14 @@ export default function LogoutButton() {
 
                 <div className="flex justify-end gap-2 mt-4">
                     <Button
-                        variant="validation"
+                        className={buttonStyles.validate}
                         onClick={() => setOpen(false)}
                     >
                         Annuler
                     </Button>
 
                     <Button
-                        variant="destructive"
+                        className={buttonStyles.danger}
                         onClick={handleConfirmLogout}
                     >
                         Oui, déconnecter

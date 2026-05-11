@@ -147,6 +147,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { buttonStyles } from "../ButtonStyle"
 
 interface CreateStepProps {
     projectId: string
@@ -200,7 +201,7 @@ export function CreateStep({ projectId }: CreateStepProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="create">
+                <Button className={buttonStyles.warning}>
                     <PlusCircleIcon className="mr-2 h-4 w-4" />
                     Ajouter une nouvelle étape
                 </Button>
@@ -261,12 +262,12 @@ export function CreateStep({ projectId }: CreateStepProps) {
 
                     <DialogFooter className="mt-6">
                         <DialogClose asChild>
-                            <Button type="button" variant="outline">
+                            <Button type="button" className={buttonStyles.danger}>
                                 Annuler
                             </Button>
                         </DialogClose>
 
-                        <Button type="submit" disabled={loading}>
+                        <Button type="submit" disabled={loading} className={buttonStyles.warning}>
                             {loading ? "Création..." : "Créer l’étape"}
                         </Button>
                     </DialogFooter>
