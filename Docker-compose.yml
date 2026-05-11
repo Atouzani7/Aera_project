@@ -2,12 +2,15 @@ services:
   backend:
     build: ./backend
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "4001:4001"
     volumes:
       - ./backend:/app
       - /app/node_modules
+    env_file:
+    - backend/.env
 
   frontend:
     build: ./frontend
@@ -18,6 +21,7 @@ services:
       - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - NEXT_PUBLIC_API_URL=http://localhost:4001/graphql
     depends_on:
       - backend
 
@@ -41,10 +45,11 @@ services:
     ports:
       - 5432:5432
     environment:
+      DB_HOST: db
+      DB_PORT: 5432
       POSTGRES_DB: aera_project_db
       POSTGRES_USER: asma
       POSTGRES_PASSWORD: aera_project_password
-      DB_HOST: db
     # permet de ne pas perdre les données à chaque arrêt.
     volumes: 
       - aera_project_db:/var/lib/postgresql/data

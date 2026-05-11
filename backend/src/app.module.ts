@@ -28,11 +28,11 @@ import { ClientEntity } from './client/entities/client.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: process.env.DB_HOST || 'localhost',
       port: 5432,
-      username: process.env.USERNAME,
-      password: process.env.PASSWORD,
-      database: process.env.DATABASE,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       entities: [
         UserEntity,
         ProjectEntity,
@@ -54,7 +54,6 @@ import { ClientEntity } from './client/entities/client.entity';
         req,
         res,
       }),
-
       cache: 'bounded',
       plugins: [
         {
