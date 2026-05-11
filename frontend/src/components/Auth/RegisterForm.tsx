@@ -103,131 +103,191 @@ export default function RegisterForm() {
 
 
     return (
-        <motion.div className="p-2 m-4 w-lg mx-auto mt-10 md:mt-20 md:w-1/2 flex flex-col justify-center">
-            <motion.div>
-            </motion.div>
-            <h1 className="text-3xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 tracking-tighter md:text-4xl">
-                Créer un compte
-            </h1>
-            <Form {...{ form }}>
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full max-w-2xl mx-auto"
+        >
+            <div className="rounded-3xl border border-white/50 bg-white/40 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-8 md:p-10">
 
+                {/* Header */}
+                <div className="mb-8">
+                    <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
+                        Créer un compte
+                    </h1>
 
-                <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
+                    <p className="mt-3 text-sm md:text-base text-gray-500">
+                        Lancez votre espace de travail et commencez à collaborer efficacement.
+                    </p>
 
-                    <div className="flex items-center gap-2 mt-4 mb-2 text-lg font-medium">
+                    <div className="mt-5 h-[2px] w-28 rounded-full bg-gradient-to-r from-teal-400 via-gray-300 to-violet-400" />
+                </div>
 
-                        <User className="mr-2 h-4 w-4" />
-                        Profil
-                    </div>
+                <Form {...{ form }}>
+                    <form onSubmit={handleFormSubmit} className="space-y-8">
 
-                    <motion.div className="flex flex-col gap-1 ">
-                        <Label htmlFor="firstname">Prénom *</Label>
-                        <Input
-                            id="firstname"
-                            name="firstname"
-                            type="text"
-                            required
-                            className="border p-2 rounded"
-                            value={formData.firstname}
-                            onChange={handleChange}
-                        />
-                        {form.formState.errors.firstname && <p className="text-red-500">{form.formState.errors.firstname.message}</p>}
-                    </motion.div>
-                    <motion.div className="flex flex-col gap-1">
-                        <Label htmlFor="lastname">Nom *</Label>
-                        <Input
-                            id="lastname"
-                            name="lastname"
-                            type="text"
-                            required
-                            className="border p-2 rounded"
-                            value={formData.lastname}
-                            onChange={handleChange}
-                        />
-                    </motion.div>
+                        {/* PROFILE SECTION */}
+                        <div className="space-y-5">
 
-                    <motion.div className="flex flex-col gap-1">
-                        <Label htmlFor="email">Email *</Label>
-                        <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            required
-                            className="border p-2 rounded"
-                            value={formData.email}
-                            onChange={handleChange}
-                        />
-                    </motion.div>
+                            <div className="flex items-center gap-2 text-lg font-medium text-gray-800">
+                                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-50 border border-teal-100">
+                                    <User className="h-4 w-4 text-teal-600" />
+                                </div>
 
-                    <motion.div className="flex flex-col gap-1">
-                        <Label htmlFor="password">Mot de passe *</Label>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            required
-                            className="border p-2 rounded"
-                            value={formData.password}
-                            onChange={handleChange}
-                        />
+                                <span>Profil</span>
+                            </div>
 
-                        <Separator />
-                    </motion.div>
+                            {/* Firstname */}
+                            <motion.div className="space-y-2">
+                                <Label htmlFor="firstname" className="text-gray-700">
+                                    Prénom *
+                                </Label>
 
-                    <div className="flex items-center gap-2 mt-4 mb-2 text-lg font-medium">
-                        <MonitorCloud className="mr-2 h-4 w-4" />
-                        Worskspace
-                    </div>
-                    <motion.div className="flex flex-col gap-1">
-                        <Label htmlFor="workspaceName">Nom de l&apos;espace de travail</Label>
-                        <Input
-                            id="workspaceName"
-                            name="workspaceName"
-                            type="text"
-                            className="border p-2 rounded"
-                            value={formData.workspaceName}
-                            onChange={handleChange}
-                        />
-                    </motion.div>
+                                <Input
+                                    id="firstname"
+                                    name="firstname"
+                                    type="text"
+                                    required
+                                    value={formData.firstname}
+                                    onChange={handleChange}
+                                    className="h-11 rounded-xl border-gray-200 bg-white/60 backdrop-blur focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition"
+                                />
 
-                    <motion.div className="flex flex-col gap-1">
-                        <Label htmlFor="workspaceDescription">Description</Label>
-                        <Input
-                            id="workspaceDescription"
-                            name="workspaceDescription"
-                            type="text"
-                            className="border p-2 rounded"
-                            value={formData.workspaceDescription}
-                            onChange={handleChange}
-                        />
-                    </motion.div>
-                    <div className="flex justify-between items-center mt-4">
+                                {form.formState.errors.firstname && (
+                                    <p className="text-sm text-red-500">
+                                        {form.formState.errors.firstname.message}
+                                    </p>
+                                )}
+                            </motion.div>
 
+                            {/* Lastname */}
+                            <motion.div className="space-y-2">
+                                <Label htmlFor="lastname" className="text-gray-700">
+                                    Nom *
+                                </Label>
 
+                                <Input
+                                    id="lastname"
+                                    name="lastname"
+                                    type="text"
+                                    required
+                                    value={formData.lastname}
+                                    onChange={handleChange}
+                                    className="h-11 rounded-xl border-gray-200 bg-white/60 backdrop-blur focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition"
+                                />
+                            </motion.div>
+
+                            {/* Email */}
+                            <motion.div className="space-y-2">
+                                <Label htmlFor="email" className="text-gray-700">
+                                    Email *
+                                </Label>
+
+                                <Input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="h-11 rounded-xl border-gray-200 bg-white/60 backdrop-blur focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition"
+                                />
+                            </motion.div>
+
+                            {/* Password */}
+                            <motion.div className="space-y-2">
+                                <Label htmlFor="password" className="text-gray-700">
+                                    Mot de passe *
+                                </Label>
+
+                                <Input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    required
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    className="h-11 rounded-xl border-gray-200 bg-white/60 backdrop-blur focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition"
+                                />
+                            </motion.div>
+                        </div>
+
+                        {/* separator */}
+                        <div className="relative">
+                            <Separator className="bg-gray-200" />
+                        </div>
+
+                        {/* WORKSPACE SECTION */}
+                        <div className="space-y-5">
+
+                            <div className="flex items-center gap-2 text-lg font-medium text-gray-800">
+                                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-50 border border-violet-100">
+                                    <MonitorCloud className="h-4 w-4 text-violet-600" />
+                                </div>
+
+                                <span>Workspace</span>
+                            </div>
+
+                            {/* Workspace Name */}
+                            <motion.div className="space-y-2">
+                                <Label htmlFor="workspaceName" className="text-gray-700">
+                                    Nom de l’espace de travail
+                                </Label>
+
+                                <Input
+                                    id="workspaceName"
+                                    name="workspaceName"
+                                    type="text"
+                                    value={formData.workspaceName}
+                                    onChange={handleChange}
+                                    className="h-11 rounded-xl border-gray-200 bg-white/60 backdrop-blur focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition"
+                                />
+                            </motion.div>
+
+                            {/* Workspace Description */}
+                            <motion.div className="space-y-2">
+                                <Label htmlFor="workspaceDescription" className="text-gray-700">
+                                    Description
+                                </Label>
+
+                                <Input
+                                    id="workspaceDescription"
+                                    name="workspaceDescription"
+                                    type="text"
+                                    value={formData.workspaceDescription}
+                                    onChange={handleChange}
+                                    className="h-11 rounded-xl border-gray-200 bg-white/60 backdrop-blur focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition"
+                                />
+                            </motion.div>
+                        </div>
+
+                        {/* Error */}
+                        {error && (
+                            <div className="rounded-xl border border-red-100 bg-red-50 p-3">
+                                <p className="text-sm text-red-500">
+                                    {error.message}
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Submit */}
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="mt-2 w-full flex items-center gap-2"
+                            className="w-full h-11 rounded-xl bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 text-white font-medium shadow-md hover:shadow-lg transition-all active:scale-[0.98]"
                         >
                             <UserRoundPlus className="mr-2 h-4 w-4" />
-                            {loading ? "Inscription en cours..." : "S'inscrire"}
+
+                            {loading
+                                ? "Inscription en cours..."
+                                : "Créer mon compte"}
                         </Button>
 
-                        {error && (
-                            <p className="text-red-500 text-sm mt-2">
-                                Erreur : {error.message}
-                            </p>
-
-                        )}
-
-
-                    </div>
-
-
-
-                </form>
-            </Form>
-        </motion.div >
+                    </form>
+                </Form>
+            </div>
+        </motion.div>
 
 
     );

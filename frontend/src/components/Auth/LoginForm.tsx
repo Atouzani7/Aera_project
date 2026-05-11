@@ -73,30 +73,60 @@ export default function LoginForm() {
 
 
     return (
-        <form onSubmit={handleSignin} className="space-y-4 m-2 m-auto w-full max-w-md ">
-            <h1 className="text-3xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 tracking-tighter md:text-4xl">
+        <form
+            onSubmit={handleSignin}
+            className="w-full max-w-md mx-auto p-8 space-y-5 rounded-3xl border border-white/50 bg-white/40 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
+        >
+
+            {/* Title */}
+            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">
                 Se connecter
             </h1>
-            <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                required
-            />
 
-            <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Mot de passe"
-                required
-            />
+            <p className="text-sm text-gray-500">
+                Accédez à votre espace et continuez vos projets.
+            </p>
 
-            {error && <p className="text-red-500">{error.message}</p>}
+            {/* Email */}
+            <div className="space-y-1">
+                <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    required
+                    className="h-11 rounded-xl border-gray-200 bg-white/60 backdrop-blur focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition"
+                />
+            </div>
 
-            <Button type="submit" disabled={loading}><LogIn className="mr-2 h-4 w-4" /> {loading ? "Connexion..." : "Se connecter"} </Button>
+            {/* Password */}
+            <div className="space-y-1">
+                <Input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Mot de passe"
+                    required
+                    className="h-11 rounded-xl border-gray-200 bg-white/60 backdrop-blur focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition"
+                />
+            </div>
 
+            {/* Error */}
+            {error && (
+                <p className="text-sm text-red-500 bg-red-50 border border-red-100 rounded-xl p-2">
+                    {error.message}
+                </p>
+            )}
+
+            {/* Button */}
+            <Button
+                type="submit"
+                disabled={loading}
+                className="w-full h-11 rounded-xl bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 text-white font-medium shadow-md hover:shadow-lg transition-all active:scale-[0.98]"
+            >
+                <LogIn className="mr-2 h-4 w-4" />
+                {loading ? "Connexion..." : "Se connecter"}
+            </Button>
 
         </form>
     );
