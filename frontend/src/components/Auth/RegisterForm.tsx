@@ -13,6 +13,7 @@ import { Separator } from "@radix-ui/react-separator";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import { Form } from "../../../components/ui/form";
+import { buttonStyles } from "../ButtonStyle";
 
 
 export default function RegisterForm() {
@@ -68,6 +69,18 @@ export default function RegisterForm() {
         }));
     };
 
+    const btnStyle = `
+h-10 px-4 rounded-xl
+bg-gradient-to-r from-cyan-500/10 to-violet-500/10
+border border-white/10
+text-black/85
+hover:bg-white/15
+hover:text-white
+transition-all duration-200
+flex items-center gap-2
+focus-visible:ring-2 focus-visible:ring-white
+focus-visible:ring-offset-2 focus-visible:ring-black
+`
 
     const [registerMutation, { loading, error }] = useMutation(REGISTER, {
         onError: (error) => {
@@ -99,7 +112,6 @@ export default function RegisterForm() {
             console.error("Erreur GraphQL :", err);
         }
     };
-
 
 
     return (
@@ -275,7 +287,8 @@ export default function RegisterForm() {
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="w-full h-11 rounded-xl bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 text-white font-medium shadow-md hover:shadow-lg transition-all active:scale-[0.98]"
+                            // className="w-full h-11 rounded-xl bg-gradient-to-r from-teal-500 via-gray-400 to-violet-400 text-white font-medium shadow-md hover:shadow-lg transition-all active:scale-[0.98]"
+                            className={btnStyle}
                         >
                             <UserRoundPlus className="mr-2 h-4 w-4" />
 
@@ -283,7 +296,6 @@ export default function RegisterForm() {
                                 ? "Inscription en cours..."
                                 : "Créer mon compte"}
                         </Button>
-
                     </form>
                 </Form>
             </div>

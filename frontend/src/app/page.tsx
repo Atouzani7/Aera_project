@@ -2,266 +2,177 @@
 "use client";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-const list = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.3, // délai entre chaque item
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, x: -20 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
-};
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-};
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="flex min-h-screen  bg-background  items-center justify-center  font-avenir ">
-      <main className="pt-24">
+    <div className="relative min-h-screen overflow-hidden bg-[#f6f7fb] text-[#0f172a] font-avenir pt-42">
 
-        {/* // HERO SECTION */}
+      {/* BACKGROUND */}
 
+      <div className="absolute inset-0 overflow-hidden">
 
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col items-center md:h-[40vh]  md:flex-row items-center justify-center p-4 bg-background text-center md:text-left "
-        >
-          <Image
-            src="/aera_project.logo.png"
-            alt="logo"
-            width={200}
-            height={40}
-            className="mt-34 md:mt-0 md:ml-4"
-            priority
-          />
-          <div className="flex flex-col md:items-center justify-center ">
+        {/* gradient blobs */}
 
-            <p className=" p-4 text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-300 to-violet-100 bg-clip-text text-transparent "><br /> Des projets clairs. Des clients ravis. <br /></p>
-            <p className=" w-2/3 md:w-1/2 ms:text-center p-4 mx-auto md:mx-0">
-              La gestion de projet client ne devrait pas être compliquée.
-              Tu jongles entre Trello, Notion, WhatsApp, et des mails sans fin ?
-              Tes clients sont perdus, toi aussi. Tu veux juste un endroit clair, beau et simple pour collaborer.</p>
-          </div>
-          <Image
-            src="/guillemets.png"
-            alt="guillemets"
-            width={40}
-            height={8}
-            className="mb-3 md:m-0 md:mr-8 md:w-50 "
-            priority
-          />
-        </motion.div>
+        <div className="absolute top-[-120px] left-[-120px] h-[420px] w-[420px] rounded-full bg-violet-200/40 blur-[120px]" />
 
-        {/* // FEATURES SECTION */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className=" md:h-[40vh] flex flex-col md:flex-row items-center justify-around rounded-lg  mt-8 bg-background "
-        >
-          <motion.div className="border-2 border-border rounded-lg m-4 p-4 bg-background shadow-lg">
-            <Image
-              src="/fleche.png"
-              alt="fleche conccurence"
-              width={400}
-              height={72.66}
-              className="justify-center p-4"
-              priority
-            />
-          </motion.div>
+        <div className="absolute bottom-[-120px] right-[-120px] h-[420px] w-[420px] rounded-full bg-cyan-200/40 blur-[120px]" />
 
-          <div className="flex flex-col items-center justify-center p-4 bg-background text-center">
-            <div>
-              <p className="text-xl ">Fini les mails perdus et les outils éparpillés</p>
-              <p className="text-xl m-4">Aera Project est la solution.</p>
-            </div>
-            <motion.div>
-              <motion.ul
-                className="list-disc list-inside text-left"
-                variants={list}
-                initial="hidden"
-                whileInView="visible"      // déclenche l'animation quand on scroll
-                viewport={{ once: true, amount: 0.8 }} // joue l'anim une seule fois, quand 50% de l'élément est visible
-              >
-                <motion.li variants={item}>
-                  Organise tes projets en un clin d’œil
-                </motion.li>
-                <motion.li variants={item}>
-                  Collabore facilement avec tes clients
-                </motion.li>
-                <motion.li variants={item}>
-                  Gagne du temps et évite les allers-retours inutiles
-                </motion.li>
-                <motion.li variants={item}>
-                  Partage l’avancement étape par étape
-                </motion.li><motion.li variants={item}>
-                  Ajoute des commentaires, des fichiers, et garde le fil du projet
-                </motion.li>
-              </motion.ul>
+        {/* grid */}
 
-            </motion.div>
-          </div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-[size:72px_72px]" />
 
-        </motion.div>
-        {/* // POUR QUI SECTION */}
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="md:h-[40vh] flex flex-col  items-center items-center justify-center p-4 bg-background text-center md:text-left ">
-          <p className="text-3xl text-center m-8 
-           p-4 text-3xl md:text-4xl bg-gradient-to-r from-blue-400 via-purple-300 to-violet-100 bg-clip-text text-transparent
-          ">Pour qui ?</p>
+      </div>
 
-          <motion.div className=" md:w-2/3 flex flex-col md:flex-row rounded-lg m-4 p-4 bg-background shadow-lg">
-            <motion.ul
-              className=" list-inside text-center items-center  m-auto flex flex-col gap-8 md:flex-row justify-baseline md:justify-evenly flex-wrap md:gap-12"
-              variants={list}
-              initial="hidden"
-              whileInView="visible"      // déclenche l'animation quand on scroll
-              viewport={{ once: true, amount: 0.8 }} // joue l'anim une seule fois, quand 50% de l'élément est visible
-            >
-              <motion.li variants={item} className="text-detail-pink">
-                <Image
-                  src="/pen.png"
-                  alt="icon designer"
-                  width={40}
-                  height={40}
-                  className="inline-block mr-2 mb-2"
-                  priority
-                />
-                Designer
-              </motion.li>
-              <motion.li variants={item} className="text-detail-pink">
-                <Image
-                  src="/web_developer.png"
-                  alt="icon web_developer"
-                  width={40}
-                  height={40}
-                  className="inline-block mr-2 mb-2"
-                  priority
-                />
-                Web developer
-              </motion.li>
-              <motion.li variants={item} className="text-detail-pink">
-                <Image
-                  src="/photographer.png"
-                  alt="icon photographer"
-                  width={40}
-                  height={40}
-                  className="inline-block mr-2 mb-2"
-                  priority
-                />
-                Photographer
-              </motion.li>
-              <motion.li variants={item} className="text-detail-pink">
-                <Image
-                  src="/user.png"
-                  alt="icon createur indépendant"
-                  width={40}
-                  height={40}
-                  className="inline-block mr-2 mb-2"
-                  priority
-                />
-                Créateur indépendant
-              </motion.li>
-            </motion.ul>
+      <main className="relative z-10">
 
-          </motion.div>
+        {/* HERO */}
 
+        <section className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
 
-
-        </motion.div>
-        {/* // FEATURES SHOWCASE SECTION  */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="  flex flex-col  items-center justify-center p-4 bg-background text-center md:text-left "
-        >
-          <p className=" p-4 text-2xl text-center ">Découvrir Aera Project</p>
-          <p className=" mb-4 text-lg ">Une interface claire pour toi et tes clients</p>
           <motion.div
-            className="md:w-2/3 flex flex-col md:flex-row rounded-lg m-4 p-4 bg-background shadow-lg ">
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-6xl"
+          >
+
+            {/* BADGE */}
+
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/70 px-4 py-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl">
+
+              <div className="h-2 w-2 rounded-full bg-violet-500" />
+
+              <span className="text-sm text-slate-600">
+                Nouvelle expérience client freelance
+              </span>
+
+            </div>
+
+            {/* TITLE */}
+
+            <h1 className="mx-auto max-w-5xl text-5xl font-semibold leading-[1.05] tracking-[-0.04em] md:text-7xl">
+
+              Des projets plus clairs.
+              <br />
+
+              <span className="bg-gradient-to-r from-violet-600/40 via-blue-500/40 to-cyan-500/40 bg-clip-text text-transparent">
+
+                Une collaboration plus élégante.
+
+              </span>
+
+            </h1>
+
+            {/* SUBTITLE */}
+
+            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-500 md:text-xl">
+
+              Centralise tes échanges clients, fichiers,
+              validations et étapes projet dans un espace moderne,
+              simple et premium.
+
+            </p>
+
+            {/* CTA */}
+
+            <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+
+              <button className="rounded-2xl bg-[#0f172a] px-8 py-4 font-medium text-white shadow-[0_20px_50px_rgba(15,23,42,0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_80px_rgba(15,23,42,0.22)]"
+                onClick={() => { router.push("/register"); setIsOpen(false); }}>
+
+                Commencer gratuitement
+
+              </button>
+
+
+              <button className="rounded-2xl border border-slate-200 bg-white/80 px-8 py-4 text-slate-700 backdrop-blur-xl transition hover:bg-white">
+
+                Voir la démo
+
+              </button>
+
+            </div>
+
+          </motion.div>
+
+          {/* MOCKUP */}
+
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="relative mt-24 w-full max-w-6xl"
+          >
+
+            {/* glow */}
+
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-200/40 to-cyan-200/40 blur-[80px]" />
+
+            {/* card */}
+
+            <div className="relative rounded-[32px] border border-white/70 bg-white/70 p-4 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-2xl">
+
+              <Image
+                src="/mockup_macbook.png"
+                alt="dashboard"
+                width={1400}
+                height={900}
+                className="rounded-2xl"
+                priority
+              />
+
+            </div>
+
+          </motion.div>
+
+        </section>
+
+        {/* FEATURES */}
+
+        <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-6 py-32 md:grid-cols-3">
+
+          {[
+            {
+              title: "Tout au même endroit",
+              text: "Fichiers, feedbacks, tâches et validations centralisés."
+            },
+            {
+              title: "Une image plus pro",
+              text: "Offre une vraie expérience premium à tes clients."
+            },
+            {
+              title: "Moins d’allers-retours",
+              text: "Chaque projet reste clair du début à la livraison."
+            }
+          ].map((feature, i) => (
 
             <motion.div
-              className="  rounded-lg m-4 p-4 bg-background m-auto flex flex- md:flex-row items-center justify-center "
+              key={i}
+              whileHover={{ y: -6 }}
+              className="rounded-[28px] border border-white/80 bg-white/60 p-8 shadow-[0_10px_40px_rgba(15,23,42,0.06)] backdrop-blur-2xl"
             >
-              <motion.div className="flex flex-col items-center justify-center p-4 bg-background text-center md:text-left "
-                initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.6 }}
-              >
-                <Image
-                  src="/mockup_macbook.png"
-                  alt="mockup_ordir page Dashboard"
-                  width={350}
-                  height={200}
-                  className=" "
-                  priority
-                />
-              </motion.div>
-              <motion.div className="flex flex-col items-center justify-center p-4 bg-background text-center md:text-left "
-                initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.6 }}
-              >
-                <Image
-                  src="/mockup_phone.png"
-                  alt="mockup_portable page project ID"
-                  width={350}
-                  height={170}
-                  className=" "
-                  priority
-                />
-              </motion.div>
+
+              <div className="mb-6 h-12 w-12 rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-400 shadow-lg" />
+
+              <h3 className="text-xl font-semibold text-slate-900">
+                {feature.title}
+              </h3>
+
+              <p className="mt-4 leading-relaxed text-slate-500">
+                {feature.text}
+              </p>
+
             </motion.div>
 
+          ))}
 
+        </section>
 
-          </motion.div>
-
-        </motion.div>
-
-        {/* Call TO ACTION  */}
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="  md:flex-row items-center min-h-80 justify-center p-4 bg-background text-center md:text-left ">
-          <p className=" p-4 text-2xl text-center ">Prêt à simplifier ta gestion de projet ?</p>
-          <motion.div className="md:w-2/3 flex flex-col md:flex-row rounded-lg m-auto p-4 bg-background shadow-lg justify-center items-center ">
-            <motion.div className="flex flex-col items-center justify-center p-4 bg-background text-center md:text-left ">
-              <p className=" mb-4 text-lg ">Tout commence ici !</p>
-              <p>Rejoins Aera Project et créé un espace unique pour chaque projet</p>
-            </motion.div>
-            <motion.div>
-              <motion.form className="flex flex-col gap-4  items-center justify-center mt-4">
-                <Input
-                  type="email"
-                  placeholder="Ton adresse e-mail"
-                  className="border border-border bg-input m-auto rounded-md mr-4 focus:outline-none focus:ring-2 focus:ring-detail-pink transition mb-4 md:mb-0"
-                />
-                <Button>
-                  Commencer maintenant
-                </Button>
-              </motion.form>
-              <p className="text-sm text-foregroundtext-sm text-muted-foreground md:mr-4">Aucun engagement. Pas de frais.</p>
-            </motion.div>
-
-
-
-          </motion.div>
-
-        </motion.div>
       </main>
     </div>
   );

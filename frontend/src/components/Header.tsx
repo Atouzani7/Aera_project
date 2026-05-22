@@ -11,6 +11,7 @@ import { User } from 'lucide-react';
 import { Button } from "../../components/ui/button";
 import { useCurrentUser } from "@/lib/useCurrentUser";
 import { AuthContext } from "../app/hook/context/authContext";
+import { buttonStyles } from "./ButtonStyle";
 
 export default function Header() {
     const router = useRouter();
@@ -82,14 +83,15 @@ export default function Header() {
                     {isAuthenticated ? (
                         <>
                             <Button
-                                className="w-full md:w-auto"
+                                className={buttonStyles.add}
                                 onClick={() => { router.push(pathnameMyAccount); setIsOpen(false); }}
                             >
                                 <User className="mr-2 h-4 w-4" />
                                 Mon Profil
                             </Button>
                             <Button
-                                className="w-full md:w-auto"
+                                // className="w-full md:w-auto"
+                                className={buttonStyles.add}
                                 // onClick={() => { router.push({ pathname: pathname }); setIsOpen(false); }}
                                 onClick={() => { router.push(pathnameWorkspace); setIsOpen(false); }}
                             >
@@ -97,7 +99,7 @@ export default function Header() {
                                 Mon workspace
                             </Button>
                             <Button
-                                className="w-full md:w-auto"
+                                className={buttonStyles.add}
                                 onClick={() => { router.push(pathnameListClients); setIsOpen(false); }}
                             >
                                 <UserSearch className="mr-2 h-4 w-4" />
@@ -108,7 +110,7 @@ export default function Header() {
                     ) : (
                         <>
                             <Button
-                                className="w-full md:w-auto"
+                                className={buttonStyles.add}
                                 onClick={() => { router.push("/login"); setIsOpen(false); }}
                             >
                                 <LogIn className="mr-2 h-4 w-4" />
@@ -116,7 +118,8 @@ export default function Header() {
                                 Se connecter
                             </Button>
                             <Button
-                                className="bg-primary text-primary-foreground w-full md:w-auto"
+                                // className="bg-primary text-primary-foreground w-full md:w-auto"
+                                className={buttonStyles.add}
                                 onClick={() => { router.push("/register"); setIsOpen(false); }}
                             >
                                 <UserRoundPlus className="mr-2 h-4 w-4" />

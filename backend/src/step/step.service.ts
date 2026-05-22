@@ -75,8 +75,20 @@ export class StepService {
     return `This action returns a #${id} step`;
   }
 
-  update(id: number, updateStepInput: UpdateStepInput) {
-    return `This action updates a #${id} step`;
+  async update(id: string, updateStepInput: UpdateStepInput) {
+    const step = await this.stepRepository.findOne({
+      where: { id: String(id) },
+    });
+    if (!step) {
+      throw new NotFoundException(
+        `Step with ID ${updateStepInput.id} not found`,
+      );
+    }
+
+    Object.assign(step, updateStepInput);
+
+    console.log('step', step);
+    return await this.stepRepository.save(step);
   }
 
   remove(id: number) {

@@ -61,7 +61,7 @@
 /* --- Variables de Design (Light Mode) --- */
 :root {
   --radius: 0.625rem;
-  --background: oklch(91.93% 0.02619 297.813);
+  --background: oklch(0.9765 0.0054 274.97);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);

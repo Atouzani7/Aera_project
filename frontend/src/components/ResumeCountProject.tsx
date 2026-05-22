@@ -59,7 +59,7 @@ export default function ResumeCountProject() {
                     <span className="font-semibold text-foreground">
                         {Object.values(counts).reduce((a, b) => a + b, 0)}
                     </span>{" "}
-                    projet{Object.values(counts).reduce((a, b) => a + b, 0)} au total
+                    projet au total
                 </motion.p>
 
                 {/* CARDS SCROLL */}

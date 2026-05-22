@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { FC } from "react";
 import type { Variants } from "framer-motion";
+import { buttonStyles } from "./ButtonStyle";
 
 const backdrop: Variants = {
     hidden: { opacity: 0 },
@@ -88,13 +89,13 @@ export const EditProjectModal: FC<EditProjectModalProps> = ({ open, setOpen, pro
                     <div className="flex justify-end gap-2 pt-2">
                         <button
                             onClick={() => setOpen(false)}
-                            className="px-4 py-2 rounded-lg text-sm bg-white/50 border border-white/30"
+                            className={buttonStyles.cancel}
                         >
                             Annuler
                         </button>
 
                         <button
-                            className="px-4 py-2 rounded-lg text-sm bg-black text-white hover:opacity-90 transition"
+                            className={buttonStyles.validate}
                         >
                             Sauvegarder
                         </button>

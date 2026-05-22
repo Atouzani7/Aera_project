@@ -9,6 +9,7 @@ export const STEPS_BY_PROJECT = gql`
       name
       status
       updatedAt
+      sequence_number
     }
   }
 `;

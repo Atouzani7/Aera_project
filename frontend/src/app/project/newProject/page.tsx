@@ -34,6 +34,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { buttonStyles } from "@/src/components/ButtonStyle"
+import { PlusCircle } from "lucide-react"
 
 type FormData = {
     contact_name: string
@@ -249,15 +251,20 @@ export default function CreateProject() {
 
                 {/* ACTIONS */}
                 <div className="flex justify-end gap-4">
-                    <Button type="button" variant="outline">
+                    <Button type="button" className={buttonStyles.danger}>
                         Annuler
                     </Button>
 
-                    <Button type="submit" disabled={loading}>
-                        {loading ? "Création..." : "Créer projet"}
+                    <Button type="submit" disabled={loading}
+                        className="
+            bg-gradient-to-r from-cyan-500/40 to-violet-500/40
+            text-white
+            hover:brightness-110
+            transition duration-300 ease-in-out">
+                        <PlusCircle className="mr-2" />    {loading ? "Création..." : "Créer projet"}
                     </Button>
                 </div>
             </form>
-        </motion.div>
+        </motion.div >
     )
 }

@@ -3,17 +3,20 @@ import { StepStatus } from '../entities/step.entity';
 
 @InputType()
 export class CreateStepInput {
-  @Field(() => String, { defaultValue: 'First Step' })
-  name: string;
+  @Field(() => String, { nullable: true })
+  name?: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   description?: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   status?: StepStatus;
 
   @Field(() => Date, { nullable: true })
-  endDate: Date;
+  endDate?: Date;
+
+  @Field(() => Int, { nullable: true })
+  sequence_number?: number;
 }
 
 export class UpdateStepDto {
@@ -21,16 +24,19 @@ export class UpdateStepDto {
     name: string,
     description: string,
     status: StepStatus,
+    sequence_number: number,
     updatedAt: Date,
   ) {
     this.name = name;
     this.description = description;
     this.status = status;
     this.updatedAt = updatedAt;
+    this.sequence_number = sequence_number;
   }
   name: string;
   description: string;
   status: StepStatus;
-  endDate: Date;
+  endDate?: Date;
   updatedAt: Date;
+  sequence_number: number;
 }

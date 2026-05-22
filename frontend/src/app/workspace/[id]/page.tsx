@@ -79,12 +79,25 @@ export default function WorkspaceIdPage() {
 
             </div>
 
-            <div className="flex items-center justify-between mb-4">
+            <div className="
+    flex flex-col md:flex-row
+    md:items-center md:justify-between
+    gap-3 mb-6
+">
 
                 <Filter onSearch={setSearch} />
-                <Button variant="default" onClick={handClickCreateProject} className="m-2">
+
+                <Button
+                    onClick={handClickCreateProject}
+                    className="
+            bg-gradient-to-r from-cyan-500/40 to-violet-500/40
+            text-white
+            hover:brightness-110
+            transition
+        "
+                >
                     <PlusCircleIcon className="mr-2 h-4 w-4" />
-                    Créer un nouveau projet
+                    Nouveau projet
                 </Button>
             </div>
 
@@ -102,7 +115,7 @@ export default function WorkspaceIdPage() {
                     {/* desktop tabs */}
                     <TabsList className="hidden md:flex gap-2 ">
                         {statuses.map((status) => (
-                            <TabsTrigger key={status.key} value={status.key}>
+                            <TabsTrigger key={status.key} value={status.key} className="text-white/70 data-[state=active]:text-white data-[state=active]:bg-white/10 rounded-lg px-3 py-1.5 transition">
                                 {status.icon} {status.label} ({status.count})
                             </TabsTrigger>
                         ))}
@@ -111,7 +124,19 @@ export default function WorkspaceIdPage() {
 
                 {/* mobile dropdown */}
                 {isOpen && (
-                    <div className="absolute top-2 left-10 w-72 max-h-[60vh] overflow-y-auto bg-white border border-gray-200 rounded-xl shadow-lg p-2 z-40 md:hidden">
+
+                    <div className="
+    absolute top-12 left-0
+    w-72
+    overflow-y-auto
+    bg-neutral-100/95
+    border border-white/10
+    rounded-2xl
+    backdrop-blur-xl
+    shadow-xl
+    p-2
+    z-40
+">
                         <TabsList className="flex flex-col mt-20 gap-1 w-full">
                             {statuses.map((status) => (
                                 <TabsTrigger

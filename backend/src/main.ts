@@ -12,6 +12,7 @@ async function bootstrap() {
       'http://localhost:3000',
       'http://localhost:4000/graphql',
       'http://192.168.1.20:3000',
+      'http://127.0.0.1:4001/graphql',
     ],
     credentials: true,
   });
@@ -19,6 +20,6 @@ async function bootstrap() {
 
   app.use(passport.initialize());
 
-  await app.listen(process.env.PORT ?? 4000, '0.0.0.0');
+  await app.listen(process.env.PORT ?? 4001, '0.0.0.0');
 }
 bootstrap();
