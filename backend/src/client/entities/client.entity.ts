@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { IsEmail, IsString } from 'class-validator';
 import { ProjectEntity } from 'src/project/entities/project.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
@@ -17,16 +18,19 @@ export class ClientEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: false })
   @Field(() => String, { description: 'Nom du client' })
+  @IsString({ message: 'Firstname must be a string' })
   name: string;
 
   @Column()
   @Field(() => String, { description: 'Nom de famille du client' })
+  @IsString({ message: 'Firstname must be a string' })
   lastname: string;
 
   @Column({ unique: true })
   @Field(() => String, { description: 'Email du client' })
+  @IsEmail({}, { message: 'Email must be a valid email address' })
   email: string;
 
   @Column()
@@ -39,10 +43,12 @@ export class ClientEntity {
 
   @Column()
   @Field({ description: 'Ville du client' })
+  @IsString({ message: 'Firstname must be a string' })
   city: string;
 
   @Column()
   @Field({ description: 'Pays du client' })
+  @IsString({ message: 'Firstname must be a string' })
   country: string;
 
   @Column()

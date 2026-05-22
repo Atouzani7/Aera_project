@@ -11,11 +11,15 @@ export const CREATE_STEP = gql`
 `;
 
 export const UPDATE_STEP = gql`
-  mutation UpdateStep($updateStepInput: UpdateStepInput!, $stepId: String!) {
-    updateStep(updateStepInput: $updateStepInput, stepId: $stepId) {
+  mutation UpdateStep($updateStepInput: UpdateStepInput!) {
+    updateStep(updateStepInput: $updateStepInput) {
       id
       name
       createdAt
+      status
+      sequence_number
+      description
+      endDate
     }
   }
 `;

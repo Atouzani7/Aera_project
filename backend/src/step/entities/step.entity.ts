@@ -19,27 +19,27 @@ export type StepStatus =
 export class StepEntity {
   @Field(() => ID, { description: 'ID' })
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
   @Field(() => String, { description: 'Step Name' })
   @Column({ length: 100, default: 'First Step' })
-  name: string;
+  name?: string;
 
   @Field(() => String, { description: 'Step Description' })
   @Column({ nullable: true })
-  description: string;
+  description?: string;
 
   @Field(() => String, { description: 'Step Status' })
   @Column({ default: 'NOT_STARTED' })
-  status: StepStatus;
+  status?: StepStatus;
 
   @Field(() => GraphQLISODateTime, { description: 'Step End Date' })
   @Column({ nullable: true })
-  endDate: Date;
+  endDate?: Date;
 
   @Field(() => GraphQLISODateTime, { description: 'Step Creation Date' })
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  createdAt?: Date;
 
   @Field(() => GraphQLISODateTime, { description: 'Step Update Date' })
   @Column({
@@ -47,15 +47,15 @@ export class StepEntity {
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @Field(() => [ProjectEntity], {
     description: 'Projects associated with this Step',
   })
   @ManyToMany(() => ProjectEntity, (project) => project.steps)
-  projects: ProjectEntity[];
+  projects?: ProjectEntity[];
 
   @Column({ type: 'int', default: 1 })
   @Field(() => Int)
-  sequence_number: number;
+  sequence_number?: number;
 }

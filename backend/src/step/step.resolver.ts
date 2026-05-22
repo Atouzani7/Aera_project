@@ -26,8 +26,16 @@ export class StepResolver {
     return this.stepService.findAll();
   }
 
+  // @Query(() => [StepEntity], { name: 'stepsByProject' })
+  // async findByProject(@Args('projectId') projectId: string) {
+  //   return this.stepService.findStepByProject(projectId);
+  // }
+
   @Query(() => [StepEntity], { name: 'stepsByProject' })
-  async findByProject(@Args('projectId') projectId: string) {
+  async findByProject(
+    @Args('projectId', { type: () => String, nullable: false })
+    projectId: string,
+  ) {
     return this.stepService.findStepByProject(projectId);
   }
   findOne(@Args('id', { type: () => Int }) id: number) {
@@ -35,7 +43,12 @@ export class StepResolver {
   }
 
   @Mutation(() => StepEntity)
-  updateStep(@Args('updateStepInput') updateStepInput: UpdateStepInput) {
+  updateStep(
+    @Args('updateStepInput') updateStepInput: UpdateStepInput,
+  ): Promise<StepEntity> {
+    if (!updateStepInput.id) {
+      throw new Error('updateStepInput.id is required');
+    }
     return this.stepService.update(updateStepInput.id, updateStepInput);
   }
 

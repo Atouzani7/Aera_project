@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import StatusBadge from "@/src/components/StatusBadge";
 import { HorizontalStepper } from "@/src/components/Step/Stepper";
-import { ArrowLeftIcon, Mail, MapPin, Pencil, Phone, Share2, User } from "lucide-react";
+import { ArrowLeftIcon, Mail, MapPin, Pencil, Phone, Share2, Shield, User } from "lucide-react";
 import useMyClients from "@/src/app/hook/useClient";
 import { useState } from "react";
 import { EditProjectModal } from "@/src/components/EditProjectModal";
@@ -134,6 +134,9 @@ export default function ProjectIdPage() {
                                 <h2 className="text-xl font-semibold tracking-wide">
                                     Détails du projet
                                 </h2>
+                                <p className="text-xs text-muted-foreground flex flex-row">
+                                    <Shield className="w-4 h-4" />Project ID: {project.id}
+                                </p>
 
                                 <p className="text-sm text-muted-foreground mt-1">
                                     Statut : <StatusBadge status={project.status} />
@@ -305,10 +308,6 @@ export default function ProjectIdPage() {
                 >
 
                     <h1 className=" text-2xl font-light tracking-wider pb-4 ">Etape du projet</h1>
-                    {/* <h1 className="text-m font-medium text-muted-foreground md:mr-4">
-                        <span className="text-foreground">Statut :&nbsp;<StatusBadge status={project.status} /> </span>&nbsp; <br />
-                    </h1> */}
-                    {/* <Step /> */}
                     <HorizontalStepper projectId={project.id} />
                 </motion.div>
                 <Separator className="my-5" />
