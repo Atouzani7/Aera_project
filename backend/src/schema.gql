@@ -69,7 +69,7 @@ input CreateClientInput {
   lastname: String!
   name: String!
   phone: String!
-  postalCode: String!
+  postalCode: String
 }
 
 input CreateCommentInput {
@@ -96,14 +96,15 @@ input CreateProjectInput {
   description: String
   name: String!
   status: ProjectStatus
-  tag: ProjectTagEnum!
+  tag: ProjectTagEnum
 }
 
 input CreateStepInput {
-  description: String!
+  description: String
   endDate: DateTime
-  name: String! = "First Step"
-  status: String!
+  name: String
+  sequence_number: Int
+  status: String
 }
 
 input CreateUserInput {
@@ -166,7 +167,7 @@ type LogoutResponse {
 
 type Mutation {
   addUserToWorkspace(userId: Int!, workspaceId: Int!): WorkspaceEntity!
-  createClient(createClientInput: CreateClientInput!): ClientEntity!
+  create(createClientInput: CreateClientInput!): ClientEntity!
   createComment(createCommentInput: CreateCommentInput!): Comment!
   createFile(createFileInput: CreateFileInput!): File!
   createProject(createProjectInput: CreateProjectInput!): ProjectEntity!
@@ -258,7 +259,10 @@ enum ProjectTagEnum {
   CREATION
   DIGITAL
   EVENEMENTIEL
+  MARKETING
   ORGANISATION
+  OUTILS
+  WEBSITE
 }
 
 type Query {
@@ -267,6 +271,7 @@ type Query {
   FindUserByID(id: String!): UserEntity!
   comment(id: Int!): Comment!
   file(id: Int!): File!
+  findClientByEmail(email: String!): ClientEntity!
   findMyClients: [ClientEntity!]!
   getCLientProjects(id: String!): [ProjectEntity!]!
   me: UserEntity!
@@ -341,8 +346,9 @@ input UpdateFileInput {
 input UpdateStepInput {
   description: String
   endDate: DateTime
-  id: Int!
-  name: String = "First Step"
+  id: ID!
+  name: String
+  sequence_number: Int
   status: String
 }
 

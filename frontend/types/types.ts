@@ -55,6 +55,7 @@ type UserWorkspacesQuery = {
 
 type StepsByProjectQuery = {
   stepsByProject: {
+    sequence_number: number;
     createdAt: string;
     description: string;
     endDate: string;
