@@ -2,7 +2,7 @@
 import { useState } from "react"; // 1. Import de useState
 import Image from "next/image";
 import LogoutButton from "./Auth/LogoutButton";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
 import { LayoutDashboard, Menu, UserSearch, X } from "lucide-react"; // 2. Import des icônes pour le burger
 import { LogIn } from 'lucide-react';
@@ -19,6 +19,7 @@ export default function Header() {
 
     const userCo = useCurrentUser()
     // console.log('🎨 Header : user', userCo.user?.id)
+    const pathname = usePathname();
 
 
     const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +45,6 @@ export default function Header() {
         <header className="bg-white/10 backdrop-blur-xl w-full fixed top-0 left-0 z-50 shadow px-4 py-4">
 
             <div className="container mx-auto flex justify-between items-center">
-                {/* Logo cliquable */}
                 <Image
                     src="/aera_project.png"
                     alt="Aera Project logo"
@@ -53,7 +53,9 @@ export default function Header() {
                     priority
                     className="cursor-pointer"
                     loading="eager"
-                    onClick={() => router.push("/")}
+                    onClick={() =>
+                        router.push(isAuthenticated ? pathnameWorkspace : "/")
+                    }
                 />
 
                 {/* --- BOUTON BURGER (Visible uniquement sur mobile) --- */}
@@ -82,29 +84,34 @@ export default function Header() {
 
                     {isAuthenticated ? (
                         <>
-                            <Button
-                                className={buttonStyles.add}
-                                onClick={() => { router.push(pathnameMyAccount); setIsOpen(false); }}
-                            >
-                                <User className="mr-2 h-4 w-4" />
-                                Mon Profil
-                            </Button>
-                            <Button
-                                // className="w-full md:w-auto"
-                                className={buttonStyles.add}
-                                // onClick={() => { router.push({ pathname: pathname }); setIsOpen(false); }}
-                                onClick={() => { router.push(pathnameWorkspace); setIsOpen(false); }}
-                            >
-                                <LayoutDashboard />
-                                Mon workspace
-                            </Button>
-                            <Button
-                                className={buttonStyles.add}
-                                onClick={() => { router.push(pathnameListClients); setIsOpen(false); }}
-                            >
-                                <UserSearch className="mr-2 h-4 w-4" />
-                                Mes clients
-                            </Button>
+                            {pathname !== `/profil/${userCo.user?.id}` && (
+                                <Button
+                                    className={buttonStyles.add}
+                                    onClick={() => { router.push(pathnameMyAccount); setIsOpen(false); }}
+                                >
+                                    <User className="mr-2 h-4 w-4" />
+                                    Mon Profil
+                                </Button>
+                            )}
+                            {pathname !== `/workspace/${user?.workspace?.id}` && (
+                                <Button
+                                    className={buttonStyles.add}
+                                    onClick={() => { router.push(pathnameWorkspace); setIsOpen(false); }}
+                                >
+                                    <LayoutDashboard />
+                                    Mon workspace
+                                </Button>
+                            )}
+                            {pathname !== pathnameListClients && (
+                                <Button
+                                    className={buttonStyles.add}
+                                    onClick={() => { router.push(pathnameListClients); setIsOpen(false); }}
+                                >
+                                    <UserSearch className="mr-2 h-4 w-4" />
+                                    Mes clients
+                                </Button>
+                            )}
+
                             <LogoutButton />
                         </>
                     ) : (
